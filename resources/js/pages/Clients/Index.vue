@@ -1,0 +1,205 @@
+<script setup>
+
+// import Layout from '@/Shared/Layout.vue'
+import Layout from '../../layouts/AppLayout.vue';
+import { Head, Link, router } from '@inertiajs/vue3'
+import { ref, watch } from 'vue'
+import { index, create, edit, show } from '@/routes/clients';
+
+
+defineOptions({
+    layout: Layout
+})
+
+const props = defineProps({
+    clients: Object,
+    filters: Object,
+})
+
+const search = ref(props.filters.search ?? '')
+
+watch(search, value => {
+
+    router.get(
+        // '/clients',
+        index(),
+        {
+            search: value
+        },
+        {
+            preserveState: true,
+            replace: true
+        }
+    )
+})
+
+</script>
+
+<template>
+
+<Head>
+    <title>Clients</title>
+</Head>
+
+<div class="flex justify-between items-center mb-6">
+
+    <h1 class="text-3xl font-bold">
+        Clients
+    </h1>
+
+    <Link
+        :href="create()"
+        class="bg-blue-600 text-white px-4 py-2 rounded"
+    >
+        New client
+    </Link>
+
+</div>
+
+<div class="mb-6">
+
+    <input
+        v-model="search"
+        type="text"
+        placeholder="Search for client ..."
+        class="w-full border rounded p-2"
+    >
+
+</div>
+
+<div class="shadow rounded overflow-hidden">
+
+    <table class="w-full">
+
+        <thead>
+
+            <tr class="bg-gray-100 dark:text-black ">
+
+                <th class="p-3 text-left">
+                    Company name
+                </th>
+
+                <th class="p-3 text-left">
+                    Tax number
+                </th>
+
+                <th class="p-3 text-left">
+                    E-mail
+                </th>
+
+                <th class="p-3 text-left">
+                    Phone
+                </th>
+
+                <th class="p-3 text-left">
+                    City
+                </th>
+
+                <th class="p-3 text-center">
+                    Actions
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody >
+
+            <tr
+                v-for="client in clients.data"
+                :key="client.id"
+                class="border-t"
+            >
+
+                <td class="p-3">
+                    {{ client.name }}
+                </td>
+
+                <td class="p-3">
+                    {{ client.tax_number }}
+                </td>
+
+                <td class="p-3">
+                    {{ client.email }}
+                </td>
+
+                <td class="p-3">
+                    {{ client.phone }}
+                </td>
+
+                <td class="p-3">
+                    {{ client.city }}
+                </td>
+
+                <td class="p-3 text-center">
+
+                    <div class="flex justify-center gap-3">
+
+                        <Link
+                            :href="show(client.id)"
+                            class="bg-green-600 text-white px-5 py-1 rounded"
+                        >
+                            View
+                        </Link>
+
+                        <Link
+                        
+                            :href="edit(client.id)"
+                            class="bg-orange-600 text-white px-5 py-1 rounded"
+                        >
+                            Edit
+                        </Link>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            <tr
+                v-if="clients.data.length === 0"
+            >
+
+                <td
+                    colspan="6"
+                    class="p-6 text-center"
+                >
+                    No clients
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="flex gap-2 mt-6">
+
+    <template
+        v-for="link in clients.links"
+        :key="link.label"
+    >
+
+        <span
+            v-if="!link.url"
+            class="px-3 py-2 border rounded text-gray-400"
+            v-html="link.label"
+        />
+
+        <Link
+            v-else
+            :href="link.url"
+            class="px-3 py-2 border rounded"
+            :class="{
+                'bg-blue-600 text-white': link.active
+            }"
+            v-html="link.label"
+        />
+
+    </template>
+
+</div>
+
+</template>

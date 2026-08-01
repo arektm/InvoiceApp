@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from '@lucide/vue';
+import { FolderGit2, LayoutGrid, UserLock } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -14,28 +14,33 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { start } from '@/routes';
+import { company } from '@/routes';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Company',
-        href: start(),
+        href: company(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Clients',
+        href : '/clients',
+        icon: UserLock,
     },
 ];
 
 const footerNavItems: NavItem[] = [
     {
         title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
+        href: 'https://github.com/arektm/InvoiceApp',
         icon: FolderGit2,
     },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
-    },
+    // {
+    //     title: 'Documentation',
+    //     href: '#',
+    //     icon: BookOpen,
+    // },
 ];
 </script>
 
@@ -45,7 +50,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="start()">
+                        <Link :href="company()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
