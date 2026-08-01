@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
 
 // Route::inertia('/', 'Welcome')->name('home');
@@ -23,7 +24,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('company/{company}', [CompanyController::class, 'update'])->name('updateCompany');
 
     Route::resource('clients', ClientController::class);
-    // Route::get('/clients/search', [ClientController::class, 'search']);
+    Route::resource('products', ProductController::class);
+    Route::resource('invoices', InvoiceController::class);
+
 
 
 });

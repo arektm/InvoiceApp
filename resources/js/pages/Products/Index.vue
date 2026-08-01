@@ -1,26 +1,33 @@
 <script setup>
 
-import Layout from '../../layouts/AppLayout.vue';
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Head, Link, router, useForm } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
-import { index, create, edit, show } from '@/routes/clients';
-
+import { index } from '@/routes/products';
 
 defineOptions({
-    layout: Layout
-})
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Products',
+                href: index(),
+            },
+        ],
+    },
+});
 
 const props = defineProps({
-    clients: Object,
+    products: Object,
     filters: Object,
 })
 
 const search = ref(props.filters.search ?? '')
 
+
+
 watch(search, value => {
 
     router.get(
-        index(),
+        '/products',
         {
             search: value
         },
@@ -36,20 +43,20 @@ watch(search, value => {
 <template>
 
 <Head>
-    <title>Clients</title>
+    <title>Products</title>
 </Head>
 
 <div class="flex justify-between items-center mb-6">
 
     <h1 class="text-3xl font-bold">
-        Clients
+        Products
     </h1>
 
     <Link
-        :href="create()"
+        href="/products/create"
         class="bg-blue-600 text-white px-4 py-2 rounded"
     >
-        New client
+        Add product
     </Link>
 
 </div>
@@ -59,8 +66,8 @@ watch(search, value => {
     <input
         v-model="search"
         type="text"
-        placeholder="Search for client ..."
-        class="w-full border rounded p-2"
+        placeholder="Search for product ..."
+        class="border rounded p-2 w-full"
     >
 
 </div>
@@ -71,29 +78,29 @@ watch(search, value => {
 
         <thead>
 
-            <tr class="bg-gray-100 dark:text-black ">
+            <tr class="bg-gray-100 text-gray-500">
 
-                <th class="p-3 text-left">
-                    Company name
+                <th class="text-left p-3">
+                    Code
                 </th>
 
-                <th class="p-3 text-left">
-                    Tax number
+                <th class="text-left p-3">
+                    Product
                 </th>
 
-                <th class="p-3 text-left">
-                    E-mail
+                <th class="text-right p-3">
+                    Net price
                 </th>
 
-                <th class="p-3 text-left">
-                    Phone
+                <th class="text-right p-3">
+                    VAT
                 </th>
 
-                <th class="p-3 text-left">
-                    City
+                <th class="text-right p-3">
+                    Stock quantity
                 </th>
 
-                <th class="p-3 text-center">
+                <th class="text-center p-3">
                     Actions
                 </th>
 
@@ -101,52 +108,53 @@ watch(search, value => {
 
         </thead>
 
-        <tbody >
+        <tbody>
 
             <tr
-                v-for="client in clients.data"
-                :key="client.id"
+                v-for="product in products.data"
+                :key="product.id"
                 class="border-t"
             >
 
                 <td class="p-3">
-                    {{ client.name }}
+                    {{ product.product_code }}
                 </td>
 
                 <td class="p-3">
-                    {{ client.tax_number }}
+                    {{ product.product_name }}
                 </td>
 
-                <td class="p-3">
-                    {{ client.email }}
+                <td class="p-3 text-right">
+                    € {{ product.net_price }}
                 </td>
 
-                <td class="p-3">
-                    {{ client.phone }}
+                <td class="p-3 text-right">
+                    {{ product.vat_rate }}%
                 </td>
 
-                <td class="p-3">
-                    {{ client.city }}
+                <td class="p-3 text-right">
+                    {{ product.stock_quantity }}
                 </td>
 
                 <td class="p-3 text-center">
 
-                    <div class="flex justify-center gap-3">
+                    <div class="flex gap-3 justify-center">
 
                         <Link
-                            :href="show(client.id)"
-                            class="bg-green-600 text-white px-5 py-1 rounded"
+                            :href="`/products/${product.id}`"
+                            class="bg-blue-600 text-white px-5 py-1 rounded"
                         >
                             View
                         </Link>
 
                         <Link
-                        
-                            :href="edit(client.id)"
+                            :href="`/products/${product.id}/edit`"
                             class="bg-orange-600 text-white px-5 py-1 rounded"
                         >
                             Edit
                         </Link>
+
+                        
 
                     </div>
 
@@ -154,15 +162,13 @@ watch(search, value => {
 
             </tr>
 
-            <tr
-                v-if="clients.data.length === 0"
-            >
+            <tr v-if="products.data === 0">
 
                 <td
                     colspan="6"
-                    class="p-6 text-center"
+                    class="text-center p-6"
                 >
-                    No clients
+                    No products
                 </td>
 
             </tr>
@@ -176,7 +182,7 @@ watch(search, value => {
 <div class="flex gap-2 mt-6">
 
     <template
-        v-for="link in clients.links"
+        v-for="link in products.links"
         :key="link.label"
     >
 

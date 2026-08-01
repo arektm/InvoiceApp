@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { FolderGit2, LayoutGrid, UserLock } from '@lucide/vue';
+import { FolderGit2, LayoutGrid, UserLock, ShoppingBasket, Box } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -24,9 +24,19 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
+        title: 'Invoices',
+        href: '/invoices',
+        icon: ShoppingBasket ,
+    },
+    {
         title: 'Clients',
         href : '/clients',
         icon: UserLock,
+    },
+        {
+        title: 'Products',
+        href : '/products',
+        icon: Box,
     },
 ];
 

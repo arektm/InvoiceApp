@@ -159,7 +159,13 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-   
+        if ($client->invoices()->exists()) {
+
+            return back()->withErrors([
+                'delete' => 'The client has issued invoices.',
+            ]);
+        }
+
         $client->delete();
 
         return redirect()

@@ -1,0 +1,175 @@
+<script setup>
+
+
+import { Head, Link, useForm } from '@inertiajs/vue3'
+import AppLayout from '../../layouts/AppLayout.vue';
+import FormInput from '../Shared/FormInput.vue';
+
+
+defineOptions({
+    layout: AppLayout
+})
+
+const props = defineProps({
+    product: Object,
+    errors: Object
+})
+
+const form = useForm({
+
+    product_code: props.product.product_code,
+
+    product_name: props.product.product_name,
+
+    description: props.product.description,
+
+    net_price: props.product.net_price,
+
+    vat_rate: props.product.vat_rate,
+
+    stock_quantity: props.product.stock_quantity,
+})
+
+const submit = () => {
+
+    form.put(`/products/${props.product.id}`)
+}
+const remove = () => {
+
+    if (!confirm('Czy na pewno usunąć produkt?')) {
+        return
+    }
+
+    form.delete(`/products/${props.product.id}`)
+}
+
+
+
+</script>
+
+<template>
+
+<Head>
+    <title>Edit product</title>
+</Head>
+
+<div class="flex justify-between items-center mb-6">
+
+    <h1 class="text-3xl font-bold">
+        Edit product
+    </h1>
+
+
+</div>
+
+<form
+    @submit.prevent="submit"
+    class="shadow rounded p-6"
+>
+
+    <div class="grid gap-4">
+
+        <div>
+
+            <FormInput
+            v-model="form.product_code"
+            id="product_code"
+            label="Product code"
+            :error="errors.product_code"
+        />
+
+        </div>
+
+        <div>
+            <FormInput
+                v-model="form.product_name"
+                id="product_name"
+                label="Product name"
+                :error="errors.product_name"
+            />
+
+        </div>
+
+        <div>
+            
+            <label>Product description</label>
+
+            <textarea
+                v-model="form.description"
+                rows="4"
+                class="w-full border rounded p-2"
+            />
+
+        </div>
+
+        <div>
+            
+            <label>Net price</label>
+
+            <input
+                v-model="form.net_price"
+                type="number"
+                step="0.01"
+                class="w-full border rounded p-2"
+            >
+
+        </div>
+
+        <div>
+
+            <label>VAT</label>
+
+            <select
+                v-model="form.vat_rate"
+                class="bg-secondary w-full border rounded p-2"
+            >
+                <option :value="23">23%</option>
+                <option :value="8">8%</option>
+                <option :value="5">5%</option>
+                <option :value="0">0%</option>
+            </select>
+
+        </div>
+
+        <div>
+            <FormInput
+                v-model="form.stock_quantity"
+                id="stock_quantity"
+                label="Stock quantity"
+                type="number"
+                :error="errors.stock_quantity"
+            />
+            
+        </div>
+
+    </div>
+
+    <div class="mt-6 flex gap-3">
+
+        <button
+            :disabled="form.processing"
+            class="bg-blue-600 text-white px-6 py-2 rounded"
+        >
+            Save changes
+        </button>
+
+    
+        <button
+            type="button"
+            @click="remove"
+            class="bg-red-600 text-white px-6 py-2 rounded"
+                        >
+            Delete
+        </button>
+        <Link
+            href="/products"
+            class="bg-gray-500 text-white px-4 py-2 rounded"
+        >
+            Cancel
+        </Link>
+
+    </div>
+<div v-if="$page.props.errors.delete" v-text="$page.props.errors.delete" class=" text-red-500"></div>
+</form>
+
+</template>
