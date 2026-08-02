@@ -16,6 +16,6 @@ class Company extends Model
         'postal_code',
         'country',
     ];
-
+    
     
 }

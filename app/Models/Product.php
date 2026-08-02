@@ -22,6 +22,9 @@ class Product extends Model
         'vat_rate',
         'stock_quantity',
     ];
-
+    public function invoiceItems()
+    {
+        return $this->hasMany(InvoiceItem::class);
+    }
    
 }
