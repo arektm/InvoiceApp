@@ -1,8 +1,9 @@
 <script setup>
 
-import { Head, Link, router, useForm } from '@inertiajs/vue3'
+import { Head, Link, router } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 import { index } from '@/routes/products';
+import Pagination from '../Shared/Pagination.vue'
 
 defineOptions({
     layout: {
@@ -179,31 +180,10 @@ watch(search, value => {
 
 </div>
 
-<div class="flex gap-2 mt-6">
 
-    <template
-        v-for="link in products.links"
-        :key="link.label"
-    >
 
-        <span
-            v-if="!link.url"
-            class="px-3 py-2 border rounded text-gray-400"
-            v-html="link.label"
-        />
+<Pagination :links="products.links" /> 
 
-        <Link
-            v-else
-            :href="link.url"
-            class="px-3 py-2 border rounded"
-            :class="{
-                'bg-blue-600 text-white': link.active
-            }"
-            v-html="link.label"
-        />
 
-    </template>
-
-</div>
 
 </template>

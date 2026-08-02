@@ -1,8 +1,19 @@
 <script setup>
 import { Head, useForm, Link } from '@inertiajs/vue3'
+import { edit } from '@/routes/invoices'
 
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue'
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue'
+defineOptions({
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Invoices/Edit invoice',
+                href: edit,
+            },
+        ],
+    },
+});
 
 const props = defineProps({
     invoice: Object,
@@ -30,6 +41,7 @@ const form = useForm({
 const submit = () => {
     form.put(`/invoices/${props.invoice.id}`)
 }
+
 </script>
 
 <template>

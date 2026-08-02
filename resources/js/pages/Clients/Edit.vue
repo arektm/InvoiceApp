@@ -2,12 +2,19 @@
 
 // import Layout from '../../layouts/AppLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import { update, index, destroy } from '@/routes/clients'
+import { update, index, destroy, edit } from '@/routes/clients'
 import FormInput from '../Shared/FormInput.vue';
 
-// defineOptions({
-//     layout: Layout
-// })
+defineOptions({
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Clients/Edit client',
+                href: edit,
+            },
+        ],
+    },
+});
 
 const props = defineProps({
     client: Object,

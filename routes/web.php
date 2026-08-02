@@ -27,6 +27,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('invoices', InvoiceController::class);
 
+    // export to pdf
+    Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
+
+    // print pdf
+    Route::get('/invoices/{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
+
+    // send invoice as email
+    Route::post('/invoices/{invoice}/send',[InvoiceController::class, 'sendEmail'])->name('invoices.send');
 
 
 });

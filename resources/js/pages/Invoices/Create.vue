@@ -1,9 +1,19 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3'
+import { create } from '@/routes/invoices'
 
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue'
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue'
-
+defineOptions({
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Invoices/New invoice',
+                href: create,
+            },
+        ],
+    },
+});
 const props = defineProps({
     clients: Array,
     products: Array,

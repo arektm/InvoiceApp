@@ -2,13 +2,20 @@
 
 
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import AppLayout from '../../layouts/AppLayout.vue';
 import FormInput from '../Shared/FormInput.vue';
-
+import { edit } from '@/routes/products/index.js';
 
 defineOptions({
-    layout: AppLayout
-})
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Products/Edit product',
+                href: edit,
+            },
+        ],
+    },
+});
+
 
 const props = defineProps({
     product: Object,

@@ -1,11 +1,19 @@
 <script setup lang="ts">
 
+import { show, edit } from '@/routes/products';
 import { Head, Link } from '@inertiajs/vue3'
-import AppLayout from '../../layouts/AppLayout.vue';
+
 
 defineOptions({
-    layout: AppLayout
-})
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Products/Product view',
+                href: show,
+            },
+        ],
+    },
+});
 
 defineProps({
     product: Object
@@ -80,7 +88,7 @@ defineProps({
     <div class="mt-6 flex gap-3">
 
         <Link
-            href="/products/${product.id}/edit"
+            :href="edit(product.id)"
             class="bg-green-600 text-white px-4 py-2 rounded"
         >
            Edit

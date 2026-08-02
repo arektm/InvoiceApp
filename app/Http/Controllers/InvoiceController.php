@@ -7,9 +7,11 @@ use App\Models\Client;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Product;
+use App\Mail\InvoiceMail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class InvoiceController extends Controller
@@ -329,7 +331,15 @@ class InvoiceController extends Controller
         //
     }
 
-    
+    public function pdf(Invoice $invoice)
+    {
+        return $this->buildPdf($invoice)->download($this->pdfFilename($invoice));
+    }
+
+    public function print(Invoice $invoice)
+    {
+        return $this->buildPdf($invoice)->stream($this->pdfFilename($invoice));
+    }
 
     // -------------------------------------------------------------------------
     // Private helpers
@@ -378,5 +388,38 @@ class InvoiceController extends Controller
         ];
     }
 
-  
+    /**
+     * Build the DomPDF instance, loading relationships only if not already loaded.
+     */
+    private function buildPdf(Invoice $invoice): \Barryvdh\DomPDF\PDF
+    {
+        $invoice->loadMissing(['client', 'items.product']);
+        $company = Company::first();
+
+        return Pdf::loadView('pdf.invoice', [
+            'invoice' => $invoice,
+            'company' => $company,
+
+        ]);
+    }
+
+    /**
+     * Return a safe PDF filename derived from the invoice number.
+     */
+    private function pdfFilename(Invoice $invoice): string
+    {
+        return str_replace('/', '_', $invoice->invoice_number).'.pdf';
+    }
+
+
+    public function sendEmail(Invoice $invoice)
+    {
+        Mail::to($invoice->client->email)
+            ->send(new InvoiceMail($invoice));
+
+        return back()->with(
+            'success',
+            'Invoice sent successfully.'
+        );
+    }
 }

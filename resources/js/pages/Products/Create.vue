@@ -1,11 +1,18 @@
 <script setup>
 
-import AppLayout from '../../layouts/AppLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3'
 
+import { create } from '@/routes/products';
+import { Head, Link, useForm } from '@inertiajs/vue3'
 defineOptions({
-    layout: AppLayout
-})
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Products/Add product',
+                href: create,
+            },
+        ],
+    },
+});
 
 const form = useForm({
 
@@ -31,13 +38,13 @@ const submit = () => {
 <template>
 
 <Head>
-    <title>New Product</title>
+    <title>Add product</title>
 </Head>
 
 <div class="flex justify-between mb-6">
 
     <h1 class="text-3xl font-bold">
-        New Product
+        Add product
     </h1>
 
 </div>
@@ -52,7 +59,7 @@ const submit = () => {
         <div>
 
             <label class="block mb-1">
-                Product Code
+                Product code
             </label>
 
             <input

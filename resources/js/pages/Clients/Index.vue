@@ -1,14 +1,23 @@
 <script setup>
 
-import Layout from '../../layouts/AppLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 import { index, create, edit, show } from '@/routes/clients';
+import Pagination from '../Shared/Pagination.vue';
+
 
 
 defineOptions({
-    layout: Layout
-})
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Clients',
+                href: index(),
+            },
+        ],
+    },
+});
+
 
 const props = defineProps({
     clients: Object,
@@ -173,31 +182,6 @@ watch(search, value => {
 
 </div>
 
-<div class="flex gap-2 mt-6">
-
-    <template
-        v-for="link in clients.links"
-        :key="link.label"
-    >
-
-        <span
-            v-if="!link.url"
-            class="px-3 py-2 border rounded text-gray-400"
-            v-html="link.label"
-        />
-
-        <Link
-            v-else
-            :href="link.url"
-            class="px-3 py-2 border rounded"
-            :class="{
-                'bg-blue-600 text-white': link.active
-            }"
-            v-html="link.label"
-        />
-
-    </template>
-
-</div>
+<Pagination :links="clients.links" /> 
 
 </template>

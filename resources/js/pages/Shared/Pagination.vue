@@ -19,7 +19,7 @@ defineProps({
 
         <span
             v-if="!link.url"
-            class="px-3 py-2 border text-gray-400 rounded"
+            class="px-3 py-2 border rounded text-gray-400"
             v-html="link.label"
         />
 
@@ -28,7 +28,7 @@ defineProps({
             :href="link.url"
             class="px-3 py-2 border rounded"
             :class="{
-                'bg-blue-500 text-white': link.active
+                'bg-blue-600 text-white': link.active
             }"
             v-html="link.label"
         />

@@ -2,8 +2,17 @@
 
 
 import { Head, Link } from '@inertiajs/vue3'
-import { edit } from '@/routes/clients'
-
+import { edit,show } from '@/routes/clients'
+defineOptions({
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Clients/Client view',
+                href: show,
+            },
+        ],
+    },
+});
 defineProps({
     client: Object
 })

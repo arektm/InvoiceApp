@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { company } from '@/routes';
 
 

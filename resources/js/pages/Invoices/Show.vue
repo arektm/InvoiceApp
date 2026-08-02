@@ -1,14 +1,19 @@
 <script setup>
 
 import { Head, Link } from '@inertiajs/vue3'
-// import Layout from '@/Shared/Layout.vue'
-import AppLayout from '../../layouts/AppLayout.vue';
-
-
-
+import { print, pdf, show } from '@/routes/invoices';
+// import { sendEmail, print } from '@/actions/App/Http/Controllers/InvoiceController';
 defineOptions({
-    layout: AppLayout
-})
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Invoices/Invoice view',
+                href: show,
+            },
+        ],
+    },
+});
+
 
 defineProps({
     invoice: Object
@@ -32,7 +37,7 @@ defineProps({
 
 </div>
 
-<!-- Dane faktury -->
+<!-- Invoice data -->
 
 <div class="shadow rounded p-6 mb-6">
 
@@ -85,7 +90,7 @@ defineProps({
 
 </div>
 
-<!-- Pozycje -->
+<!-- Items -->
 
 <div class="shadow rounded p-6">
 
@@ -190,28 +195,39 @@ defineProps({
 
 </div>
 <div class="mt-6 ml-5 flex gap-3">
-
+<!-- :href="`/invoices/${invoice.id}/pdf`" -->
     <a
-        :href="`/invoices/${invoice.id}/pdf`"
+        :href="pdf(invoice.id).url"
         target="_blank"
         class="bg-blue-600 text-white px-4 py-2 rounded"
     >
         Download PDF
     </a>
-
+<!-- :href="`/invoices/${invoice.id}/print`" -->
     <a
-        :href="`/invoices/${invoice.id}/print`"
+        
+        :href="print(invoice.id).url"
         target="_blank"
         class="bg-green-600 text-white px-4 py-2 rounded"
     >
         Print
     </a>
      <Link
-        :href="/invoices/"
+        href="/invoices/"
         class="bg-gray-600 text-white px-4 py-2 rounded"
     >
         Back
     </Link>
+<!-- :href=router.get(print(invoice.id))  -->
+    <!-- <button
+        
+        @click="router.post(send(invoice.id))"
+        
+        class="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+        Send by Email
+    </button> -->
+    
 
 </div>
 </template>

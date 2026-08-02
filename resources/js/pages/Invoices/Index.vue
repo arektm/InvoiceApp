@@ -3,13 +3,20 @@
 import { Head, Link, router } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 
-import { create, show }from '@/routes/invoices'
+import { create, show, index } from '@/routes/invoices'
 
 import Pagination from '../Shared/Pagination.vue'
 
-// defineOptions({
-//     layout: AppLayout,
-// })
+defineOptions({
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Invoices',
+                href: index(),
+            },
+        ],
+    },
+});
 
 const props = defineProps({
     invoices: Object,
@@ -151,10 +158,8 @@ watch(search, value => {
 
 </table>
 
-<div class="flex gap-2 mt-6">
 
-   <Pagination :links="invoices.links" /> 
+<Pagination :links="invoices.links" /> 
 
-</div>
 
 </template>
