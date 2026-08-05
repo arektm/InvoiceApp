@@ -1,6 +1,4 @@
 <script setup>
-
-
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import FormInput from '../Shared/FormInput.vue';
 import { edit } from '@/routes/products/index.js';
@@ -43,7 +41,7 @@ const submit = () => {
 }
 const remove = () => {
 
-    if (!confirm('Czy na pewno usunąć produkt?')) {
+    if (!confirm('Are you sure you want to delete this product? ')) {
         return
     }
 

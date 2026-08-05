@@ -20,3 +20,27 @@ The project follows Laravel best practices, including Resource Controllers, Form
 * Role-ready architecture
 
 ---
+
+
+# Instalation
+Requirements:
+php
+copmposer
+
+Clone repo
+On Linux install php-sqlite 
+Change in  php.ini ;extension=pdo_sqlite to extension=pdo_sqlite
+
+composer install
+copy .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisen db:seed
+npm install
+npm run build
+composer run dev
+
+login email addres:
+admin@local.com
+password:
+aaaaaaaa

@@ -1,8 +1,7 @@
 <script setup>
-
-
 import { Head, Link } from '@inertiajs/vue3'
 import { edit,show } from '@/routes/clients'
+
 defineOptions({
     layout: {
         breadcrumbs: [

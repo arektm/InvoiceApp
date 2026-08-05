@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { Head, useForm, Link } from '@inertiajs/vue3';
 import AlertError from '@/components/AlertError.vue'
-import Alert from '@/components/ui/alert/Alert.vue';
 import { updateCompany } from '@/routes';
+
 
 defineOptions({
     layout: {
         breadcrumbs: [
             {
-                title: 'Edit company',
-                // href: edit()',
+                title: 'Company/Edit company details',
+                // href: edit,
             },
         ],
     },

@@ -1,8 +1,8 @@
 <script setup>
+import { Head, Link, useForm, router } from '@inertiajs/vue3'
+import { print, pdf, show, destroy } from '@/routes/invoices';
+// import { destroy, print } from '@/actions/App/Http/Controllers/InvoiceController';
 
-import { Head, Link } from '@inertiajs/vue3'
-import { print, pdf, show } from '@/routes/invoices';
-// import { sendEmail, print } from '@/actions/App/Http/Controllers/InvoiceController';
 defineOptions({
     layout: {
         breadcrumbs: [
@@ -15,10 +15,20 @@ defineOptions({
 });
 
 
-defineProps({
+const props = defineProps({
     invoice: Object
 })
+// const form = useForm({
+//     invoice_id: props.invoice.id
+// })
+const remove = () => {
+    if (!confirm('Are you sure you want to delete the invoice? ')) {
+        return
+    }
 
+    // form.delete(destroy(props.invoice.id))
+    router.delete(destroy(props.invoice.id).url)
+}
 </script>
 
 <template>
@@ -30,7 +40,7 @@ defineProps({
 <div class="flex justify-between mb-6">
 
     <h1 class="text-3xl font-bold">
-        Invoice {{ invoice.invoice_number }}
+        Invoice {{ invoice.invoice_number }} Invoice id {{ invoice.id }}
     </h1>
 
    
@@ -218,7 +228,14 @@ defineProps({
     >
         Back
     </Link>
-<!-- :href=router.get(print(invoice.id))  -->
+     <button
+            type="button"
+            @click="remove"
+            class="bg-red-600 text-white px-6 py-2 rounded"
+                        >
+            Delete
+        </button>
+    <!-- :href=router.get(print(invoice.id))  -->
     <!-- <button
         
         @click="router.post(send(invoice.id))"

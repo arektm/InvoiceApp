@@ -19,9 +19,8 @@ const props = defineProps({
     products: Array,
 })
 
-// ------------------------------------------------------------------
+
 // Date helpers
-// ------------------------------------------------------------------
 function toDateString(date) {
     return date.toISOString().split('T')[0]
 }
@@ -37,9 +36,7 @@ const defaultDueDate = toDateString(
     )
 )
 
-// ------------------------------------------------------------------
-// Form
-// ------------------------------------------------------------------
+
 const form = useForm({
     client_id: '',
 

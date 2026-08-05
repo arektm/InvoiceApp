@@ -78,7 +78,7 @@ class ProductController extends Controller
 
         return redirect()
             ->route('products.index')
-            ->with('success', 'Produkt został dodany');
+            ->with('success', 'Product added');
     }
 
     /**
@@ -163,7 +163,7 @@ class ProductController extends Controller
 
         return redirect()
             ->route('products.index')
-            ->with('success', 'Produkt został zaktualizowany');
+            ->with('success', 'Product updated');
     }
 
     /**
@@ -175,7 +175,7 @@ class ProductController extends Controller
         if ($product->invoiceItems()->exists()) {
 
             return back()->withErrors([
-                'delete' => 'Produkt występuje na fakturach i nie może zostać usunięty.',
+                'delete' => 'The product appears on invoices and cannot be removed.',
             ]);
         }
 
@@ -183,6 +183,6 @@ class ProductController extends Controller
 
         return redirect()
             ->route('products.index')
-            ->with('success', 'Produkt został usunięty');
+            ->with('success', 'Poduct removed');
     }
 }

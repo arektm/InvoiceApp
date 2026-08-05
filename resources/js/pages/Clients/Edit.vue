@@ -1,6 +1,4 @@
 <script setup>
-
-// import Layout from '../../layouts/AppLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { update, index, destroy, edit } from '@/routes/clients'
 import FormInput from '../Shared/FormInput.vue';
@@ -51,14 +49,14 @@ const submit = () => {
 const remove = () => {
 
     if (!confirm(
-        'Usunąć klienta?'
+        'Remove client?'
     )) {
         return
     }
 
     form.delete(
         destroy(props.client.id)
-        //`/clients/${props.client.id}`
+        
     )
 }
 

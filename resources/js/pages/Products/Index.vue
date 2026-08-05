@@ -1,5 +1,4 @@
 <script setup>
-
 import { Head, Link, router } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 import { index } from '@/routes/products';
@@ -180,10 +179,6 @@ watch(search, value => {
 
 </div>
 
-
-
 <Pagination :links="products.links" /> 
-
-
 
 </template>

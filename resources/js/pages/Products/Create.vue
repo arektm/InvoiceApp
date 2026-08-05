@@ -1,8 +1,7 @@
 <script setup>
-
-
 import { create } from '@/routes/products';
 import { Head, Link, useForm } from '@inertiajs/vue3'
+
 defineOptions({
     layout: {
         breadcrumbs: [

@@ -1,9 +1,8 @@
 <script setup>
-
-import AppLayout from '../../layouts/AppLayout.vue';
 import FormInput from '../Shared/FormInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { store } from '@/routes/clients';
+
 defineOptions({
     layout: {
         breadcrumbs: [

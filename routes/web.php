@@ -4,16 +4,15 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-// Route::inertia('/', 'Welcome')->name('home');
 Route::get('/', function () {
      if (Auth::check()) {
         return redirect()->route('company');
     }
-
     return redirect()->route('login');
 })->name('home');
 
@@ -33,9 +32,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // print pdf
     Route::get('/invoices/{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
 
-    // send invoice as email
-    Route::post('/invoices/{invoice}/send',[InvoiceController::class, 'sendEmail'])->name('invoices.send');
+    
 
+    // Reports
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/unpaid-invoices', [ReportController::class, 'unpaidInvoices'])->name('reports.unpaid-invoices');
 
 });
 

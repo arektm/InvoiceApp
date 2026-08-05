@@ -1,8 +1,6 @@
 <script setup lang="ts">
-
 import { show, edit } from '@/routes/products';
 import { Head, Link } from '@inertiajs/vue3'
-
 
 defineOptions({
     layout: {

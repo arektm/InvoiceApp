@@ -1,10 +1,7 @@
 <script setup>
-
 import { Head, Link, router } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
-
 import { create, show, index } from '@/routes/invoices'
-
 import Pagination from '../Shared/Pagination.vue'
 
 defineOptions({

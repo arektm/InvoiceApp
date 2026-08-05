@@ -328,7 +328,11 @@ class InvoiceController extends Controller
 
     public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->delete();
+
+        return redirect()
+            ->route('invoices.index')
+            ->with('success', 'Invoice deleted');
     }
 
     public function pdf(Invoice $invoice)

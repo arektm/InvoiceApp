@@ -5,12 +5,13 @@ namespace App\Models;
 use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
 {
     /** @use HasFactory<InvoiceFactory> */
     use HasFactory;
-
+    use SoftDeletes;
     protected $fillable = [
         'invoice_number',
         'client_id',
