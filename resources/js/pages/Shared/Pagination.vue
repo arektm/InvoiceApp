@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 
 import { Link } from '@inertiajs/vue3'
 
@@ -23,7 +23,7 @@ defineProps({
             v-html="link.label"
         />
 
-        <Link
+        <!-- <Link
             v-else
             :href="link.url"
             class="px-3 py-2 border rounded"
@@ -31,7 +31,19 @@ defineProps({
                 'bg-blue-600 text-white': link.active
             }"
             v-html="link.label"
-        />
+        /> -->
+        <Link
+            v-else
+            :href="link.url"
+            class="px-3 py-2 border rounded"
+            :class="{
+                'bg-blue-600 text-white': link.active
+            }"
+        >
+            <span v-html="link.label"></span>
+        </Link>
+
+
 
     </template>
 

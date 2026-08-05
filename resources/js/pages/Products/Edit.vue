@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import FormInput from '../Shared/FormInput.vue';
 import { edit } from '@/routes/products/index.js';
+import FormInput from '../Shared/FormInput.vue';
 
 defineOptions({
     layout: {

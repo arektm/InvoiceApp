@@ -1,6 +1,6 @@
-<script setup>
-import { create } from '@/routes/products';
+<script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3'
+import { create } from '@/routes/products';
 
 defineOptions({
     layout: {

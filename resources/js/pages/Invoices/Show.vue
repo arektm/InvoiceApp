@@ -1,5 +1,5 @@
-<script setup>
-import { Head, Link, useForm, router } from '@inertiajs/vue3'
+<script setup lang="ts">
+import { Head, Link, router } from '@inertiajs/vue3'
 import { print, pdf, show, destroy } from '@/routes/invoices';
 // import { destroy, print } from '@/actions/App/Http/Controllers/InvoiceController';
 

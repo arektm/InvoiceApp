@@ -168,6 +168,7 @@ class ReportController extends Controller
             ->with('client')
 
             ->where('status', 'unpaid')
+            
 
             ->orderBy('due_date')
 
@@ -195,11 +196,53 @@ class ReportController extends Controller
                 //         : 0,
                 'days_overdue' => $invoice->due_date->isPast()
                     ? (int) $invoice->due_date->diffInDays(now()->today())
-                    : 0,
+                    : (int) $invoice->due_date->diffInDays(now()->today()),
             ]);
 
         return Inertia::render(
             'Reports/UnpaidInvoices',
+            [
+                'invoices' => $invoices,
+            ]
+        );
+    }
+
+
+    public function overdueInvoices()
+    {
+        $invoices = Invoice::query()
+
+            ->with('client')
+
+            ->where('status', 'unpaid')
+
+            ->whereDate('due_date', '<', today())
+
+            ->orderBy('due_date')
+
+            ->paginate(20)
+
+            ->through(fn ($invoice) => [
+
+                'id' => $invoice->id,
+
+                'invoice_number' => $invoice->invoice_number,
+
+                'issue_date' => $invoice->issue_date->format('Y-m-d'),
+
+                'due_date' => $invoice->due_date->format('Y-m-d'),
+
+                'total_gross' => $invoice->total_gross,
+
+                'client_name' => $invoice->client?->name,
+
+                'client_email' => $invoice->client?->email,
+
+                'days_overdue' => (int) $invoice->due_date->diffInDays(today()),
+            ]);
+
+        return Inertia::render(
+            'Reports/OverdueInvoices',
             [
                 'invoices' => $invoices,
             ]

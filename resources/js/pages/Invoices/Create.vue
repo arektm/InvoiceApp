@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Head, useForm } from '@inertiajs/vue3'
 import { create } from '@/routes/invoices'
 
@@ -14,7 +14,7 @@ defineOptions({
         ],
     },
 });
-const props = defineProps({
+ defineProps({
     clients: Array,
     products: Array,
 })
@@ -58,6 +58,11 @@ const form = useForm({
 const submit = () => {
     form.post('/invoices')
 }
+// ----------------------------------
+
+
+
+
 </script>
 
 <template>
@@ -197,7 +202,7 @@ const submit = () => {
             :products="products"
             :errors="form.errors"
         />
-   
+      
         <!-- SAVE -->
 
         <button

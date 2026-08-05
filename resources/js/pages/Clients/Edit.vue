@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { update, index, destroy, edit } from '@/routes/clients'
 import FormInput from '../Shared/FormInput.vue';

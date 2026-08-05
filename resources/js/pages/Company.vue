@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import { company } from '@/routes';
-
 
 defineOptions({
     layout: {
         breadcrumbs: [
             {
                 title: 'Company',
-                href: company(),
+                href: 'company/',
             },
         ],
     },

@@ -37,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/unpaid-invoices', [ReportController::class, 'unpaidInvoices'])->name('reports.unpaid-invoices');
+    Route::get('/reports/overdue-invoices', [ReportController::class, 'overdueInvoices'])->name('reports.overdue-invoices');
 
 });
 

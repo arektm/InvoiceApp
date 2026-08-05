@@ -132,7 +132,7 @@ defineProps({
                         v-else
                         class="text-green-600"
                     >
-                    {{ -invoice.days_overdue }}
+                    {{ invoice.days_overdue }}
                         OK
                     </span>
 

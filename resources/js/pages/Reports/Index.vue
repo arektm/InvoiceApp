@@ -1,6 +1,6 @@
-<script setup>
-import { index } from '@/routes/reports';
+<script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3'
+import { index } from '@/routes/reports';
 
 // import { reports_unpaid_invoices } from '@/routes/reports';
 defineOptions({
@@ -13,7 +13,7 @@ defineOptions({
         ],
     },
 });
-const props = defineProps({
+ defineProps({
 
     todaySales: Number,
 
@@ -98,7 +98,12 @@ const props = defineProps({
         <h3>Unpaid</h3>
 
         <div class="text-3xl font-bold">
-            {{ unpaidInvoices }}
+            <Link
+                href="/reports/unpaid-invoices"
+            >
+                {{ unpaidInvoices }}
+            </Link>
+
         </div>
     </div>
 
@@ -109,7 +114,7 @@ const props = defineProps({
 
         <div class="text-3xl font-bold text-red-600">
             <Link
-                href="/reports/unpaid-invoices"
+                href="/reports/overdue-invoices"
             >
            {{ overdueInvoices }}
             </Link>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Head, useForm, Link } from '@inertiajs/vue3'
 import { edit } from '@/routes/invoices'
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue'
@@ -40,6 +40,17 @@ const form = useForm({
 
 const submit = () => {
     form.put(`/invoices/${props.invoice.id}`)
+}
+const addItem = () => {
+    form.items.push({
+        product_id: '',
+        product_name: '',
+        quantity: 1,
+    })
+}
+
+const removeItem = (index: number) => {
+    form.items.splice(index, 1)
 }
 
 </script>
@@ -180,10 +191,17 @@ const submit = () => {
 
         <!-- ITEMS -->
 
+        <!-- <InvoiceItems
+            :items="form.items"
+            :products="products"
+            :errors="form.errors"
+        /> -->
         <InvoiceItems
             :items="form.items"
             :products="products"
             :errors="form.errors"
+            @add-item="addItem"
+            @remove-item="removeItem"
         />
 
         <!-- BUTTONS -->
