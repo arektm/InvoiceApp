@@ -1,5 +1,5 @@
 /.phpunit.cache
-/bootstrap/cache/
+/bootstrap/cache/*
 /bootstrap/ssr
 /database/database.sqlite
 /node_modules
