@@ -1,4 +1,5 @@
 /.phpunit.cache
+/back
 /bootstrap/cache/*
 /bootstrap/ssr
 /database/database.sqlite
