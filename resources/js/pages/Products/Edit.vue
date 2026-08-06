@@ -20,28 +20,28 @@ const props = defineProps({
 });
 
 const form = useForm({
-    product_code: props.product.product_code,
+    product_code: props.product?.product_code,
 
-    product_name: props.product.product_name,
+    product_name: props.product?.product_name,
 
-    description: props.product.description,
+    description: props.product?.description,
 
-    net_price: props.product.net_price,
+    net_price: props.product?.net_price,
 
-    vat_rate: props.product.vat_rate,
+    vat_rate: props.product?.vat_rate,
 
-    stock_quantity: props.product.stock_quantity,
+    stock_quantity: props.product?.stock_quantity,
 });
 
 const submit = () => {
-    form.put(`/products/${props.product.id}`);
+    form.put(`/products/${props.product?.id}`);
 };
 const remove = () => {
     if (!confirm('Are you sure you want to delete this product? ')) {
         return;
     }
 
-    form.delete(`/products/${props.product.id}`);
+    form.delete(`/products/${props.product?.id}`);
 };
 </script>
 
@@ -61,7 +61,7 @@ const remove = () => {
                     v-model="form.product_code"
                     id="product_code"
                     label="Product code"
-                    :error="errors.product_code"
+                    :error="errors?.product_code"
                 />
             </div>
 
@@ -70,7 +70,7 @@ const remove = () => {
                     v-model="form.product_name"
                     id="product_name"
                     label="Product name"
-                    :error="errors.product_name"
+                    :error="errors?.product_name"
                 />
             </div>
 
@@ -115,7 +115,7 @@ const remove = () => {
                     id="stock_quantity"
                     label="Stock quantity"
                     type="number"
-                    :error="errors.stock_quantity"
+                    :error="errors?.stock_quantity"
                 />
             </div>
         </div>

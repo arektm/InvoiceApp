@@ -37,7 +37,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(store());
+    form.post(store().url);
 };
 </script>
 
@@ -52,21 +52,21 @@ const submit = () => {
                 v-model="form.name"
                 id="name"
                 label="Company name"
-                :error="errors.name"
+                :error="errors?.name"
             />
 
             <FormInput
                 v-model="form.tax_number"
                 id="tax_number"
                 label="Tax number"
-                :error="errors.tax_number"
+                :error="errors?.tax_number"
             />
             <FormInput
                 v-model="form.street"
                 id="street"
                 type="street"
                 label="Street"
-                :error="errors.street"
+                :error="errors?.street"
             />
 
             <FormInput
@@ -74,7 +74,7 @@ const submit = () => {
                 id="postal_code"
                 type="postal_code"
                 label="Postal code"
-                :error="errors.postal_code"
+                :error="errors?.postal_code"
             />
 
             <FormInput
@@ -82,14 +82,14 @@ const submit = () => {
                 id="city"
                 type="city"
                 label="City"
-                :error="errors.city"
+                :error="errors?.city"
             />
             <FormInput
                 v-model="form.country"
                 id="country"
                 type="country"
                 label="Country"
-                :error="errors.country"
+                :error="errors?.country"
             />
 
             <FormInput
@@ -97,14 +97,14 @@ const submit = () => {
                 id="email"
                 type="email"
                 label="E-mail"
-                :error="errors.email"
+                :error="errors?.email"
             />
             <FormInput
                 v-model="form.phone"
                 id="phone"
                 type="phone"
                 label="Phone"
-                :error="errors.phone"
+                :error="errors?.phone"
             />
         </div>
         <div class="mt-6 flex gap-4">

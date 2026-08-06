@@ -21,19 +21,19 @@ const props = defineProps({
 
 // Inertia Form Helper handles processing states and errors automatically
 const form = useForm({
-    name: props.company.name,
-    tax_number: props.company.tax_number,
-    email: props.company.email,
-    phone: props.company.phone,
-    street: props.company.street,
-    city: props.company.city,
-    postal_code: props.company.postal_code,
-    country: props.company.country,
+    name: props.company?.name,
+    tax_number: props.company?.tax_number,
+    email: props.company?.email,
+    phone: props.company?.phone,
+    street: props.company?.street,
+    city: props.company?.city,
+    postal_code: props.company?.postal_code,
+    country: props.company?.country,
 });
 
 // Submit the form to the route (usually a PUT or PATCH request for updates)
 const submit = () => {
-    form.patch(updateCompany(props.company.id));
+    form.patch(updateCompany(props.company?.id).url);
     // form.put(route('companyUpdate', props.company.id), {
     // form.patch((`/company/edit/${props.company.id}`),{
     // onSuccess: () => alert('Company updated successfully!'), // Optional redirect logic handled by Inertia
@@ -64,10 +64,10 @@ const submit = () => {
                             class="w-full rounded border border-gray-300 p-2 outline-none focus:ring-2 focus:ring-green-600"
                             required
                         />
-                        <div v-if="props.errors.name">
+                        <div v-if="props.errors?.name">
                             <AlertError
                                 title=""
-                                :errors="[props.errors.name]"
+                                :errors="[props.errors?.name]"
                             />
                         </div>
                     </div>
@@ -81,10 +81,10 @@ const submit = () => {
                             class="w-full rounded border border-gray-300 p-2 outline-none focus:ring-2 focus:ring-green-600"
                             required
                         />
-                        <div v-if="props.errors.tax_number">
+                        <div v-if="props.errors?.tax_number">
                             <AlertError
                                 title=""
-                                :errors="[props.errors.tax_number]"
+                                :errors="[props.errors?.tax_number]"
                             />
                         </div>
                     </div>

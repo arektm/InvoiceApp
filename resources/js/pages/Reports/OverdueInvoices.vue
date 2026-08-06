@@ -54,7 +54,7 @@ defineProps({
 
             <tbody>
                 <tr
-                    v-for="invoice in invoices.data"
+                    v-for="invoice in invoices?.data"
                     :key="invoice.id"
                     class="border-t"
                 >
@@ -110,5 +110,5 @@ defineProps({
         </table>
     </div>
 
-    <Pagination :links="invoices.links" />
+    <Pagination :links="invoices?.links" />
 </template>

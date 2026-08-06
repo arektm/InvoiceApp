@@ -20,7 +20,7 @@ defineProps({
 
 <template>
     <Head>
-        <title>{{ product.product_name }}</title>
+        <title>{{ product?.product_name }}</title>
     </Head>
 
     <div class="mb-6 flex items-center justify-between">
@@ -31,32 +31,32 @@ defineProps({
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <strong>Product code:</strong>
-                <p>{{ product.product_code }}</p>
+                <p>{{ product?.product_code }}</p>
             </div>
 
             <div>
                 <strong>Product name:</strong>
-                <p>{{ product.product_name }}</p>
+                <p>{{ product?.product_name }}</p>
             </div>
 
             <div>
                 <strong>Net price:</strong>
-                <p>€ {{ product.net_price }}</p>
+                <p>€ {{ product?.net_price }}</p>
             </div>
 
             <div>
                 <strong>VAT:</strong>
-                <p>{{ product.vat_rate }}%</p>
+                <p>{{ product?.vat_rate }}%</p>
             </div>
 
             <div>
                 <strong>Stock quantity:</strong>
-                <p>{{ product.stock_quantity }}</p>
+                <p>{{ product?.stock_quantity }}</p>
             </div>
 
             <div>
                 <strong>Created at:</strong>
-                <p>{{ product.created_at }}</p>
+                <p>{{ product?.created_at }}</p>
             </div>
         </div>
 
@@ -64,13 +64,13 @@ defineProps({
             <strong>Description:</strong>
 
             <div class="mt-2 rounded border p-4">
-                {{ product.description || 'No description' }}
+                {{ product?.description || 'No description' }}
             </div>
         </div>
 
         <div class="mt-6 flex gap-3">
             <Link
-                :href="edit(product.id)"
+                :href="edit(product?.id)"
                 class="rounded bg-green-600 px-4 py-2 text-white"
             >
                 Edit

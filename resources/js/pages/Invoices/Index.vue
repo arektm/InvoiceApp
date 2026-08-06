@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
-import { create, show, index } from '@/routes/invoices';
+import { create, show, index, edit } from '@/routes/invoices';
 import Pagination from '../Shared/Pagination.vue';
 
 defineOptions({
@@ -19,7 +19,7 @@ const props = defineProps({
     invoices: Object,
     filters: Object,
 });
-const search = ref(props.filters.search ?? '');
+const search = ref(props.filters?.search ?? '');
 
 watch(search, (value) => {
     router.get(
@@ -71,7 +71,7 @@ watch(search, (value) => {
         </thead>
 
         <tbody>
-            <tr v-for="invoice in invoices.data" :key="invoice.id">
+            <tr v-for="invoice in invoices?.data" :key="invoice.id">
                 <td class="border p-2 hover:underline">
                     <Link :href="show(invoice.id)">
                         {{ invoice.invoice_number }}
@@ -95,14 +95,17 @@ watch(search, (value) => {
                 </td>
 
                 <td class="flex gap-2 p-2">
+                    <!-- :href="`/invoices/${invoice.id}`" -->
                     <Link
-                        :href="`/invoices/${invoice.id}`"
+                        
+                        :href="show(invoice.id).url"
                         class="rounded bg-blue-600 px-5 py-1 text-white"
                     >
                         View
                     </Link>
+                    <!-- :href="`/invoices/${invoice.id}/edit`" -->
                     <Link
-                        :href="`/invoices/${invoice.id}/edit`"
+                        :href="edit(invoice.id)"
                         class="rounded bg-red-600 px-5 py-1 text-white"
                     >
                         Edit
@@ -112,5 +115,5 @@ watch(search, (value) => {
         </tbody>
     </table>
 
-    <Pagination :links="invoices.links" />
+    <Pagination :links="invoices?.links" />
 </template>

@@ -20,27 +20,27 @@ const props = defineProps({
 });
 
 const form = useForm({
-    name: props.client.name,
+    name: props.client?.name,
 
-    tax_number: props.client.tax_number,
+    tax_number: props.client?.tax_number,
 
-    street: props.client.street,
+    street: props.client?.street,
 
-    postal_code: props.client.postal_code,
+    postal_code: props.client?.postal_code,
 
-    city: props.client.city,
+    city: props.client?.city,
 
-    country: props.client.country,
+    country: props.client?.country,
 
-    email: props.client.email,
+    email: props.client?.email,
 
-    phone: props.client.phone,
+    phone: props.client?.phone,
 });
 
 const submit = () => {
     form.patch(
         // `/clients/${props.client.id}`
-        update(props.client.id),
+        update(props.client?.id).url,
     );
 };
 
@@ -49,7 +49,7 @@ const remove = () => {
         return;
     }
 
-    form.delete(destroy(props.client.id));
+    form.delete(destroy(props.client?.id).url);
 };
 </script>
 
@@ -64,21 +64,21 @@ const remove = () => {
                 v-model="form.name"
                 id="name"
                 label="Company name"
-                :error="errors.name"
+                :error="errors?.name"
             />
 
             <FormInput
                 v-model="form.tax_number"
                 id="tax_number"
                 label="Tax number"
-                :error="errors.tax_number"
+                :error="errors?.tax_number"
             />
             <FormInput
                 v-model="form.street"
                 id="street"
                 type="street"
                 label="Street"
-                :error="errors.street"
+                :error="errors?.street"
             />
 
             <FormInput
@@ -86,7 +86,7 @@ const remove = () => {
                 id="postal_code"
                 type="postal_code"
                 label="Postal code"
-                :error="errors.postal_code"
+                :error="errors?.postal_code"
             />
 
             <FormInput
@@ -94,14 +94,14 @@ const remove = () => {
                 id="city"
                 type="city"
                 label="City"
-                :error="errors.city"
+                :error="errors?.city"
             />
             <FormInput
                 v-model="form.country"
                 id="country"
                 type="country"
                 label="Country"
-                :error="errors.country"
+                :error="errors?.country"
             />
 
             <FormInput
@@ -109,14 +109,14 @@ const remove = () => {
                 id="email"
                 type="email"
                 label="E-mail"
-                :error="errors.email"
+                :error="errors?.email"
             />
             <FormInput
                 v-model="form.phone"
                 id="phone"
                 type="phone"
                 label="Phone"
-                :error="errors.phone"
+                :error="errors?.phone"
             />
         </div>
 

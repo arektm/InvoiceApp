@@ -20,7 +20,7 @@ const props = defineProps({
     filters: Object,
 });
 
-const search = ref(props.filters.search ?? '');
+const search = ref(props.filters?.search ?? '');
 
 watch(search, (value) => {
     router.get(
@@ -81,7 +81,7 @@ watch(search, (value) => {
 
             <tbody>
                 <tr
-                    v-for="product in products.data"
+                    v-for="product in products?.data"
                     :key="product.id"
                     class="border-t"
                 >
@@ -120,12 +120,12 @@ watch(search, (value) => {
                     </td>
                 </tr>
 
-                <tr v-if="products.data === 0">
+                <tr v-if="products?.data === 0">
                     <td colspan="6" class="p-6 text-center">No products</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <Pagination :links="products.links" />
+    <Pagination :links="products?.links" />
 </template>

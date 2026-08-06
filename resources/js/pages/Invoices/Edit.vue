@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, useForm, Link } from '@inertiajs/vue3';
-import { edit } from '@/routes/invoices';
+import { edit, update } from '@/routes/invoices';
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
 
@@ -14,32 +14,31 @@ defineOptions({
         ],
     },
 });
-
 const props = defineProps({
     invoice: Object,
     clients: Array,
     products: Array,
-});
+})
 
 const form = useForm({
-    client_id: props.invoice.client_id,
+    client_id: props.invoice?.client_id,
+    issue_date: props.invoice?.issue_date,
+    sale_date: props.invoice?.sale_date,
+    due_date: props.invoice?.due_date,
+    status: props.invoice?.status,
+    payment_method: props.invoice?.payment_method,
 
-    issue_date: props.invoice.issue_date,
-    sale_date: props.invoice.sale_date,
-    due_date: props.invoice.due_date,
-    status: props.invoice.status,
-    payment_method: props.invoice.payment_method,
-
-    items: props.invoice.items.map((item) => ({
+    items: props.invoice?.items?.map((item : any)  => ({
         id: item.id,
         product_id: item.product_id,
         product_name: item.product_name,
         quantity: item.quantity,
     })),
-});
+})
 
 const submit = () => {
-    form.put(`/invoices/${props.invoice.id}`);
+    // form.put(`/invoices/${props.invoice.id}`);
+    form.put(update(props.invoice?.id).url);
 };
 const addItem = () => {
     form.items.push({
@@ -59,7 +58,7 @@ const removeItem = (index: number) => {
         <title>Edit Invoice</title>
     </Head>
 
-    <h1 class="mb-6 text-3xl">Edit Invoice {{ invoice.invoice_number }}</h1>
+    <h1 class="mb-6 text-3xl">Edit Invoice {{ invoice?.invoice_number }}</h1>
 
     <form @submit.prevent="submit">
         <!-- CLIENT -->
@@ -69,7 +68,7 @@ const removeItem = (index: number) => {
 
             <ComboboxClient
                 v-model="form.client_id"
-                :clients="clients"
+                :clients="clients ?? []"
                 :error="form.errors.client_id"
             />
         </div>
@@ -171,7 +170,7 @@ const removeItem = (index: number) => {
         /> -->
         <InvoiceItems
             :items="form.items"
-            :products="products"
+            :products="products ?? []"
             :errors="form.errors"
             @add-item="addItem"
             @remove-item="removeItem"

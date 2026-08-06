@@ -27,6 +27,14 @@ defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+const handleInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+
+    if (target) {
+        emit('update:modelValue', target.value);
+    }
+};
 </script>
 
 <template>
@@ -39,7 +47,7 @@ const emit = defineEmits(['update:modelValue']);
             :id="id"
             :type="type"
             :value="modelValue"
-            @input="emit('update:modelValue', $event.target.value)"
+            @input="handleInput"
             class="rounded border p-2"
         />
 

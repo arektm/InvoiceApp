@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 
-defineProps({
-    links: Array,
-});
+interface PaginationLink {
+    url: string | null;   
+    label: string;        
+    active: boolean;      
+}
+
+defineProps<{
+    links: PaginationLink[]; 
+}>();
 </script>
 
 <template>
@@ -14,16 +20,6 @@ defineProps({
                 class="rounded border px-3 py-2 text-gray-400"
                 v-html="link.label"
             />
-
-            <!-- <Link
-            v-else
-            :href="link.url"
-            class="px-3 py-2 border rounded"
-            :class="{
-                'bg-blue-600 text-white': link.active
-            }"
-            v-html="link.label"
-        /> -->
             <Link
                 v-else
                 :href="link.url"

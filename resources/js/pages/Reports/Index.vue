@@ -13,23 +13,48 @@ defineOptions({
         ],
     },
 });
-const props = defineProps({
-    todaySales: Number,
+interface TopClient {
+    id: number;
+    name: string;
+    invoices_sum_total_gross: number | string | null; // Laravel sum() potrafi zwrócić string lub null
+}
+interface NestedProduct {
+    product_name: string;
+}
 
-    monthSales: Number,
+interface TopProduct {
+    product_id: number;
+    total_quantity: number | string;
+    product: NestedProduct;
+}
+// const props = defineProps({
+//     todaySales: Number,
 
-    yearSales: Number,
+//     monthSales: Number,
 
-    invoiceCount: Number,
+//     yearSales: Number,
 
-    unpaidInvoices: Number,
+//     invoiceCount: Number,
 
-    overdueInvoices: Number,
+//     unpaidInvoices: Number,
 
-    topClients: Array,
+//     overdueInvoices: Number,
 
-    topProducts: Array,
-});
+//     topClients: Array,
+
+//     topProducts: Array,
+
+// });
+const props = defineProps<{
+    todaySales: number;
+    monthSales: number;
+    yearSales: number;
+    invoiceCount: number;
+    unpaidInvoices: number;
+    overdueInvoices: number;
+    topClients: TopClient[];  // Teraz TS wie, co kryje się w tablicy
+    topProducts: TopProduct[];       // Możesz zmienić 'any[]' na 'TopProduct[]' w przyszłości
+}>();
 </script>
 
 <template>
@@ -132,7 +157,7 @@ const props = defineProps({
                 <tbody>
                     <tr v-for="item in topProducts" :key="item.product_id">
                         <td>
-                            {{ item.product?.product_name }}
+                            {{ item.product.product_name }}
                         </td>
 
                         <td class="text-center">

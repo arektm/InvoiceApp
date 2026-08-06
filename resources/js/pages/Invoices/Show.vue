@@ -26,18 +26,18 @@ const remove = () => {
     }
 
     // form.delete(destroy(props.invoice.id))
-    router.delete(destroy(props.invoice.id).url);
+    router.delete(destroy(props.invoice?.id).url);
 };
 </script>
 
 <template>
     <Head>
-        <title>{{ invoice.invoice_number }}</title>
+        <title>{{ invoice?.invoice_number }}</title>
     </Head>
 
     <div class="mb-6 flex justify-between">
         <h1 class="text-3xl font-bold">
-            Invoice {{ invoice.invoice_number }} Invoice id {{ invoice.id }}
+            Invoice {{ invoice?.invoice_number }}
         </h1>
     </div>
 
@@ -48,34 +48,34 @@ const remove = () => {
             <div>
                 <h2 class="mb-2 font-bold">Client</h2>
 
-                <p>{{ invoice.client.name }}</p>
+                <p>{{ invoice?.client.name }}</p>
 
                 <p>
-                    {{ invoice.client.street }}
+                    {{ invoice?.client.street }}
                 </p>
 
                 <p>
-                    {{ invoice.client.postal_code }}
-                    {{ invoice.client.city }}
+                    {{ invoice?.client.postal_code }}
+                    {{ invoice?.client.city }}
                 </p>
 
-                <p>Tax number: {{ invoice.client.tax_number }}</p>
+                <p>Tax number: {{ invoice?.client.tax_number }}</p>
             </div>
 
             <div>
                 <h2 class="mb-2 font-bold">Invoice data</h2>
 
-                <p>Invoice number: {{ invoice.invoice_number }}</p>
+                <p>Invoice number: {{ invoice?.invoice_number }}</p>
 
-                <p>Issue date: {{ invoice.issue_date }}</p>
+                <p>Issue date: {{ invoice?.issue_date }}</p>
 
-                <p>Sale date: {{ invoice.sale_date }}</p>
+                <p>Sale date: {{ invoice?.sale_date }}</p>
 
-                <p>Invoice due date: {{ invoice.due_date }}</p>
+                <p>Invoice due date: {{ invoice?.due_date }}</p>
 
-                <p>Status: {{ invoice.status }}</p>
+                <p>Status: {{ invoice?.status }}</p>
 
-                <p>Payment metod: {{ invoice.payment_method }}</p>
+                <p>Payment metod: {{ invoice?.payment_method }}</p>
             </div>
         </div>
     </div>
@@ -103,7 +103,7 @@ const remove = () => {
             </thead>
 
             <tbody>
-                <tr v-for="item in invoice.items" :key="item.id">
+                <tr v-for="item in invoice?.items" :key="item.id">
                     <td class="border p-2">
                         {{ item.product_name }}
                     </td>
@@ -135,15 +135,15 @@ const remove = () => {
                     <td colspan="3" class="border p-2 text-right">Total:</td>
 
                     <td class="border p-2 text-right">
-                        € {{ invoice.total_net }}
+                        € {{ invoice?.total_net }}
                     </td>
 
                     <td class="border p-2 text-right">
-                        € {{ invoice.total_vat }}
+                        € {{ invoice?.total_vat }}
                     </td>
 
                     <td class="border p-2 text-right">
-                        € {{ invoice.total_gross }}
+                        € {{ invoice?.total_gross }}
                     </td>
                 </tr>
             </tfoot>
@@ -152,7 +152,7 @@ const remove = () => {
     <div class="mt-6 ml-5 flex gap-3">
         <!-- :href="`/invoices/${invoice.id}/pdf`" -->
         <a
-            :href="pdf(invoice.id).url"
+            :href="pdf(invoice?.id).url"
             target="_blank"
             class="rounded bg-blue-600 px-4 py-2 text-white"
         >
@@ -160,7 +160,7 @@ const remove = () => {
         </a>
         <!-- :href="`/invoices/${invoice.id}/print`" -->
         <a
-            :href="print(invoice.id).url"
+            :href="print(invoice?.id).url"
             target="_blank"
             class="rounded bg-green-600 px-4 py-2 text-white"
         >

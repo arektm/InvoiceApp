@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 const props = defineProps({

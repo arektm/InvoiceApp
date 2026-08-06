@@ -69,13 +69,13 @@ class ClientController extends Controller
 
         $validated = $request->validate([
 
-            'name' => ['required', 'max:255'],
+            'name' => ['required', 'max:255', 'unique:clients,name'],
+
+            'tax_number' => ['required', 'max:50'],
 
             'first_name' => ['nullable', 'max:50'],
 
             'last_name' => ['nullable', 'max50'],
-
-            'tax_number' => ['required', 'max:50'],
 
             'street' => ['nullable', 'max:50'],
 

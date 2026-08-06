@@ -20,7 +20,7 @@ defineProps({
 });
 
 // Date helpers
-function toDateString(date) {
+function toDateString(date: Date) {
     return date.toISOString().split('T')[0];
 }
 
@@ -71,7 +71,7 @@ const submit = () => {
 
             <ComboboxClient
                 v-model="form.client_id"
-                :clients="clients"
+                :clients="clients ?? []"
                 :error="form.errors.client_id"
             />
         </div>
@@ -152,7 +152,7 @@ const submit = () => {
 
         <InvoiceItems
             :items="form.items"
-            :products="products"
+            :products="products ?? []"
             :errors="form.errors"
         />
 

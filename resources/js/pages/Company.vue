@@ -27,7 +27,14 @@ const props = defineProps({
 //     country:'Ireland'
 
 // }
-const page = usePage();
+interface SharedProps {
+    flash: {
+        success?: string | null;
+        error?: string | null;
+    };
+    [key: string]: any; 
+}
+const page = usePage<SharedProps>();
 </script>
 
 <template>
@@ -41,7 +48,7 @@ const page = usePage();
     >
         <div class="rounded p-6 shadow">
             <h1 class="mb-6 text-3xl font-bold">
-                {{ props.company.name }}
+                {{ props.company?.name }}
             </h1>
 
             <div
@@ -50,27 +57,27 @@ const page = usePage();
                 <div class="grid grid-cols-2 gap-4">
                     <p>
                         <strong>Tax number:</strong>
-                        {{ props.company.tax_number }}
+                        {{ props.company?.tax_number }}
                     </p>
 
-                    <p><strong>Phone:</strong> {{ props.company.phone }}</p>
+                    <p><strong>Phone:</strong> {{ props.company?.phone }}</p>
 
-                    <p><strong>E-mail:</strong> {{ props.company.email }}</p>
+                    <p><strong>E-mail:</strong> {{ props.company?.email }}</p>
 
-                    <p><strong>City:</strong> {{ props.company.city }}</p>
+                    <p><strong>City:</strong> {{ props.company?.city }}</p>
 
-                    <p><strong>Country:</strong> {{ props.company.country }}</p>
+                    <p><strong>Country:</strong> {{ props.company?.country }}</p>
                 </div>
 
                 <div class="mt-4 grid grid-cols-2 gap-4">
-                    <p><strong>Address:</strong> {{ props.company.street }}</p>
+                    <p><strong>Address:</strong> {{ props.company?.street }}</p>
 
                     <p>
                         <strong>Postal code:</strong>
-                        {{ props.company.postal_code }}
+                        {{ props.company?.postal_code }}
                     </p>
 
-                    <p><strong>Country:</strong> {{ props.company.country }}</p>
+                    <p><strong>Country:</strong> {{ props.company?.country }}</p>
                 </div>
 
                 <div class="mt-6">
