@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { FolderGit2, LayoutGrid, UserLock, ShoppingBasket, Box, LucideSquareChartGantt } from '@lucide/vue';
+import {
+    FolderGit2,
+    LayoutGrid,
+    UserLock,
+    ShoppingBasket,
+    Box,
+    LucideSquareChartGantt,
+} from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -26,21 +33,21 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Invoices',
         href: '/invoices',
-        icon: ShoppingBasket ,
+        icon: ShoppingBasket,
     },
     {
         title: 'Clients',
-        href : '/clients',
+        href: '/clients',
         icon: UserLock,
     },
     {
         title: 'Products',
-        href : '/products',
+        href: '/products',
         icon: Box,
     },
     {
         title: 'Reports',
-        href : '/reports',
+        href: '/reports',
         icon: LucideSquareChartGantt,
     },
 ];

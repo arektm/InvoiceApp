@@ -14,7 +14,6 @@ defineOptions({
     },
 });
 const props = defineProps({
-
     todaySales: Number,
 
     monthSales: Number,
