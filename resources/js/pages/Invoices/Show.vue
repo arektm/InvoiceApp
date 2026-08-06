@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Head, Link, router } from '@inertiajs/vue3';
 import { print, pdf, show, destroy } from '@/routes/invoices';
 // import { destroy, print } from '@/actions/App/Http/Controllers/InvoiceController';
 
@@ -14,229 +14,173 @@ defineOptions({
     },
 });
 
-
 const props = defineProps({
-    invoice: Object
-})
+    invoice: Object,
+});
 // const form = useForm({
 //     invoice_id: props.invoice.id
 // })
 const remove = () => {
     if (!confirm('Are you sure you want to delete the invoice? ')) {
-        return
+        return;
     }
 
     // form.delete(destroy(props.invoice.id))
-    router.delete(destroy(props.invoice.id).url)
-}
+    router.delete(destroy(props.invoice.id).url);
+};
 </script>
 
 <template>
+    <Head>
+        <title>{{ invoice.invoice_number }}</title>
+    </Head>
 
-<Head>
-    <title>{{ invoice.invoice_number }}</title>
-</Head>
-
-<div class="flex justify-between mb-6">
-
-    <h1 class="text-3xl font-bold">
-        Invoice {{ invoice.invoice_number }} Invoice id {{ invoice.id }}
-    </h1>
-
-   
-
-</div>
-
-<!-- Invoice data -->
-
-<div class="shadow rounded p-6 mb-6">
-
-    <div class="grid grid-cols-2 gap-6">
-
-        <div>
-
-            <h2 class="font-bold mb-2">
-                Client
-            </h2>
-
-            <p>{{ invoice.client.name }}</p>
-
-            <p>
-                {{ invoice.client.street }}
-            </p>
-
-            <p>
-                {{ invoice.client.postal_code }}
-                {{ invoice.client.city }}
-            </p>
-
-            <p>
-                Tax number: {{ invoice.client.tax_number }}
-            </p>
-
-        </div>
-
-        <div>
-
-            <h2 class="font-bold mb-2">
-                Invoice data
-            </h2>
-
-            <p>Invoice number: {{ invoice.invoice_number }}</p>
-
-            <p>Issue date: {{ invoice.issue_date }}</p>
-
-            <p>Sale date: {{ invoice.sale_date }}</p>
-
-            <p>Invoice due date: {{ invoice.due_date }}</p>
-
-            <p>Status: {{ invoice.status }}</p>
-
-            <p>Payment metod: {{ invoice.payment_method }}</p>
-
-        </div>
-
+    <div class="mb-6 flex justify-between">
+        <h1 class="text-3xl font-bold">
+            Invoice {{ invoice.invoice_number }} Invoice id {{ invoice.id }}
+        </h1>
     </div>
 
-</div>
+    <!-- Invoice data -->
 
-<!-- Items -->
+    <div class="mb-6 rounded p-6 shadow">
+        <div class="grid grid-cols-2 gap-6">
+            <div>
+                <h2 class="mb-2 font-bold">Client</h2>
 
-<div class="shadow rounded p-6">
+                <p>{{ invoice.client.name }}</p>
 
-    <h2 class="text-xl font-bold mb-4">
-        Invoice items
-    </h2>
+                <p>
+                    {{ invoice.client.street }}
+                </p>
 
-    <table class="w-full border-collapse border">
+                <p>
+                    {{ invoice.client.postal_code }}
+                    {{ invoice.client.city }}
+                </p>
 
-        <thead>
+                <p>Tax number: {{ invoice.client.tax_number }}</p>
+            </div>
 
-            <tr class="bg-gray-100 dark:text-black">
+            <div>
+                <h2 class="mb-2 font-bold">Invoice data</h2>
 
-                <th class="border p-2 text-left">
-                    Product
-                </th>
+                <p>Invoice number: {{ invoice.invoice_number }}</p>
 
-                <th class="border p-2 text-right">
-                    Quantity
-                </th>
+                <p>Issue date: {{ invoice.issue_date }}</p>
 
-                <th class="border p-2 text-right">
-                    Unit net price
-                </th>
+                <p>Sale date: {{ invoice.sale_date }}</p>
 
-                <th class="border p-2 text-right">
-                    Net value
-                </th>
+                <p>Invoice due date: {{ invoice.due_date }}</p>
 
-                <th class="border p-2 text-right">
-                    VAT value
-                </th>
+                <p>Status: {{ invoice.status }}</p>
 
-                <th class="border p-2 text-right">
-                    Gross value
-                </th>
+                <p>Payment metod: {{ invoice.payment_method }}</p>
+            </div>
+        </div>
+    </div>
 
-            </tr>
+    <!-- Items -->
 
-        </thead>
+    <div class="rounded p-6 shadow">
+        <h2 class="mb-4 text-xl font-bold">Invoice items</h2>
 
-        <tbody>
+        <table class="w-full border-collapse border">
+            <thead>
+                <tr class="bg-gray-100 dark:text-black">
+                    <th class="border p-2 text-left">Product</th>
 
-            <tr
-                v-for="item in invoice.items"
-                :key="item.id"
-            >
+                    <th class="border p-2 text-right">Quantity</th>
 
-                <td class="border p-2">
-                    {{ item.product_name }}
-                </td>
+                    <th class="border p-2 text-right">Unit net price</th>
 
-                <td class="border p-2 text-right">
-                    {{ item.quantity }}
-                </td>
+                    <th class="border p-2 text-right">Net value</th>
 
-                <td class="border p-2 text-right">
-                    € {{ item.unit_net_price }}
-                </td>
+                    <th class="border p-2 text-right">VAT value</th>
 
-                <td class="border p-2 text-right">
-                    € {{ item.net_value }}
-                </td>
+                    <th class="border p-2 text-right">Gross value</th>
+                </tr>
+            </thead>
 
-                <td class="border p-2 text-right">
-                    € {{ item.vat_value }}
-                </td>
+            <tbody>
+                <tr v-for="item in invoice.items" :key="item.id">
+                    <td class="border p-2">
+                        {{ item.product_name }}
+                    </td>
 
-                <td class="border p-2 text-right">
-                    € {{ item.gross_value }}
-                </td>
+                    <td class="border p-2 text-right">
+                        {{ item.quantity }}
+                    </td>
 
-            </tr>
+                    <td class="border p-2 text-right">
+                        € {{ item.unit_net_price }}
+                    </td>
 
-        </tbody>
+                    <td class="border p-2 text-right">
+                        € {{ item.net_value }}
+                    </td>
 
-        <tfoot>
+                    <td class="border p-2 text-right">
+                        € {{ item.vat_value }}
+                    </td>
 
-            <tr class="font-bold bg-gray-50 dark:text-black">
+                    <td class="border p-2 text-right">
+                        € {{ item.gross_value }}
+                    </td>
+                </tr>
+            </tbody>
 
-                <td colspan="3" class="border p-2 text-right">
-                    Total:
-                </td>
+            <tfoot>
+                <tr class="bg-gray-50 font-bold dark:text-black">
+                    <td colspan="3" class="border p-2 text-right">Total:</td>
 
-                <td class="border p-2 text-right">
-                    € {{ invoice.total_net }}
-                </td>
+                    <td class="border p-2 text-right">
+                        € {{ invoice.total_net }}
+                    </td>
 
-                <td class="border p-2 text-right">
-                    € {{ invoice.total_vat }}
-                </td>
+                    <td class="border p-2 text-right">
+                        € {{ invoice.total_vat }}
+                    </td>
 
-                <td class="border p-2 text-right">
-                    € {{ invoice.total_gross }}
-                </td>
-
-            </tr>
-
-        </tfoot>
-
-    </table>
-
-</div>
-<div class="mt-6 ml-5 flex gap-3">
-<!-- :href="`/invoices/${invoice.id}/pdf`" -->
-    <a
-        :href="pdf(invoice.id).url"
-        target="_blank"
-        class="bg-blue-600 text-white px-4 py-2 rounded"
-    >
-        Download PDF
-    </a>
-<!-- :href="`/invoices/${invoice.id}/print`" -->
-    <a
-        
-        :href="print(invoice.id).url"
-        target="_blank"
-        class="bg-green-600 text-white px-4 py-2 rounded"
-    >
-        Print
-    </a>
-     <Link
-        href="/invoices/"
-        class="bg-gray-600 text-white px-4 py-2 rounded"
-    >
-        Back
-    </Link>
-     <button
+                    <td class="border p-2 text-right">
+                        € {{ invoice.total_gross }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="mt-6 ml-5 flex gap-3">
+        <!-- :href="`/invoices/${invoice.id}/pdf`" -->
+        <a
+            :href="pdf(invoice.id).url"
+            target="_blank"
+            class="rounded bg-blue-600 px-4 py-2 text-white"
+        >
+            Download PDF
+        </a>
+        <!-- :href="`/invoices/${invoice.id}/print`" -->
+        <a
+            :href="print(invoice.id).url"
+            target="_blank"
+            class="rounded bg-green-600 px-4 py-2 text-white"
+        >
+            Print
+        </a>
+        <Link
+            href="/invoices/"
+            class="rounded bg-gray-600 px-4 py-2 text-white"
+        >
+            Back
+        </Link>
+        <button
             type="button"
             @click="remove"
-            class="bg-red-600 text-white px-6 py-2 rounded"
-                        >
+            class="rounded bg-red-600 px-6 py-2 text-white"
+        >
             Delete
         </button>
-    <!-- :href=router.get(print(invoice.id))  -->
-    <!-- <button
+        <!-- :href=router.get(print(invoice.id))  -->
+        <!-- <button
         
         @click="router.post(send(invoice.id))"
         
@@ -244,7 +188,5 @@ const remove = () => {
         >
         Send by Email
     </button> -->
-    
-
-</div>
+    </div>
 </template>

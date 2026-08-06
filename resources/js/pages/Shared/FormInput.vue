@@ -2,39 +2,36 @@
 defineProps({
     modelValue: {
         type: [String, Number],
-        default: ''
+        default: '',
     },
     label: {
         type: String,
-        required: true
+        required: true,
     },
     id: {
         type: String,
-        required: true
+        required: true,
     },
     type: {
         type: String,
-        default: 'text'
+        default: 'text',
     },
-    step:{
+    step: {
         type: String,
-        default:''
+        default: '',
     },
     error: {
         type: String,
-        default: ''
-    }
-})
+        default: '',
+    },
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 </script>
 
 <template>
     <div class="flex flex-col gap-1">
-        <label
-            :for="id"
-            class="text-sm font-medium"
-        >
+        <label :for="id" class="text-sm font-medium">
             {{ label }}
         </label>
 
@@ -43,13 +40,10 @@ const emit = defineEmits(['update:modelValue'])
             :type="type"
             :value="modelValue"
             @input="emit('update:modelValue', $event.target.value)"
-            class="border p-2 rounded"
-        >
+            class="rounded border p-2"
+        />
 
-        <div
-            v-if="error"
-            class="text-red-500 text-sm"
-        >
+        <div v-if="error" class="text-sm text-red-500">
             {{ error }}
         </div>
     </div>

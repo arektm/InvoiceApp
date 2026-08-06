@@ -90,15 +90,15 @@ class ReportController extends Controller
 
             ->get();
 
-        return Inertia::render(
+            return Inertia::render(
             'Reports/Index',
             [
 
-                'todaySales' => $todaySales,
+                'todaySales' =>round($todaySales, 2) ,
 
-                'monthSales' => $monthSales,
+                'monthSales' => round($monthSales, 2),
 
-                'yearSales' => $yearSales,
+                'yearSales' => round($yearSales, 2),
 
                 'invoiceCount' => $invoiceCount,
 

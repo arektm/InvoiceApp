@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3'
-import { ref, watch } from 'vue'
-import { create, show, index } from '@/routes/invoices'
-import Pagination from '../Shared/Pagination.vue'
+import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import { create, show, index } from '@/routes/invoices';
+import Pagination from '../Shared/Pagination.vue';
 
 defineOptions({
     layout: {
@@ -18,11 +18,10 @@ defineOptions({
 const props = defineProps({
     invoices: Object,
     filters: Object,
-})
-const search = ref(props.filters.search ?? '')
+});
+const search = ref(props.filters.search ?? '');
 
-watch(search, value => {
-
+watch(search, (value) => {
     router.get(
         '/invoices',
         {
@@ -31,132 +30,87 @@ watch(search, value => {
         {
             preserveState: true,
             replace: true,
-        }
-    )
-})
+        },
+    );
+});
 </script>
 
 <template>
-<Head title="Invoices" ></Head>
+    <Head title="Invoices"></Head>
 
-<div class="flex justify-between mb-6">
+    <div class="mb-6 flex justify-between">
+        <h1 class="text-3xl font-bold">Invoices</h1>
 
-    <h1 class="text-3xl font-bold">
-        Invoices
-    </h1>
+        <Link :href="create()" class="rounded bg-blue-500 px-4 py-2 text-white">
+            New Invoice
+        </Link>
+    </div>
+    <div class="mb-6">
+        <input
+            v-model="search"
+            type="text"
+            placeholder=" Invoice number, client name, e-mail..."
+            class="w-full rounded border p-2"
+        />
+    </div>
+    <table class="w-full border-collapse border">
+        <thead>
+            <tr class="bg-gray-200 dark:text-black">
+                <th class="border p-2 text-left">Number</th>
 
-    <Link
-    
-        :href="create()"
-        class="bg-blue-500 text-white px-4 py-2 rounded"
-    >
-        New Invoice
-    </Link>
+                <th class="border p-2 text-left">Client</th>
 
-</div>
-<div class="mb-6">
+                <th class="border p-2 text-left">Issue Date</th>
 
-    <input
-        v-model="search"
-        type="text"
-        placeholder=" Invoice number, client name, e-mail..."
-        class="w-full border rounded p-2"
-    >
+                <th class="border p-2 text-right">Gross</th>
 
-</div>
-<table class="w-full border-collapse border">
+                <th class="border p-2 text-left">Status</th>
 
-    <thead>
-        <tr class="bg-gray-200 dark:text-black">
+                <th class="border p-2">Actions</th>
+            </tr>
+        </thead>
 
-            <th class="border p-2 text-left">
-                Number
-            </th>
+        <tbody>
+            <tr v-for="invoice in invoices.data" :key="invoice.id">
+                <td class="border p-2 hover:underline">
+                    <Link :href="show(invoice.id)">
+                        {{ invoice.invoice_number }}
+                    </Link>
+                </td>
 
-            <th class="border p-2 text-left">
-                Client
-            </th>
+                <td class="border p-2">
+                    {{ invoice.name }}
+                </td>
 
-            <th class="border p-2 text-left">
-                Issue Date
-            </th>
+                <td class="border p-2">
+                    {{ invoice.issue_date }}
+                </td>
 
-            <th class="border p-2 text-right">
-                Gross
-            </th>
+                <td class="border p-2 text-right">
+                    € {{ invoice.total_gross }}
+                </td>
 
-            <th class="border p-2 text-left">
-                Status
-            </th>
+                <td class="border p-2">
+                    {{ invoice.status }}
+                </td>
 
-            <th class="border p-2">
-                Actions
-            </th>
-
-        </tr>
-    </thead>
-
-    <tbody>
-
-        <tr
-            v-for="invoice in invoices.data"
-            :key="invoice.id"
-        >
-
-            <td class="border p-2 hover:underline">
-                <Link
-                    :href="show(invoice.id)"
-                >
-                    {{ invoice.invoice_number }}
-                </Link>
-
-                
-            </td>
-
-            <td class="border p-2">
-                {{ invoice.name }}
-            </td>
-
-            <td class="border p-2">
-                {{ invoice.issue_date}}
-            </td>
-
-            <td class="border p-2 text-right">
-                € {{ invoice.total_gross }}
-            </td>
-
-            <td class="border p-2">
-                {{ invoice.status }}
-            </td>
-
-            <td class="flex gap-2 p-2">
-                
-
+                <td class="flex gap-2 p-2">
                     <Link
-                        
                         :href="`/invoices/${invoice.id}`"
-                        class="bg-blue-600 text-white px-5 py-1 rounded"
+                        class="rounded bg-blue-600 px-5 py-1 text-white"
                     >
                         View
                     </Link>
                     <Link
-                        
                         :href="`/invoices/${invoice.id}/edit`"
-                        class="bg-red-600 text-white px-5 py-1 rounded"
+                        class="rounded bg-red-600 px-5 py-1 text-white"
                     >
                         Edit
                     </Link>
-                
-            </td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-        </tr>
-
-    </tbody>
-
-</table>
-
-
-<Pagination :links="invoices.links" /> 
-
-
+    <Pagination :links="invoices.links" />
 </template>

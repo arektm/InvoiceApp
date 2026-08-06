@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3'
-import { edit,show } from '@/routes/clients'
+import { Head, Link } from '@inertiajs/vue3';
+import { edit, show } from '@/routes/clients';
 
 defineOptions({
     layout: {
@@ -13,59 +13,45 @@ defineOptions({
     },
 });
 defineProps({
-    client: Object
-})
-
-
+    client: Object,
+});
 </script>
 
 <template>
+    <Head :title="client.name" />
 
-<Head :title="client.name" />
+    <div class="rounded p-6 shadow">
+        <h1 class="mb-6 text-3xl font-bold">
+            {{ client.name }}
+        </h1>
 
-<div class="p-6 rounded shadow">
+        <div class="grid grid-cols-2 gap-4">
+            <p><strong>Tax number:</strong> {{ client.tax_number }}</p>
 
-    <h1 class="text-3xl font-bold mb-6">
+            <p><strong>Phone:</strong> {{ client.phone }}</p>
 
-        {{ client.name }}
+            <p><strong>E-mail:</strong> {{ client.email }}</p>
 
-    </h1>
+            <p><strong>City:</strong> {{ client.city }}</p>
 
-    <div class="grid grid-cols-2 gap-4">
+            <p><strong>Country:</strong> {{ client.country }}</p>
+        </div>
 
-        <p><strong>Tax number:</strong> {{ client.tax_number }}</p>
+        <div class="mt-4">
+            <strong>Address:</strong>
 
-        <p><strong>Phone:</strong> {{ client.phone }}</p>
+            {{ client.street }}
 
-        <p><strong>E-mail:</strong> {{ client.email }}</p>
+            {{ client.postal_code }}
+        </div>
 
-        <p><strong>City:</strong> {{ client.city }}</p>
-
-        <p><strong>Country:</strong> {{ client.country }}</p>
-
+        <div class="mt-6">
+            <Link
+                :href="edit(client.id)"
+                class="rounded bg-orange-600 px-4 py-2 text-white"
+            >
+                Edit
+            </Link>
+        </div>
     </div>
-
-    <div class="mt-4">
-
-        <strong>Address:</strong>
-
-        {{ client.street }}
-
-        {{ client.postal_code }}
-
-    </div>
-
-    <div class="mt-6">
-
-        <Link
-            :href="edit(client.id)"
-            class="bg-orange-600 text-white px-4 py-2 rounded"
-        >
-            Edit
-        </Link>
-
-    </div>
-
-</div>
-
 </template>

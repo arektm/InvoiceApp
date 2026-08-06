@@ -11,11 +11,11 @@ defineOptions({
         ],
     },
 });
-const props=defineProps({
-   company: Object,
-   errors: Object,
-   success: Object,
-})
+const props = defineProps({
+    company: Object,
+    errors: Object,
+    success: Object,
+});
 // const company={
 //     name:'Creative Work',
 //     tax_number:'23123123123',
@@ -32,61 +32,56 @@ const page = usePage();
 
 <template>
     <Head title="Company" />
-     <div v-if="page.props.flash.success" class="toast">
+    <div v-if="page.props.flash.success" class="toast">
         {{ page.props.flash.success }}
     </div>
 
-    <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-       <div class=" p-6 rounded shadow">
-
-            <h1 class="text-3xl font-bold mb-6">
-
+    <div
+        class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
+    >
+        <div class="rounded p-6 shadow">
+            <h1 class="mb-6 text-3xl font-bold">
                 {{ props.company.name }}
-
             </h1>
 
-            <div 
-            class="p-5 relative aspect-[calc(4*3+1)/3 overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
+            <div
+                class="aspect-[calc(4*3+1)/3 relative overflow-hidden rounded-xl border border-sidebar-border/70 p-5 dark:border-sidebar-border"
             >
-            <div class=" grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <p>
+                        <strong>Tax number:</strong>
+                        {{ props.company.tax_number }}
+                    </p>
 
-                <p><strong>Tax number:</strong> {{ props.company.tax_number }}</p>
+                    <p><strong>Phone:</strong> {{ props.company.phone }}</p>
 
-                <p><strong>Phone:</strong> {{ props.company.phone }}</p>
+                    <p><strong>E-mail:</strong> {{ props.company.email }}</p>
 
-                <p><strong>E-mail:</strong> {{ props.company.email }}</p>
+                    <p><strong>City:</strong> {{ props.company.city }}</p>
 
-                <p><strong>City:</strong> {{ props.company.city }}</p>
+                    <p><strong>Country:</strong> {{ props.company.country }}</p>
+                </div>
 
-                <p><strong>Country:</strong> {{ props.company.country }}</p>
+                <div class="mt-4 grid grid-cols-2 gap-4">
+                    <p><strong>Address:</strong> {{ props.company.street }}</p>
 
-               
-            </div>
+                    <p>
+                        <strong>Postal code:</strong>
+                        {{ props.company.postal_code }}
+                    </p>
 
-            <div class="mt-4 grid grid-cols-2 gap-4">
+                    <p><strong>Country:</strong> {{ props.company.country }}</p>
+                </div>
 
-                <p><strong>Address:</strong> {{ props.company.street }}</p>
-
-                <p><strong>Postal code:</strong> {{ props.company.postal_code }}</p>
-
-                <p><strong>Country:</strong> {{ props.company.country }}</p>
-
-            </div>
-            
-            <div class="mt-6">
-                
-                <Link
-                    href="/company/edit"
-                    class="bg-primary text-primary-foreground px-4 py-2 rounded"
+                <div class="mt-6">
+                    <Link
+                        href="/company/edit"
+                        class="rounded bg-primary px-4 py-2 text-primary-foreground"
                     >
-                    Edit
-                </Link>
-
-             </div>
-
-                
+                        Edit
+                    </Link>
+                </div>
             </div>
-            
         </div>
         <!-- <div
             class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border"
@@ -94,5 +89,4 @@ const page = usePage();
             <PlaceholderPattern />
         </div> -->
     </div>
-   
 </template>
