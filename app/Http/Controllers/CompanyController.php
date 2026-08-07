@@ -10,7 +10,7 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        //$company = Company::first() ;
+        // $company = Company::first() ;
         $company = Company::firstOrCreate([], [
             'name' => '',
             'tax_number' => '',
@@ -23,7 +23,7 @@ class CompanyController extends Controller
             'bank_account' => '',
             'website' => '',
         ]);
-        
+
         return Inertia::render('Company', [
             'company' => $company,
 
@@ -32,8 +32,7 @@ class CompanyController extends Controller
 
     public function edit()
     {
-        $company = Company::first() ;
-        
+        $company = Company::first();
 
         return Inertia::render('Company/Edit', [
             'company' => $company,

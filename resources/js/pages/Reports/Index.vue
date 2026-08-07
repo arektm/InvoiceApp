@@ -52,8 +52,8 @@ const props = defineProps<{
     invoiceCount: number;
     unpaidInvoices: number;
     overdueInvoices: number;
-    topClients: TopClient[];  // Teraz TS wie, co kryje się w tablicy
-    topProducts: TopProduct[];       // Możesz zmienić 'any[]' na 'TopProduct[]' w przyszłości
+    topClients: TopClient[]; // Teraz TS wie, co kryje się w tablicy
+    topProducts: TopProduct[]; // Możesz zmienić 'any[]' na 'TopProduct[]' w przyszłości
 }>();
 </script>
 

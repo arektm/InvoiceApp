@@ -7,11 +7,9 @@ use App\Models\Client;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Product;
-use App\Mail\InvoiceMail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class InvoiceController extends Controller
@@ -34,15 +32,15 @@ class InvoiceController extends Controller
             ->latest()
             ->paginate(10)
             ->withQueryString()
-            ->through(fn ($invoice) => [
+            ->through(fn (Invoice $invoice) => [
                 'id' => $invoice->id,
                 'invoice_number' => $invoice->invoice_number,
                 'issue_date' => $invoice->issue_date->format('Y/m/d'),
                 'due_date' => $invoice->due_date->format('Y/m/d'),
                 'status' => $invoice->status,
                 'total_gross' => $invoice->total_gross,
-                'name' => $invoice->client?->name,
-                'email' => $invoice->client?->email,
+                'name' => $invoice->client->name,
+                'email' => $invoice->client->email,
             ]);
 
         return Inertia::render('Invoices/Index', [
@@ -68,6 +66,17 @@ class InvoiceController extends Controller
 
     public function store(StoreInvoiceRequest $request)
     {
+        /** @var array{
+                client_id:int,
+                issue_date:string,
+                sale_date:string,
+                due_date:string,
+                payment_method:string,
+                items:list<array{
+                product_id:int,
+                quantity:numeric
+            }>
+        } $validated */
         $validated = $request->validated();
 
         DB::transaction(function () use ($validated) {
@@ -96,6 +105,9 @@ class InvoiceController extends Controller
 
             foreach ($validated['items'] as $row) {
                 $product = $products[$row['product_id']];
+                if ($product === null) {
+                    throw new \RuntimeException('Product not found.');
+                }
 
                 $net = round($product->net_price * $row['quantity'], 2);
                 $vat = round($net * ($product->vat_rate / 100), 2);
@@ -195,7 +207,18 @@ class InvoiceController extends Controller
 
     public function update(Request $request, Invoice $invoice)
     {
-
+        /** @var array{
+            client_id:int,
+            issue_date:string,
+            sale_date:string,
+            due_date:string,
+            payment_method:string,
+            status:string,
+            items:list<array{
+                product_id:int,
+                quantity:float
+            }>
+        } $validated */
         $validated = $request->validate([
 
             'client_id' => ['required'],
@@ -265,7 +288,11 @@ class InvoiceController extends Controller
 
                 $product =
                     $products[$row['product_id']];
-
+                if ($product === null) {
+                    throw new \RuntimeException(
+                        'Product not found: '.$row['product_id']
+                    );
+                }
                 $net = round(
                     $product->net_price *
                     $row['quantity'],
@@ -356,7 +383,7 @@ class InvoiceController extends Controller
     private function generateInvoiceNumber(): string
     {
         // Lock the invoices table row with the highest id to prevent race conditions.
-        $lastId = Invoice::lockForUpdate()->max('id') + 1;
+        $lastId = strval(Invoice::lockForUpdate()->max('id') + 1);
 
         return 'FV/'.now()->format('Y/m/').str_pad($lastId, 4, '0', STR_PAD_LEFT);
     }
@@ -381,7 +408,7 @@ class InvoiceController extends Controller
             'client' => $invoice->client,
             'items' => $invoice->items->map(fn ($item) => [
                 'id' => $item->id,
-                'product_name' => $item->product->product_name,
+                'product_name' => $item->product->product_name ?? '[Deleted product]',
                 'quantity' => $item->quantity,
                 'unit_net_price' => $item->unit_net_price,
                 'vat_rate' => $item->vat_rate,
@@ -415,15 +442,14 @@ class InvoiceController extends Controller
         return str_replace('/', '_', $invoice->invoice_number).'.pdf';
     }
 
+    // public function sendEmail(Invoice $invoice)
+    // {
+    //     Mail::to($invoice->client->email)
+    //         ->send(new InvoiceMail($invoice));
 
-    public function sendEmail(Invoice $invoice)
-    {
-        Mail::to($invoice->client->email)
-            ->send(new InvoiceMail($invoice));
-
-        return back()->with(
-            'success',
-            'Invoice sent successfully.'
-        );
-    }
+    //     return back()->with(
+    //         'success',
+    //         'Invoice sent successfully.'
+    //     );
+    // }
 }

@@ -5,14 +5,14 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-     if (Auth::check()) {
+    if (Auth::check()) {
         return redirect()->route('company');
     }
+
     return redirect()->route('login');
 })->name('home');
 
@@ -31,8 +31,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // print pdf
     Route::get('/invoices/{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
-
-    
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

@@ -6,7 +6,6 @@
 //     $response->assertStatus(200);
 // });
 
-
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,8 +34,8 @@ it('can display products page', function () {
 it('can create product', function () {
 
     $response = $this->post(route('products.store'), [
-        
-        'product_code'=>'PR-000034344',
+
+        'product_code' => 'PR-000034344',
 
         'product_name' => 'Laravel Book',
 
@@ -53,7 +52,7 @@ it('can create product', function () {
 
     $this->assertDatabaseHas('products', [
 
-        'product_code'=>'PR-000034344',
+        'product_code' => 'PR-000034344',
 
         'product_name' => 'Laravel Book',
 
@@ -61,7 +60,7 @@ it('can create product', function () {
 
         'vat_rate' => 23,
 
-        'stock_quantity'=> 100,
+        'stock_quantity' => 100,
     ]);
 });
 
@@ -88,7 +87,7 @@ it('can update product', function () {
 
         [
             'product_code' => $product->product_code,
-            
+
             'product_name' => 'Updated Product',
 
             'description' => 'Updated',

@@ -18,7 +18,7 @@ const props = defineProps({
     invoice: Object,
     clients: Array,
     products: Array,
-})
+});
 
 const form = useForm({
     client_id: props.invoice?.client_id,
@@ -28,13 +28,13 @@ const form = useForm({
     status: props.invoice?.status,
     payment_method: props.invoice?.payment_method,
 
-    items: props.invoice?.items?.map((item : any)  => ({
+    items: props.invoice?.items?.map((item: any) => ({
         id: item.id,
         product_id: item.product_id,
         product_name: item.product_name,
         quantity: item.quantity,
     })),
-})
+});
 
 const submit = () => {
     // form.put(`/invoices/${props.invoice.id}`);

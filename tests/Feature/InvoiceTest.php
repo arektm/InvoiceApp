@@ -8,7 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-
 beforeEach(function () {
 
     $this->user = User::factory()->create();
@@ -17,27 +16,22 @@ beforeEach(function () {
 
 });
 
-
 it('can display invoices page', function () {
 
     Invoice::factory()
         ->count(5)
         ->create();
 
-
     $response = $this->get(
         route('invoices.index')
     );
 
-
     $response
         ->assertOk()
-        ->assertInertia(fn ($page) =>
-            $page->component('Invoices/Index')
+        ->assertInertia(fn ($page) => $page->component('Invoices/Index')
         );
 
 });
-
 
 it('can display create invoice page', function () {
 
@@ -45,20 +39,16 @@ it('can display create invoice page', function () {
         route('invoices.create')
     );
 
-
     $response
         ->assertOk()
-        ->assertInertia(fn ($page) =>
-            $page->component('Invoices/Create')
+        ->assertInertia(fn ($page) => $page->component('Invoices/Create')
         );
 
 });
 
-
 it('can create invoice with items', function () {
 
     $client = Client::factory()->create();
-
 
     $product = Product::factory()->create([
 
@@ -67,7 +57,6 @@ it('can create invoice with items', function () {
         'vat_rate' => 23,
 
     ]);
-
 
     $response = $this->post(
 
@@ -85,9 +74,7 @@ it('can create invoice with items', function () {
                 ->addDays(14)
                 ->format('Y-m-d'),
 
-
             'payment_method' => 'bank transfer',
-
 
             'items' => [
 
@@ -97,7 +84,7 @@ it('can create invoice with items', function () {
 
                     'quantity' => 2,
 
-                ]
+                ],
 
             ],
 
@@ -105,17 +92,14 @@ it('can create invoice with items', function () {
 
     );
 
-
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect();
-
 
     $this->assertDatabaseCount(
         'invoices',
         1
     );
-
 
     $this->assertDatabaseHas(
         'invoice_items',
@@ -128,26 +112,20 @@ it('can create invoice with items', function () {
         ]
     );
 
-
     $invoice = Invoice::first();
-
 
     expect($invoice->total_net)
         ->toBe(200);
 
-
     expect($invoice->total_vat)
         ->toBe(46);
-
 
     expect($invoice->total_gross)
         ->toBe(246);
 
 });
 
-
 it('validates invoice required fields', function () {
-
 
     $response = $this->post(
 
@@ -156,7 +134,6 @@ it('validates invoice required fields', function () {
         []
 
     );
-
 
     $response->assertSessionHasErrors([
 
@@ -170,12 +147,9 @@ it('validates invoice required fields', function () {
 
 });
 
-
 it('can display invoice details', function () {
 
-
     $invoice = Invoice::factory()->create();
-
 
     $response = $this->get(
 
@@ -183,15 +157,12 @@ it('can display invoice details', function () {
 
     );
 
-
     $response
         ->assertOk()
-        ->assertInertia(fn ($page) =>
-            $page->component('Invoices/Show')
+        ->assertInertia(fn ($page) => $page->component('Invoices/Show')
         );
 
 });
-
 
 it('can update invoice', function () {
 
@@ -291,9 +262,7 @@ it('can update invoice', function () {
 
 it('can soft delete invoice', function () {
 
-
     $invoice = Invoice::factory()->create();
-
 
     $response = $this->delete(
 
@@ -301,9 +270,7 @@ it('can soft delete invoice', function () {
 
     );
 
-
     $response->assertRedirect();
-
 
     $this->assertSoftDeleted(
         'invoices',

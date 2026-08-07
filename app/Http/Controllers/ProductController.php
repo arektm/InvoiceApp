@@ -104,7 +104,7 @@ class ProductController extends Controller
 
                 'stock_quantity' => $product->stock_quantity,
 
-                'created_at' => $product->created_at?->format('Y-m-d H:i'),
+                'created_at' => $product->created_at->format('Y-m-d H:i'),
             ],
         ]);
     }

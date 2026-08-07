@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
-    
+
     protected static ?string $password;
+
     /**
      * Seed the application's database.
      */
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-       Client::factory(20)->create();
+        Client::factory(20)->create();
         Product::factory(100)->create();
         Invoice::factory(20)
             ->create()

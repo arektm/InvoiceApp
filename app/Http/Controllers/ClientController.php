@@ -146,7 +146,7 @@ class ClientController extends Controller
             'phone' => ['nullable'],
 
         ]);
-        // dd($client);
+
         $client->update($validated);
 
         return redirect()
@@ -173,7 +173,6 @@ class ClientController extends Controller
             ->with('success', 'Clients data deleted');
     }
 
-     
     public function search(Request $request)
     {
         return Client::query()

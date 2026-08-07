@@ -97,7 +97,6 @@ watch(search, (value) => {
                 <td class="flex gap-2 p-2">
                     <!-- :href="`/invoices/${invoice.id}`" -->
                     <Link
-                        
                         :href="show(invoice.id).url"
                         class="rounded bg-blue-600 px-5 py-1 text-white"
                     >

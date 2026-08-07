@@ -11,3 +11,7 @@ parameters:
         - routes/
 
     level: 7
+
+    ignoreErrors:
+        - '#Method .* has no return type specified\..*#'
+        - identifier: missingType.iterableValue

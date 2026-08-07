@@ -2,13 +2,13 @@
 import { Link } from '@inertiajs/vue3';
 
 interface PaginationLink {
-    url: string | null;   
-    label: string;        
-    active: boolean;      
+    url: string | null;
+    label: string;
+    active: boolean;
 }
 
 defineProps<{
-    links: PaginationLink[]; 
+    links: PaginationLink[];
 }>();
 </script>
 

@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-
 beforeEach(function () {
 
     $this->user = User::factory()->create();
@@ -15,27 +14,22 @@ beforeEach(function () {
 
 });
 
-
 it('can display clients page', function () {
 
     Client::factory()
         ->count(5)
         ->create();
 
-
     $response = $this->get(
         route('clients.index')
     );
 
-
     $response
         ->assertOk()
-        ->assertInertia(fn ($page) =>
-            $page->component('Clients/Index')
+        ->assertInertia(fn ($page) => $page->component('Clients/Index')
         );
 
 });
-
 
 it('can create client', function () {
 
@@ -62,11 +56,9 @@ it('can create client', function () {
         ]
     );
 
-
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect();
-
 
     $this->assertDatabaseHas('clients', [
 
@@ -90,15 +82,12 @@ it('can create client', function () {
 
 });
 
-
 it('validates required client fields', function () {
-
 
     $response = $this->post(
         route('clients.store'),
         []
     );
-
 
     $response->assertSessionHasErrors([
 
@@ -109,32 +98,24 @@ it('validates required client fields', function () {
 
 });
 
-
 it('can show client details', function () {
 
-
     $client = Client::factory()->create();
-
 
     $response = $this->get(
         route('clients.show', $client)
     );
 
-
     $response
         ->assertOk()
-        ->assertInertia(fn ($page) =>
-            $page->component('Clients/Show')
+        ->assertInertia(fn ($page) => $page->component('Clients/Show')
         );
 
 });
 
-
 it('can update client', function () {
 
-
     $client = Client::factory()->create();
-
 
     $response = $this->put(
 
@@ -162,11 +143,9 @@ it('can update client', function () {
 
     );
 
-
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect();
-
 
     $this->assertDatabaseHas('clients', [
 
@@ -182,12 +161,9 @@ it('can update client', function () {
 
 });
 
-
 it('can soft delete client', function () {
 
-
     $client = Client::factory()->create();
-
 
     $response = $this->delete(
 
@@ -195,15 +171,13 @@ it('can soft delete client', function () {
 
     );
 
-
     $response
         ->assertRedirect();
-
 
     $this->assertSoftDeleted(
         'clients',
         [
-            'id' => $client->id
+            'id' => $client->id,
         ]
     );
 

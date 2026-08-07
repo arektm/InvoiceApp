@@ -22,10 +22,10 @@ class ReportController extends Controller
         //     today()
         // )->sum('total_gross');
 
-        $todaySales = Invoice::whereDate('issue_date', now()->today())
+        $todaySales = (float) Invoice::whereDate('issue_date', now()->today())
             ->sum('total_gross');
 
-        $monthSales = Invoice::whereMonth(
+        $monthSales = (float) Invoice::whereMonth(
             'issue_date',
             now()->month
         )
@@ -35,7 +35,7 @@ class ReportController extends Controller
             )
             ->sum('total_gross');
 
-        $yearSales = Invoice::whereYear(
+        $yearSales = (float) Invoice::whereYear(
             'issue_date',
             now()->year
         )->sum('total_gross');
@@ -90,15 +90,15 @@ class ReportController extends Controller
 
             ->get();
 
-            return Inertia::render(
+        return Inertia::render(
             'Reports/Index',
             [
 
-                'todaySales' =>round($todaySales, 2) ,
+                'todaySales' => round((float) $todaySales, 2),
 
-                'monthSales' => round($monthSales, 2),
+                'monthSales' => round((float) $monthSales, 2),
 
-                'yearSales' => round($yearSales, 2),
+                'yearSales' => round((float) $yearSales, 2),
 
                 'invoiceCount' => $invoiceCount,
 
@@ -168,7 +168,6 @@ class ReportController extends Controller
             ->with('client')
 
             ->where('status', 'unpaid')
-            
 
             ->orderBy('due_date')
 
@@ -186,9 +185,9 @@ class ReportController extends Controller
 
                 'total_gross' => $invoice->total_gross,
 
-                'client_name' => $invoice->client?->name,
+                'client_name' => $invoice->client->name,
 
-                'client_email' => $invoice->client?->email,
+                'client_email' => $invoice->client->email,
 
                 // 'days_overdue' => now()
                 //     ->greaterThan($invoice->due_date)
@@ -206,7 +205,6 @@ class ReportController extends Controller
             ]
         );
     }
-
 
     public function overdueInvoices()
     {
@@ -234,9 +232,9 @@ class ReportController extends Controller
 
                 'total_gross' => $invoice->total_gross,
 
-                'client_name' => $invoice->client?->name,
+                'client_name' => $invoice->client->name,
 
-                'client_email' => $invoice->client?->email,
+                'client_email' => $invoice->client->email,
 
                 'days_overdue' => (int) $invoice->due_date->diffInDays(today()),
             ]);

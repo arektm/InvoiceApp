@@ -32,7 +32,7 @@ interface SharedProps {
         success?: string | null;
         error?: string | null;
     };
-    [key: string]: any; 
+    [key: string]: any;
 }
 const page = usePage<SharedProps>();
 </script>
@@ -66,7 +66,9 @@ const page = usePage<SharedProps>();
 
                     <p><strong>City:</strong> {{ props.company?.city }}</p>
 
-                    <p><strong>Country:</strong> {{ props.company?.country }}</p>
+                    <p>
+                        <strong>Country:</strong> {{ props.company?.country }}
+                    </p>
                 </div>
 
                 <div class="mt-4 grid grid-cols-2 gap-4">
@@ -77,7 +79,9 @@ const page = usePage<SharedProps>();
                         {{ props.company?.postal_code }}
                     </p>
 
-                    <p><strong>Country:</strong> {{ props.company?.country }}</p>
+                    <p>
+                        <strong>Country:</strong> {{ props.company?.country }}
+                    </p>
                 </div>
 
                 <div class="mt-6">
