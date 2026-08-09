@@ -85,7 +85,8 @@ class InvoiceController extends Controller
             $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
 
             $invoice = Invoice::create([
-                'invoice_number' => $this->generateInvoiceNumber(),
+                // 'invoice_number' => $this->generateInvoiceNumber(),
+                'invoice_number' => null,
                 'client_id' => $validated['client_id'],
                 'issue_date' => $validated['issue_date'],
                 'sale_date' => $validated['sale_date'],
@@ -95,6 +96,9 @@ class InvoiceController extends Controller
                 'total_net' => 0,
                 'total_vat' => 0,
                 'total_gross' => 0,
+            ]);
+            $invoice->update([
+                'invoice_number' => $this->generateInvoiceNumber($invoice),
             ]);
 
             $totalNet = 0;
@@ -380,12 +384,19 @@ class InvoiceController extends Controller
      * Generate a unique invoice number inside a lock so concurrent requests
      * cannot produce the same number.
      */
-    private function generateInvoiceNumber(): string
-    {
-        // Lock the invoices table row with the highest id to prevent race conditions.
-        $lastId = strval(Invoice::lockForUpdate()->max('id') + 1);
+    // private function generateInvoiceNumber(): string
+    // {
+    //     // Lock the invoices table row with the highest id to prevent race conditions.
+    //     $lastId = strval(Invoice::withTrashed()->lockForUpdate()->max('id') + 1);
 
-        return 'FV/'.now()->format('Y/m/').str_pad($lastId, 4, '0', STR_PAD_LEFT);
+    //     return 'FV/'.now()->format('Y/m/').str_pad($lastId, 4, '0', STR_PAD_LEFT);
+    // }
+
+    private function generateInvoiceNumber(Invoice $invoice): string
+    {
+        return 'FV/'.
+            $invoice->issue_date->format('Y/m/').
+            str_pad(strval($invoice->id), 4, '0', STR_PAD_LEFT);
     }
 
     /**

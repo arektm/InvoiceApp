@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<template>
+<!-- <template>
     <div class="relative" ref="dropdownRef">
         <div class="flex gap-1">
             <input
@@ -122,6 +122,64 @@ onBeforeUnmount(() => {
         </div>
 
         <p v-if="error" class="mt-1 text-sm text-red-500">
+            {{ error }}
+        </p>
+    </div>
+</template> -->
+<template>
+    <div class="relative" ref="dropdownRef">
+        <div class="flex w-full gap-2">
+            <input
+                v-model="search"
+                type="text"
+                autocomplete="off"
+                placeholder="Search client..."
+                class="w-full items-center rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                @focus="open = true"
+                @keydown.escape="open = false"
+            />
+
+            <button
+                v-if="modelValue"
+                type="button"
+                class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border bg-background text-sm text-muted-foreground shadow-sm transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
+                @click="clearClient"
+            >
+                ✕
+            </button>
+        </div>
+
+        <div
+            v-if="open"
+            class="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-lg border bg-background shadow-lg"
+        >
+            <div
+                v-for="client in filteredClients"
+                :key="client.id"
+                class="cursor-pointer border-b px-3 py-2.5 transition-colors last:border-b-0 hover:bg-muted/60"
+                @click="selectClient(client)"
+            >
+                <div class="text-sm font-medium text-foreground">
+                    {{ client.name }}
+                </div>
+
+                <div
+                    v-if="client.email"
+                    class="mt-0.5 text-sm text-muted-foreground"
+                >
+                    {{ client.email }}
+                </div>
+            </div>
+
+            <div
+                v-if="filteredClients.length === 0"
+                class="px-3 py-3 text-sm text-muted-foreground"
+            >
+                No clients found
+            </div>
+        </div>
+
+        <p v-if="error" class="mt-1 text-xs text-red-500">
             {{ error }}
         </p>
     </div>

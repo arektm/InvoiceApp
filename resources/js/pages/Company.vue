@@ -37,67 +37,199 @@ interface SharedProps {
 const page = usePage<SharedProps>();
 </script>
 
+```html
 <template>
     <Head title="Company" />
-    <div v-if="page.props.flash.success" class="toast">
-        {{ page.props.flash.success }}
-    </div>
 
-    <div
-        class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
-    >
-        <div class="rounded p-6 shadow">
-            <h1 class="mb-6 text-3xl font-bold">
-                {{ props.company?.name }}
-            </h1>
+    <div class="space-y-8">
+        <!-- Header -->
+        <div
+            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+            <div>
+                <div
+                    class="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                    <Building class="h-4 w-4" />
 
-            <div
-                class="aspect-[calc(4*3+1)/3 relative overflow-hidden rounded-xl border border-sidebar-border/70 p-5 dark:border-sidebar-border"
+                    <span>Company</span>
+                </div>
+
+                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
+                    Company Profile
+                </h1>
+
+                <!-- Toast Notification -->
+                <div
+                    v-if="page.props.flash.success"
+                    class="mt-4 inline-flex h-9 items-center justify-center rounded-lg border bg-muted px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted/60"
+                >
+                    {{ page.props.flash.success }}
+                </div>
+            </div>
+
+            <Link
+                href="/company/edit"
+                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
             >
-                <div class="grid grid-cols-2 gap-4">
-                    <p>
-                        <strong>Tax number:</strong>
-                        {{ props.company?.tax_number }}
-                    </p>
+                Edit Profile
+            </Link>
+        </div>
 
-                    <p><strong>Phone:</strong> {{ props.company?.phone }}</p>
+        <!-- Main Information Card -->
+        <div
+            class="rounded-xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+        >
+            <div class="space-y-6">
+                <!-- Contact Info -->
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <!-- Tax Number -->
+                    <div
+                        class="flex items-center justify-between rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50"
+                    >
+                        <div class="flex flex-col">
+                            <p class="mb-1 text-sm text-muted-foreground">
+                                Tax number
+                            </p>
 
-                    <p><strong>E-mail:</strong> {{ props.company?.email }}</p>
+                            <p class="font-semibold">
+                                {{ props.company?.tax_number }}
+                            </p>
+                        </div>
+                        <ChevronRight
+                            class="h-4 w-4 text-muted-foreground opacity-50"
+                        />
+                    </div>
 
-                    <p><strong>City:</strong> {{ props.company?.city }}</p>
+                    <!-- Phone -->
+                    <div
+                        class="flex items-center justify-between rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50"
+                    >
+                        <div class="flex flex-col">
+                            <p class="mb-1 text-sm text-muted-foreground">
+                                Phone
+                            </p>
 
-                    <p>
-                        <strong>Country:</strong> {{ props.company?.country }}
-                    </p>
+                            <p>{{ props.company?.phone }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div
+                        class="flex items-center justify-between rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50"
+                    >
+                        <div class="flex flex-col">
+                            <p class="mb-1 text-sm text-muted-foreground">
+                                E-mail
+                            </p>
+
+                            <p>{{ props.company?.email }}</p>
+                        </div>
+                    </div>
+
+                    <!-- City -->
+                    <div
+                        class="flex items-center justify-between rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50"
+                    >
+                        <div class="flex flex-col">
+                            <p class="mb-1 text-sm text-muted-foreground">
+                                City
+                            </p>
+
+                            <p>{{ props.company?.city }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Country -->
+                    <div
+                        class="flex items-center justify-between rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50 md:col-span-2"
+                    >
+                        <div class="flex flex-col">
+                            <p class="mb-1 text-sm text-muted-foreground">
+                                Country
+                            </p>
+
+                            <p>{{ props.company?.country }}</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mt-4 grid grid-cols-2 gap-4">
-                    <p><strong>Address:</strong> {{ props.company?.street }}</p>
+                <!-- Address Section -->
+                <div class="border-t border-border/20 pt-4">
+                    <div
+                        class="mb-3 flex items-center gap-2 text-sm text-muted-foreground"
+                    >
+                        <MapPin class="h-4 w-4" />
+                        <span>Address Details</span>
+                    </div>
 
-                    <p>
-                        <strong>Postal code:</strong>
-                        {{ props.company?.postal_code }}
-                    </p>
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <!-- Street -->
+                        <div
+                            class="rounded-lg border bg-muted/30 p-3 shadow-sm transition-colors hover:bg-muted/50"
+                        >
+                            <p
+                                class="mb-1 text-xs font-medium tracking-wide text-muted-foreground uppercase"
+                            >
+                                Street
+                            </p>
 
-                    <p>
-                        <strong>Country:</strong> {{ props.company?.country }}
-                    </p>
+                            <p>{{ props.company?.street }}</p>
+                        </div>
+
+                        <!-- Postal Code -->
+                        <div
+                            class="rounded-lg border bg-muted/30 p-3 shadow-sm transition-colors hover:bg-muted/50 md:col-span-2"
+                        >
+                            <p
+                                class="mb-1 text-xs font-medium tracking-wide text-muted-foreground uppercase"
+                            >
+                                Postal Code
+                            </p>
+
+                            <p>{{ props.company?.postal_code }}</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mt-6">
+                <!-- Edit Link Footer -->
+                <div
+                    class="mt-6 flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
+                >
+                    <p class="self-center text-xs text-muted-foreground">
+                        Update your company information to ensure invoices are
+                        correct.
+                    </p>
+
                     <Link
                         href="/company/edit"
-                        class="rounded bg-primary px-4 py-2 text-primary-foreground"
+                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
                     >
-                        Edit
+                        Edit Profile
                     </Link>
                 </div>
             </div>
         </div>
-        <!-- <div
-            class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border"
-        >
-            <PlaceholderPattern />
-        </div> -->
+
+        <!-- Bottom Information (same as Reports page) -->
+        <div class="rounded-xl border bg-muted/30 p-5 shadow-sm">
+            <div class="flex items-start gap-3">
+                <div
+                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background shadow-sm"
+                >
+                    <Briefcase class="h-4 w-4 text-muted-foreground" />
+                </div>
+
+                <div>
+                    <p class="text-sm font-medium">Company Information</p>
+
+                    <p class="mt-1 text-sm text-muted-foreground">
+                        These details are used for all outgoing invoices and
+                        business cards. Ensure the tax number matches your
+                        official registration documents.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

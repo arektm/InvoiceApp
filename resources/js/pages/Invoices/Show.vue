@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import ModalAlert from '@/components/ModalAlert.vue';
 import { print, pdf, show, destroy } from '@/routes/invoices';
 // import { destroy, print } from '@/actions/App/Http/Controllers/InvoiceController';
 
@@ -14,179 +16,333 @@ defineOptions({
     },
 });
 
+type InvoiceStatus = 'paid' | 'unpaid' | 'cancelled';
+
 const props = defineProps({
     invoice: Object,
 });
 // const form = useForm({
 //     invoice_id: props.invoice.id
 // })
-const remove = () => {
-    if (!confirm('Are you sure you want to delete the invoice? ')) {
-        return;
-    }
+// const remove = () => {
+//     if (!confirm('Are you sure you want to delete the invoice? ')) {
+//         return;
+//     }
 
-    // form.delete(destroy(props.invoice.id))
-    router.delete(destroy(props.invoice?.id).url);
+//     // form.delete(destroy(props.invoice.id))
+//     router.delete(destroy(props.invoice?.id).url);
+// };
+const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
+    paid: {
+        label: 'Paid',
+        class: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
+    },
+    unpaid: {
+        label: 'Unpaid',
+        class: 'bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400',
+    },
+    cancelled: {
+        label: 'Cancelled',
+        class: 'bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400',
+    },
+};
+
+const isConfirmOpen = ref(false);
+
+const openConfirmModal = () => {
+    isConfirmOpen.value = true;
+};
+const confirmRemove = () => {
+    isConfirmOpen.value = false;
+
+    if (props.invoice?.id) {
+        router.delete(destroy(props.invoice.id).url);
+    }
 };
 </script>
 
 <template>
-    <Head>
-        <title>{{ invoice?.invoice_number }}</title>
-    </Head>
+    <Head :title="invoice?.invoice_number || 'Invoice'" />
 
-    <div class="mb-6 flex justify-between">
-        <h1 class="text-3xl font-bold">
-            Invoice {{ invoice?.invoice_number }}
-        </h1>
-    </div>
-
-    <!-- Invoice data -->
-
-    <div class="mb-6 rounded p-6 shadow">
-        <div class="grid grid-cols-2 gap-6">
+    <div class="space-y-8">
+        <!-- Header -->
+        <div
+            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
             <div>
-                <h2 class="mb-2 font-bold">Client</h2>
+                <div
+                    class="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                    <FileText class="h-4 w-4" />
 
-                <p>{{ invoice?.client.name }}</p>
+                    <span>Documents</span>
+                </div>
 
-                <p>
-                    {{ invoice?.client.street }}
-                </p>
+                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
+                    Invoice {{ invoice?.invoice_number }}
+                </h1>
 
-                <p>
-                    {{ invoice?.client.postal_code }}
-                    {{ invoice?.client.city }}
-                </p>
-
-                <p>Tax number: {{ invoice?.client.tax_number }}</p>
+                <!-- Status Badge -->
+                <div
+                    class="mt-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium shadow-sm"
+                    :class="
+                        statusConfig[invoice?.status as InvoiceStatus]?.class
+                    "
+                >
+                    {{ statusConfig[invoice?.status as InvoiceStatus]?.label }}
+                </div>
             </div>
 
-            <div>
-                <h2 class="mb-2 font-bold">Invoice data</h2>
+            <div class="flex items-center gap-2">
+                <Link
+                    :href="pdf(invoice?.id)?.url"
+                    target="_blank"
+                    class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
+                >
+                    Download PDF
+                </Link>
 
-                <p>Invoice number: {{ invoice?.invoice_number }}</p>
+                <Link
+                    :href="print(invoice?.id)?.url"
+                    target="_blank"
+                    class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
+                >
+                    Print
+                </Link>
 
-                <p>Issue date: {{ invoice?.issue_date }}</p>
+                <Link
+                    href="/invoices/"
+                    class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
+                >
+                    Back
+                </Link>
 
-                <p>Sale date: {{ invoice?.sale_date }}</p>
+                <button
+                    @click="openConfirmModal"
+                    class="inline-flex h-9 items-center justify-center rounded-lg bg-red-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-600/90 disabled:pointer-events-none disabled:opacity-50"
+                >
+                    Delete
+                </button>
 
-                <p>Invoice due date: {{ invoice?.due_date }}</p>
-
-                <p>Status: {{ invoice?.status }}</p>
-
-                <p>Payment metod: {{ invoice?.payment_method }}</p>
+                <ModalAlert
+                    :show="isConfirmOpen"
+                    title="Delete confirmation"
+                    message="Are you sure you want to delete the invoice?"
+                    confirm="Delete"
+                    @close="isConfirmOpen = false"
+                    @confirm="confirmRemove"
+                />
             </div>
         </div>
-    </div>
 
-    <!-- Items -->
+        <!-- Invoice data -->
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <!-- Client Card -->
+            <div
+                class="rounded-xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+            >
+                <div class="mb-4 flex items-center gap-2 text-muted-foreground">
+                    <Users class="h-5 w-5" />
+                    <h2 class="text-sm font-medium tracking-tight uppercase">
+                        Client Details
+                    </h2>
+                </div>
 
-    <div class="rounded p-6 shadow">
-        <h2 class="mb-4 text-xl font-bold">Invoice items</h2>
+                <div class="space-y-3 text-sm">
+                    <div>
+                        <p class="font-semibold">{{ invoice?.client.name }}</p>
+                        <p class="mt-1 text-muted-foreground">
+                            {{ invoice?.client.street }}
+                        </p>
+                        <p class="text-muted-foreground">
+                            {{ invoice?.client.postal_code }}
+                            {{ invoice?.client.city }}
+                        </p>
+                    </div>
 
-        <table class="w-full border-collapse border">
-            <thead>
-                <tr class="bg-gray-100 dark:text-black">
-                    <th class="border p-2 text-left">Product</th>
+                    <div>
+                        <p class="font-medium">Tax number</p>
+                        <p class="mt-1 text-muted-foreground">
+                            : {{ invoice?.client.tax_number }}
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-                    <th class="border p-2 text-right">Quantity</th>
+            <!-- Invoice Info Card -->
+            <div
+                class="rounded-xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+            >
+                <div class="mb-4 flex items-center gap-2 text-muted-foreground">
+                    <CalendarDays class="h-5 w-5" />
+                    <h2 class="text-sm font-medium tracking-tight uppercase">
+                        Invoice Information
+                    </h2>
+                </div>
 
-                    <th class="border p-2 text-right">Unit net price</th>
+                <div class="space-y-3 text-sm">
+                    <div>
+                        <p class="font-medium">Invoice number</p>
+                        <p class="mt-1">{{ invoice?.invoice_number }}</p>
+                    </div>
 
-                    <th class="border p-2 text-right">Net value</th>
+                    <div>
+                        <p class="font-medium">Issue date</p>
+                        <p class="mt-1">{{ invoice?.issue_date }}</p>
+                    </div>
 
-                    <th class="border p-2 text-right">VAT value</th>
+                    <div>
+                        <p class="font-medium">Sale date</p>
+                        <p class="mt-1">{{ invoice?.sale_date }}</p>
+                    </div>
 
-                    <th class="border p-2 text-right">Gross value</th>
-                </tr>
-            </thead>
+                    <div>
+                        <p class="font-medium">Due date</p>
+                        <p class="mt-1">{{ invoice?.due_date }}</p>
+                    </div>
 
-            <tbody>
-                <tr v-for="item in invoice?.items" :key="item.id">
-                    <td class="border p-2">
-                        {{ item.product_name }}
-                    </td>
+                    <div>
+                        <p class="font-medium">Payment method</p>
+                        <p class="mt-1">{{ invoice?.payment_method }}</p>
+                    </div>
 
-                    <td class="border p-2 text-right">
-                        {{ item.quantity }}
-                    </td>
+                    <div>
+                        <p class="font-medium">Status</p>
+                        <p class="mt-1">{{ invoice?.status }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <td class="border p-2 text-right">
-                        € {{ item.unit_net_price }}
-                    </td>
+        <!-- Items -->
+        <div class="rounded-xl border bg-card shadow-sm">
+            <div class="flex items-center justify-between border-b px-5 py-4">
+                <div>
+                    <div class="flex items-center gap-2 text-muted-foreground">
+                        <Package class="h-5 w-5" />
+                        <h2 class="font-semibold">Invoice Items</h2>
+                    </div>
 
-                    <td class="border p-2 text-right">
-                        € {{ item.net_value }}
-                    </td>
+                    <p class="mt-1 text-xs text-muted-foreground">
+                        Product breakdown with VAT calculations
+                    </p>
+                </div>
+            </div>
 
-                    <td class="border p-2 text-right">
-                        € {{ item.vat_value }}
-                    </td>
+            <div class="overflow-hidden">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="border-b bg-muted/30">
+                            <th
+                                class="border p-4 text-left text-sm font-medium"
+                            >
+                                Product
+                            </th>
 
-                    <td class="border p-2 text-right">
-                        € {{ item.gross_value }}
-                    </td>
-                </tr>
-            </tbody>
+                            <th
+                                class="border p-4 text-right text-sm font-medium"
+                            >
+                                Quantity
+                            </th>
 
-            <tfoot>
-                <tr class="bg-gray-50 font-bold dark:text-black">
-                    <td colspan="3" class="border p-2 text-right">Total:</td>
+                            <th
+                                class="border p-4 text-right text-sm font-medium"
+                            >
+                                Unit net price
+                            </th>
 
-                    <td class="border p-2 text-right">
-                        € {{ invoice?.total_net }}
-                    </td>
+                            <th
+                                class="border p-4 text-right text-sm font-medium"
+                            >
+                                Net value
+                            </th>
 
-                    <td class="border p-2 text-right">
-                        € {{ invoice?.total_vat }}
-                    </td>
+                            <th
+                                class="border p-4 text-right text-sm font-medium"
+                            >
+                                VAT value
+                            </th>
 
-                    <td class="border p-2 text-right">
-                        € {{ invoice?.total_gross }}
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-    <div class="mt-6 ml-5 flex gap-3">
-        <!-- :href="`/invoices/${invoice.id}/pdf`" -->
-        <a
-            :href="pdf(invoice?.id).url"
-            target="_blank"
-            class="rounded bg-blue-600 px-4 py-2 text-white"
-        >
-            Download PDF
-        </a>
-        <!-- :href="`/invoices/${invoice.id}/print`" -->
-        <a
-            :href="print(invoice?.id).url"
-            target="_blank"
-            class="rounded bg-green-600 px-4 py-2 text-white"
-        >
-            Print
-        </a>
-        <Link
-            href="/invoices/"
-            class="rounded bg-gray-600 px-4 py-2 text-white"
-        >
-            Back
-        </Link>
-        <button
-            type="button"
-            @click="remove"
-            class="rounded bg-red-600 px-6 py-2 text-white"
-        >
-            Delete
-        </button>
-        <!-- :href=router.get(print(invoice.id))  -->
-        <!-- <button
-        
-        @click="router.post(send(invoice.id))"
-        
-        class="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-        Send by Email
-    </button> -->
+                            <th
+                                class="border p-4 text-right text-sm font-medium"
+                            >
+                                Gross value
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr
+                            v-for="item in invoice?.items"
+                            :key="item.id"
+                            class="border-b transition-colors last:border-b-0 hover:bg-muted/20"
+                        >
+                            <td class="p-4 text-sm">
+                                {{ item.product_name }}
+                            </td>
+
+                            <td class="p-4 text-right text-sm">
+                                {{ item.quantity }}
+                            </td>
+
+                            <td class="p-4 text-right text-sm">
+                                € {{ item.unit_net_price || '0.00' }}
+                            </td>
+
+                            <td class="p-4 text-right text-sm font-medium">
+                                € {{ item.net_value || '0.00' }}
+                            </td>
+
+                            <td class="p-4 text-right text-sm">
+                                € {{ item.vat_value || '0.00' }}
+                            </td>
+
+                            <td
+                                class="p-4 text-right text-sm font-semibold text-blue-600"
+                            >
+                                € {{ item.gross_value || '0.00' }}
+                            </td>
+                        </tr>
+
+                        <tr
+                            v-if="invoice?.items.length"
+                            class="border-t bg-muted/30"
+                        >
+                            <td
+                                colspan="5"
+                                class="p-4 text-right text-sm font-medium"
+                            >
+                                Total:
+                            </td>
+
+                            <td class="p-4 text-right text-sm font-medium">
+                                € {{ invoice?.total_net || '0.00' }}
+                            </td>
+
+                            <td class="p-4 text-right text-sm font-medium">
+                                € {{ invoice?.total_vat || '0.00' }}
+                            </td>
+
+                            <td
+                                class="p-4 text-right text-sm font-bold text-blue-600"
+                            >
+                                € {{ invoice?.total_gross || '0.00' }}
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot v-if="!invoice?.items?.length">
+                        <tr>
+                            <td
+                                colspan="7"
+                                class="p-8 text-center text-xs text-muted-foreground"
+                            >
+                                No items available for this invoice
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 </template>

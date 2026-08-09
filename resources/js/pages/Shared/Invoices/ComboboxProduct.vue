@@ -55,7 +55,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<template>
+<!-- <template>
     <div class="relative" ref="dropdownRef">
         <input
             :value="modelValue.product_name"
@@ -97,6 +97,57 @@ onBeforeUnmount(() => {
             </div>
 
             <div v-if="filteredProducts.length === 0" class="p-2 text-gray-500">
+                No products found
+            </div>
+        </div>
+    </div>
+</template> -->
+
+<template>
+    <div class="relative" ref="dropdownRef">
+        <input
+            :value="modelValue.product_name"
+            type="text"
+            autocomplete="off"
+            placeholder="Select product..."
+            class="flex w-full items-center rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+            @focus="open = true"
+            @keydown.escape="open = false"
+            @input="
+                emit('update:modelValue', {
+                    ...modelValue,
+                    product_name: $event.target.value,
+                })
+            "
+        />
+
+        <div
+            v-if="open"
+            class="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-lg border bg-background shadow-lg"
+        >
+            <div
+                v-for="product in filteredProducts"
+                :key="product.id"
+                class="cursor-pointer border-b px-3 py-2.5 transition-colors last:border-b-0 hover:bg-muted/60"
+                @click="selectProduct(product)"
+            >
+                <div class="text-sm font-medium text-foreground">
+                    {{ product.product_name }}
+                </div>
+
+                <div class="mt-0.5 text-sm text-muted-foreground">
+                    € {{ product.net_price }}
+
+                    <span class="ml-2 text-xs">
+                        VAT {{ product.vat_rate }}%
+                    </span>
+                </div>
+            </div>
+
+            <div
+                v-if="filteredProducts.length === 0"
+                class="px-3 py-3 text-sm text-muted-foreground"
+            >
                 No products found
             </div>
         </div>

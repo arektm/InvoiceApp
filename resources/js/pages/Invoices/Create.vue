@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { create } from '@/routes/invoices';
 
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
@@ -57,113 +57,220 @@ const submit = () => {
 </script>
 
 <template>
-    <Head>
-        <title>Create Invoice</title>
-    </Head>
+    <Head title="New Invoice" />
 
-    <h1 class="mb-6 text-3xl">New Invoice</h1>
-
-    <form @submit.prevent="submit">
-        <!-- CLIENT -->
-
-        <div class="mb-6">
-            <label class="mb-2 block font-medium"> Client </label>
-
-            <ComboboxClient
-                v-model="form.client_id"
-                :clients="clients ?? []"
-                :error="form.errors.client_id"
-            />
-        </div>
-
-        <!-- DATES -->
-
-        <div class="mb-6 grid grid-cols-2 gap-4">
-            <div>
-                <label class="mb-1 block font-medium"> Issue date </label>
-
-                <input
-                    v-model="form.issue_date"
-                    type="date"
-                    class="w-full rounded border p-2"
-                />
-
-                <p
-                    v-if="form.errors.issue_date"
-                    class="mt-1 text-sm text-red-500"
-                >
-                    {{ form.errors.issue_date }}
-                </p>
-            </div>
-
-            <div>
-                <label class="mb-1 block font-medium"> Sale date </label>
-
-                <input
-                    v-model="form.sale_date"
-                    type="date"
-                    class="w-full rounded border p-2"
-                />
-
-                <p
-                    v-if="form.errors.sale_date"
-                    class="mt-1 text-sm text-red-500"
-                >
-                    {{ form.errors.sale_date }}
-                </p>
-            </div>
-
-            <div>
-                <label class="mb-1 block font-medium"> Due date </label>
-
-                <input
-                    v-model="form.due_date"
-                    type="date"
-                    class="w-full rounded border p-2"
-                />
-
-                <p
-                    v-if="form.errors.due_date"
-                    class="mt-1 text-sm text-red-500"
-                >
-                    {{ form.errors.due_date }}
-                </p>
-            </div>
-
-            <div>
-                <label class="mb-1 block font-medium"> Payment method </label>
-
-                <input
-                    v-model="form.payment_method"
-                    type="text"
-                    class="w-full rounded border p-2"
-                />
-
-                <p
-                    v-if="form.errors.payment_method"
-                    class="mt-1 text-sm text-red-500"
-                >
-                    {{ form.errors.payment_method }}
-                </p>
-            </div>
-        </div>
-
-        <!-- PRODUCTS -->
-
-        <InvoiceItems
-            :items="form.items"
-            :products="products ?? []"
-            :errors="form.errors"
-        />
-
-        <!-- SAVE -->
-
-        <button
-            type="submit"
-            class="mt-5 ml-5 rounded bg-blue-500 px-6 py-2 text-white disabled:opacity-50"
-            :disabled="form.processing"
+    <div class="space-y-8">
+        <!-- Header -->
+        <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
-            {{ form.processing ? 'Saving...' : 'Save Invoice' }}
-        </button>
-    </form>
+            <div>
+                <h1 class="mt-2 text-3xl font-semibold tracking-tight">
+                    New Invoice
+                </h1>
+
+                <p class="mt-1 text-sm text-muted-foreground">
+                    Create a new invoice record in the system.
+                </p>
+            </div>
+
+            <Link
+                href="/invoices"
+                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
+            >
+                Cancel
+            </Link>
+        </div>
+
+        <!-- Form -->
+        <form @submit.prevent="submit">
+            <div class="space-y-6">
+                <!-- CLIENT CARD -->
+                <div
+                    class="rounded-xl border bg-card p-3 shadow-sm transition-shadow hover:shadow-md"
+                >
+                    <div class="mb-4 flex items-center justify-between">
+                        <div
+                            class="flex items-center gap-2 text-muted-foreground"
+                        >
+                            <Users class="h-5 w-5" />
+                            <h2
+                                class="text-sm font-medium tracking-tight text-muted-foreground uppercase"
+                            >
+                                Client Information
+                            </h2>
+                        </div>
+                    </div>
+                    <ComboboxClient
+                        v-model="form.client_id"
+                        :clients="clients ?? []"
+                        :error="form.errors.client_id"
+                        class="flex w-full items-center gap-2 rounded-lg border bg-background px-6 py-3 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    />
+
+                    <div
+                        v-if="form.errors.client_id"
+                        class="mt-1 text-xs text-red-500"
+                    >
+                        {{ form.errors.client_id }}
+                    </div>
+                </div>
+
+                <!-- DATES CARD -->
+                <div
+                    class="rounded-xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+                >
+                    <div
+                        class="mb-4 flex items-center gap-2 text-muted-foreground"
+                    >
+                        <CalendarDays class="h-5 w-5" />
+                        <h2
+                            class="text-sm font-medium tracking-tight text-muted-foreground uppercase"
+                        >
+                            Dates & Payment Method
+                        </h2>
+                    </div>
+
+                    <div
+                        class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4"
+                    >
+                        <!-- Issue Date -->
+                        <div>
+                            <label
+                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
+                                >Issue date</label
+                            >
+
+                            <input
+                                v-model="form.issue_date"
+                                type="date"
+                                class="flex w-full items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                            />
+
+                            <p
+                                v-if="form.errors.issue_date"
+                                class="mt-1 text-xs text-red-500"
+                            >
+                                {{ form.errors.issue_date }}
+                            </p>
+                        </div>
+
+                        <!-- Sale Date -->
+                        <div>
+                            <label
+                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
+                                >Sale date</label
+                            >
+
+                            <input
+                                v-model="form.sale_date"
+                                type="date"
+                                class="flex w-full items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                            />
+
+                            <p
+                                v-if="form.errors.sale_date"
+                                class="mt-1 text-xs text-red-500"
+                            >
+                                {{ form.errors.sale_date }}
+                            </p>
+                        </div>
+
+                        <!-- Due Date -->
+                        <div>
+                            <label
+                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
+                                >Due date</label
+                            >
+
+                            <input
+                                v-model="form.due_date"
+                                type="date"
+                                class="flex w-full items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                            />
+
+                            <p
+                                v-if="form.errors.due_date"
+                                class="mt-1 text-xs text-red-500"
+                            >
+                                {{ form.errors.due_date }}
+                            </p>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div>
+                            <label
+                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
+                                >Payment method</label
+                            >
+
+                            <input
+                                v-model="form.payment_method"
+                                type="text"
+                                placeholder="e.g. Transfer, Cash..."
+                                class="flex w-full items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                            />
+
+                            <p
+                                v-if="form.errors.payment_method"
+                                class="mt-1 text-xs text-red-500"
+                            >
+                                {{ form.errors.payment_method }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ITEMS CARD -->
+                <div
+                    class="rounded-xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+                >
+                    <div
+                        class="mb-4 flex items-center gap-2 text-muted-foreground"
+                    >
+                        <Package class="h-5 w-5" />
+                        <h2
+                            class="text-sm font-medium tracking-tight text-muted-foreground uppercase"
+                        >
+                            Items
+                        </h2>
+                    </div>
+
+                    <!-- Comment: Keep your component as is inside this styled wrapper -->
+                    <InvoiceItems
+                        :items="form.items"
+                        :products="products ?? []"
+                        :errors="form.errors"
+                    />
+
+                    <p
+                        v-if="!form.items.length"
+                        class="mt-4 text-sm text-muted-foreground"
+                    >
+                        Items list is currently empty.
+                    </p>
+                </div>
+
+                <!-- Actions FOOTER -->
+                <div
+                    class="flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
+                >
+                    <Link
+                        href="/invoices"
+                        class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
+                    >
+                        Cancel
+                    </Link>
+
+                    <button
+                        type="submit"
+                        :disabled="form.processing"
+                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
+                    >
+                        {{ form.processing ? 'Saving...' : 'Save Invoice' }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 </template>
