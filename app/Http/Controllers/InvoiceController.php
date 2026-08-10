@@ -41,6 +41,7 @@ class InvoiceController extends Controller
                 'total_gross' => $invoice->total_gross,
                 'name' => $invoice->client->name,
                 'email' => $invoice->client->email,
+                'overdue' => $invoice->due_date->isPast(),
             ]);
 
         return Inertia::render('Invoices/Index', [
@@ -151,6 +152,7 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         $invoice->load(['client', 'items.product']);
+        $invoice->overdue = $invoice->due_date->isPast();
 
         return Inertia::render('Invoices/Show', [
             'invoice' => $this->formatInvoice($invoice),
@@ -417,6 +419,7 @@ class InvoiceController extends Controller
             'total_vat' => $invoice->total_vat,
             'total_gross' => $invoice->total_gross,
             'client' => $invoice->client,
+            'overdue' => $invoice->overdue,
             'items' => $invoice->items->map(fn ($item) => [
                 'id' => $item->id,
                 'product_name' => $item->product->product_name ?? '[Deleted product]',

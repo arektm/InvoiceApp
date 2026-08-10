@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
+import { Eye, Pencil, Plus } from '@lucide/vue';
 import { ref, watch } from 'vue';
 import { create, show, index, edit } from '@/routes/invoices';
 import Pagination from '../Shared/Pagination.vue';
@@ -38,27 +39,15 @@ watch(search, (value) => {
 <template>
     <Head title="Invoices"></Head>
 
-    <div class="space-y-8">
+    <div class="space-y-4">
         <!-- Header -->
         <div
             class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <FileText class="h-4 w-4" />
-
-                    <span>Billing</span>
-                </div>
-
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
+                <h1 class="mt-3 ml-3 text-3xl font-semibold tracking-tight">
                     Invoices
                 </h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Manage your invoices, payments and billing activity.
-                </p>
             </div>
 
             <Link
@@ -77,13 +66,14 @@ watch(search, (value) => {
                 <Search class="h-4 w-4 text-muted-foreground" />
 
                 <label for="invoice-search" class="text-sm font-medium">
-                    Search invoices
+                    Search invoices by invoice number, client name or email
+                    address.
                 </label>
             </div>
 
-            <p class="mt-1 text-xs text-muted-foreground">
+            <!-- <p class="mt-1 text-xs text-muted-foreground">
                 Search by invoice number, client name or email address.
-            </p>
+            </p> -->
 
             <div class="relative mt-4">
                 <Search
@@ -109,10 +99,6 @@ watch(search, (value) => {
 
                     <h2 class="font-semibold">Invoice list</h2>
                 </div>
-
-                <p class="mt-1 text-xs text-muted-foreground">
-                    All invoices in your system.
-                </p>
             </div>
 
             <!-- Desktop table -->
@@ -165,7 +151,7 @@ watch(search, (value) => {
                             class="transition-colors hover:bg-muted/40"
                         >
                             <!-- Number -->
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-2 whitespace-nowrap">
                                 <Link
                                     :href="show(invoice.id)"
                                     class="text-sm font-medium hover:underline"
@@ -175,7 +161,7 @@ watch(search, (value) => {
                             </td>
 
                             <!-- Client -->
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <div class="text-sm font-medium">
                                     {{ invoice.name }}
                                 </div>
@@ -183,20 +169,20 @@ watch(search, (value) => {
 
                             <!-- Issue date -->
                             <td
-                                class="px-6 py-4 text-sm whitespace-nowrap text-muted-foreground"
+                                class="px-6 py-2 text-sm whitespace-nowrap text-muted-foreground"
                             >
                                 {{ invoice.issue_date }}
                             </td>
 
                             <!-- Gross -->
                             <td
-                                class="px-6 py-4 text-right text-sm font-semibold whitespace-nowrap"
+                                class="px-6 py-2 text-right text-sm font-semibold whitespace-nowrap"
                             >
                                 € {{ invoice.total_gross }}
                             </td>
 
                             <!-- Status -->
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <span
                                     class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium"
                                     :class="{
@@ -215,10 +201,18 @@ watch(search, (value) => {
                                 >
                                     {{ invoice.status }}
                                 </span>
+                                <span
+                                    v-if="
+                                        invoice.status === 'unpaid' &&
+                                        invoice.overdue
+                                    "
+                                    class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-400"
+                                    >overdue</span
+                                >
                             </td>
 
                             <!-- Actions -->
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-2">
                                 <div class="flex justify-end gap-2">
                                     <Link
                                         :href="show(invoice.id).url"

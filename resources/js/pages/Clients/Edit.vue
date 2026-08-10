@@ -273,26 +273,5 @@ const remove = () => {
                 </div>
             </div>
         </form>
-
-        <!-- Bottom Information -->
-        <div class="rounded-xl border bg-muted/30 p-5 shadow-sm">
-            <div class="flex items-start gap-3">
-                <div
-                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background shadow-sm"
-                >
-                    <Users class="h-4 w-4 text-muted-foreground" />
-                </div>
-
-                <div>
-                    <p class="text-sm font-medium">Client Information</p>
-
-                    <p class="mt-1 text-sm text-muted-foreground">
-                        These details are used for all invoices sent to this
-                        client. Please ensure all information is accurate and
-                        current.
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </template>

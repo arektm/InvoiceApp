@@ -70,14 +70,6 @@ const confirmRemove = () => {
             class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <FileText class="h-4 w-4" />
-
-                    <span>Documents</span>
-                </div>
-
                 <h1 class="mt-1 text-3xl font-semibold tracking-tight">
                     Invoice {{ invoice?.invoice_number }}
                 </h1>
@@ -90,6 +82,12 @@ const confirmRemove = () => {
                     "
                 >
                     {{ statusConfig[invoice?.status as InvoiceStatus]?.label }}
+                </div>
+                <div
+                    v-if="invoice?.status === 'unpaid' && invoice?.overdue"
+                    class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-400"
+                >
+                    overdue
                 </div>
             </div>
 
@@ -163,7 +161,7 @@ const confirmRemove = () => {
                     <div>
                         <p class="font-medium">Tax number</p>
                         <p class="mt-1 text-muted-foreground">
-                            : {{ invoice?.client.tax_number }}
+                            {{ invoice?.client.tax_number }}
                         </p>
                     </div>
                 </div>
@@ -180,7 +178,10 @@ const confirmRemove = () => {
                     </h2>
                 </div>
 
-                <div class="space-y-3 text-sm">
+                <div
+                    class="grid grid-cols-1 gap-x-8 gap-y-4 text-sm md:grid-cols-2"
+                >
+                    <!-- Column 1 -->
                     <div>
                         <p class="font-medium">Invoice number</p>
                         <p class="mt-1">{{ invoice?.invoice_number }}</p>
@@ -196,6 +197,7 @@ const confirmRemove = () => {
                         <p class="mt-1">{{ invoice?.sale_date }}</p>
                     </div>
 
+                    <!-- Column 2 -->
                     <div>
                         <p class="font-medium">Due date</p>
                         <p class="mt-1">{{ invoice?.due_date }}</p>

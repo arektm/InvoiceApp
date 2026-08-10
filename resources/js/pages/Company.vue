@@ -47,16 +47,8 @@ const page = usePage<SharedProps>();
             class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <Building class="h-4 w-4" />
-
-                    <span>Company</span>
-                </div>
-
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                    Company Profile
+                <h1 class="mt-3 ml-3 text-3xl font-semibold tracking-tight">
+                    Company Data
                 </h1>
 
                 <!-- Toast Notification -->
@@ -68,12 +60,12 @@ const page = usePage<SharedProps>();
                 </div>
             </div>
 
-            <Link
+            <!-- <Link
                 href="/company/edit"
-                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
+                class="inline-flex mr-3 h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
             >
                 Edit Profile
-            </Link>
+            </Link> -->
         </div>
 
         <!-- Main Information Card -->
@@ -83,6 +75,17 @@ const page = usePage<SharedProps>();
             <div class="space-y-6">
                 <!-- Contact Info -->
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div
+                        class="flex items-center justify-between rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50 md:col-span-2"
+                    >
+                        <div class="flex flex-col">
+                            <p class="mb-1 text-sm text-muted-foreground">
+                                Company Name
+                            </p>
+
+                            <p>{{ props.company?.name }}</p>
+                        </div>
+                    </div>
                     <!-- Tax Number -->
                     <div
                         class="flex items-center justify-between rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50"
@@ -196,38 +199,12 @@ const page = usePage<SharedProps>();
                 <div
                     class="mt-6 flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
                 >
-                    <p class="self-center text-xs text-muted-foreground">
-                        Update your company information to ensure invoices are
-                        correct.
-                    </p>
-
                     <Link
                         href="/company/edit"
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
+                        class="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground text-secondary shadow-sm transition-colors hover:bg-primary/80 disabled:pointer-events-none disabled:opacity-50"
                     >
                         Edit Profile
                     </Link>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Information (same as Reports page) -->
-        <div class="rounded-xl border bg-muted/30 p-5 shadow-sm">
-            <div class="flex items-start gap-3">
-                <div
-                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background shadow-sm"
-                >
-                    <Briefcase class="h-4 w-4 text-muted-foreground" />
-                </div>
-
-                <div>
-                    <p class="text-sm font-medium">Company Information</p>
-
-                    <p class="mt-1 text-sm text-muted-foreground">
-                        These details are used for all outgoing invoices and
-                        business cards. Ensure the tax number matches your
-                        official registration documents.
-                    </p>
                 </div>
             </div>
         </div>

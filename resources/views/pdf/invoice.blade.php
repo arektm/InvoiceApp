@@ -1,190 +1,325 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <meta charset="utf-8">
 
-<meta charset="utf-8">
+    <style>
+        body {
+            font-family: DejaVu Sans;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #1f2937;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
+        .invoice {
+            width: 100%;
+        }
 
-body{
-    font-family: DejaVu Sans;
-    font-size:12px;
-}
+        /* Header */
 
-table{
-    width:100%;
-    border-collapse:collapse;
-}
+        .header {
+            width: 100%;
+            margin-bottom: 28px;
+        }
 
-th,td{
-    border:1px solid #000;
-    padding:5px;
-}
+        .header-title {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+            margin: 0 0 8px 0;
+            color: #111827;
+        }
 
-.text-right{
-    text-align:right;
-}
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-  /* height: 300px; */
-}
+        .invoice-number {
+            font-size: 14px;
+            font-weight: bold;
+            color: #374151;
+        }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-</style>
+        .invoice-meta {
+            margin-top: 10px;
+            color: #6b7280;
+            font-size: 11px;
+        }
 
+        .invoice-meta strong {
+            color: #374151;
+        }
+
+        /* Customer / Seller */
+
+        .row {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .column {
+            display: inline-block;
+            vertical-align: top;
+            width: 47%;
+            padding: 14px;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+        }
+
+        /* .column + .column {
+            margin-left: 20%;
+        } */
+
+        .section-title {
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            font-weight: bold;
+            color: #374151;
+            text-transform: uppercase;
+        }
+
+        .address {
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        /* Items */
+
+        .items-title {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #e5e7eb;
+            padding: 7px 8px;
+        }
+
+        th {
+            background: #f3f4f6;
+            color: #374151;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td {
+            color: #374151;
+            background: #ffffff;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        /* Summary */
+
+        .summary {
+            width: 45%;
+            margin-left: auto;
+            margin-top: 18px;
+        }
+
+        .summary th {
+            background: #f9fafb;
+            text-align: left;
+        }
+
+        .summary .total {
+            background: #f3f4f6;
+            font-size: 12px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        /* Footer */
+
+        .footer {
+            margin-top: 35px;
+            padding-top: 12px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 10px;
+        }
+    </style>
 </head>
+
 <body>
+<div class="invoice">
 
-<h1>INVOICE</h1>
+    <!-- Header -->
 
-<h3>
-Number:
-{{ $invoice->invoice_number }}
-</h3>
+    <div class="header">
+        <h1 class="header-title">INVOICE</h1>
 
-<p>
-Issue date:
-{{ $invoice->issue_date }}
-</p>
+        <div class="invoice-number">
+            Number:
+            {{ $invoice->invoice_number }}
+        </div>
 
-<p>
-Due date:
-{{ $invoice->due_date }}
-</p>
+        <div class="invoice-meta">
+            <strong>Issue date:</strong>
+            {{ $invoice->issue_date }}
 
-<div class="row">
-    <div class="column">
-        <h3>Customer</h3>
+            &nbsp;&nbsp;&nbsp;
 
-        <p>
-        {{ $invoice->client->name }}
-        <br>
-        TAX number:
-        {{ $invoice->client->tax_number }}
-        <br>
-        {{ $invoice->client->street }}
-        <br>
-        {{ $invoice->client->postal_code }}
-        {{ $invoice->client->city }}
-        </p>
+            <strong>Due date:</strong>
+            {{ $invoice->due_date }}
+        </div>
     </div>
-    <div class="column">
-        <h3>Seller</h3>
 
-        <p>
-        {{ $company->name }}
-        <br>
-        TAX number:
-        {{ $company->tax_number }}
-        <br>
-        {{ $company->street }}
-        <br>
-        {{ $company->postal_code }}
-        {{ $company->city }}
+    <!-- Customer / Seller -->
+
+    <div class="row">
+
+        <div class="column">
+            <h3 class="section-title">Customer</h3>
+
+            <p class="address">
+                {{ $invoice->client->name }}
+                <br>
+
+                TAX number:
+                {{ $invoice->client->tax_number }}
+                <br>
+
+                {{ $invoice->client->street }}
+                <br>
+
+                {{ $invoice->client->postal_code }}
+                {{ $invoice->client->city }}
+            </p>
+        </div>
+
+        <div class="column">
+            <h3 class="section-title">Seller</h3>
+
+            <p class="address">
+                {{ $company->name }}
+                <br>
+
+                TAX number:
+                {{ $company->tax_number }}
+                <br>
+
+                {{ $company->street }}
+                <br>
+
+                {{ $company->postal_code }}
+                {{ $company->city }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Invoice items -->
+
+    <div>
+        <p class="items-title">
+            Invoice items
         </p>
-    </div>    
-</div>
 
-<div>
-    <p>Invoice items</p>
-    <table>
-    <thead>
-    <tr>
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">No.</th>
+                    <th>Product</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-right">Unit price</th>
+                    <th class="text-center">VAT</th>
+                    <th class="text-right">Net value</th>
+                    <th class="text-right">Gross value</th>
+                </tr>
+            </thead>
 
-    <th>No.</th>
-    <th>Product</th>
-    <th>Quantity</th>
-    <th>Unit price</th>
-    <th>VAT</th>
-    <th>Net value</th>
-    <th>Gross value</th>
+            <tbody>
+                @foreach($invoice->items as $index => $item)
+                    <tr>
+                        <td class="text-center">
+                            {{ $index + 1 }}
+                        </td>
 
-    </tr>
+                        <td>
+                            {{ $item->product->product_name }}
+                        </td>
 
-    </thead>
+                        <td class="text-center">
+                            {{ $item->quantity }}
+                        </td>
 
-    <tbody>
+                        <td class="text-right">
+                            {{ number_format($item->unit_net_price,2) }}
+                        </td>
 
-    @foreach($invoice->items as $index => $item)
+                        <td class="text-center">
+                            {{ $item->vat_rate }}%
+                        </td>
 
-    <tr>
+                        <td class="text-right">
+                            {{ number_format($item->net_value,2) }}
+                        </td>
 
-    <td>{{ $index + 1 }}</td>
+                        <td class="text-right">
+                            {{ number_format($item->gross_value,2) }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <td>
-    {{ $item->product->product_name }}
-    </td>
+        <!-- Summary -->
 
-    <td>
-    {{ $item->quantity }}
-    </td>
+        <table class="summary">
+            <tr>
+                <th>
+                    Total net
+                </th>
 
-    <td class="text-right">
-    {{ number_format($item->unit_net_price,2) }}
-    </td>
+                <td class="text-right">
+                    {{ number_format($invoice->total_net,2) }}
+                </td>
+            </tr>
 
-    <td>
-    {{ $item->vat_rate }}%
-    </td>
+            <tr>
+                <th>
+                    VAT
+                </th>
 
-    <td class="text-right">
-    {{ number_format($item->net_value,2) }}
-    </td>
+                <td class="text-right">
+                    {{ number_format($invoice->total_vat,2) }}
+                </td>
+            </tr>
 
-    <td class="text-right">
-    {{ number_format($item->gross_value,2) }}
-    </td>
+            <tr>
+                <th class="total">
+                    Total gross
+                </th>
 
-    </tr>
+                <td class="text-right total">
+                    {{ number_format($invoice->total_gross,2) }}
+                </td>
+            </tr>
+        </table>
+    </div>
 
-    @endforeach
+    <!-- Footer -->
 
-    </tbody>
+    <div class="footer">
+        Invoice {{ $invoice->invoice_number }}
+    </div>
 
-    </table>
-
-    <br>
-
-    <table>
-
-    <tr>
-
-    <th>Total net</th>
-
-    <td class="text-right">
-    {{ number_format($invoice->total_net,2) }}
-    </td>
-
-    </tr>
-
-    <tr>
-
-    <th>VAT</th>
-
-    <td class="text-right">
-    {{ number_format($invoice->total_vat,2) }}
-    </td>
-
-    </tr>
-
-    <tr>
-
-    <th>Total gross</th>
-
-    <td class="text-right">
-    {{ number_format($invoice->total_gross,2) }}
-    </td>
-
-    </tr>
-
-    </table>
 </div>
 </body>
 </html>
+

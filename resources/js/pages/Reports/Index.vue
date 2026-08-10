@@ -475,25 +475,5 @@ const productPercentage = (value: number | string | null) => {
                 </div>
             </div>
         </div>
-
-        <!-- Bottom information -->
-        <div class="rounded-xl border bg-muted/30 p-5">
-            <div class="flex items-start gap-3">
-                <div
-                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background shadow-sm"
-                >
-                    <BarChart3 class="h-4 w-4 text-muted-foreground" />
-                </div>
-
-                <div>
-                    <p class="text-sm font-medium">Business overview</p>
-
-                    <p class="mt-1 text-sm text-muted-foreground">
-                        Revenue figures are calculated from issued invoices.
-                        Overdue invoices are based on their payment due date.
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </template>

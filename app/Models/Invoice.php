@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Company $company
  * @property-read Collection<int, InvoiceItem> $items
  * @property-read int $items_count
+ * @property bool $overdue
  *
  * @method static \Database\Factories\InvoiceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice newModelQuery()

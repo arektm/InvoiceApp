@@ -173,26 +173,5 @@ defineProps({
                 </div>
             </div>
         </div>
-
-        <!-- Bottom Information (same as Reports page) -->
-        <div class="rounded-xl border bg-muted/30 p-5 shadow-sm">
-            <div class="flex items-start gap-3">
-                <div
-                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background shadow-sm"
-                >
-                    <Users class="h-4 w-4 text-muted-foreground" />
-                </div>
-
-                <div>
-                    <p class="text-sm font-medium">Client Information</p>
-
-                    <p class="mt-1 text-sm text-muted-foreground">
-                        Client details used for invoicing and business
-                        communications. Ensure accuracy to maintain proper
-                        customer records.
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </template>

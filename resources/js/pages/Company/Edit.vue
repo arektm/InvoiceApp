@@ -243,7 +243,7 @@ const submit = () => {
                     <button
                         type="submit"
                         :disabled="form.processing"
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
+                        class="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground text-secondary shadow-sm transition-colors hover:bg-primary/80 disabled:pointer-events-none disabled:opacity-50"
                     >
                         {{
                             form.processing
@@ -254,27 +254,5 @@ const submit = () => {
                 </div>
             </form>
         </div>
-
-        <!-- Bottom Information -->
-        <div class="rounded-xl border bg-muted/30 p-5 shadow-sm">
-            <div class="flex items-start gap-3">
-                <div
-                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background shadow-sm"
-                >
-                    <BarChart3 class="h-4 w-4 text-muted-foreground" />
-                </div>
-
-                <div>
-                    <p class="text-sm font-medium">Company Information</p>
-
-                    <p class="mt-1 text-sm text-muted-foreground">
-                        Your company details are used for invoices and business
-                        communications. Please ensure all information is
-                        accurate and up to date.
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
-```
