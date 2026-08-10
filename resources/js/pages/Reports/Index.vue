@@ -11,7 +11,17 @@ import {
     Package,
     Users,
 } from '@lucide/vue';
-
+import reports from '@/routes/reports';
+defineOptions({
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Reports',
+                href: reports.index(),
+            },
+        ],
+    },
+});
 interface TopClient {
     id: number;
     name: string;
@@ -92,17 +102,9 @@ const productPercentage = (value: number | string | null) => {
     <div class="space-y-8">
         <!-- Header -->
         <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+            class="flex flex-col gap-4 p-3 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <BarChart3 class="h-4 w-4" />
-
-                    <span>Business overview</span>
-                </div>
-
                 <h1 class="mt-1 text-3xl font-semibold tracking-tight">
                     Reports
                 </h1>

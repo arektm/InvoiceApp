@@ -203,7 +203,7 @@ const page = usePage<SharedProps>();
                         href="/company/edit"
                         class="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground text-secondary shadow-sm transition-colors hover:bg-primary/80 disabled:pointer-events-none disabled:opacity-50"
                     >
-                        Edit Profile
+                        Edit Data
                     </Link>
                 </div>
             </div>

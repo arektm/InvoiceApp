@@ -42,17 +42,9 @@ watch(search, (value) => {
     <div class="space-y-6">
         <!-- Header -->
         <div
-            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+            class="mt-3 mb-6 ml-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <Users class="h-4 w-4" />
-
-                    <span>Clients</span>
-                </div>
-
                 <h1 class="mt-1 text-3xl font-semibold tracking-tight">
                     Clients
                 </h1>

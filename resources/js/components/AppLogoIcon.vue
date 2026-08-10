@@ -13,9 +13,13 @@ defineProps<Props>();
 </script>
 
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 42"
-        :class="className" v-bind="$attrs"
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 500 500"
+        :class="className"
+        v-bind="$attrs"
+        fill="none"
+    >
         <path
             fill="currentColor"
             fill-rule="evenodd"

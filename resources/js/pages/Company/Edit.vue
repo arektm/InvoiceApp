@@ -40,7 +40,6 @@ const submit = () => {
 // };
 </script>
 
-```html
 <template>
     <Head title="Edit Company" />
 

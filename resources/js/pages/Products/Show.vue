@@ -32,109 +32,17 @@ const confirmRemove = () => {
 };
 </script>
 
-<!-- <template>
-    <Head>
-        <title>{{ product?.product_name }}</title>
-    </Head>
-
-    <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold">Product details</h1>
-    </div>
-
-    <div class="rounded p-6 shadow">
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <strong>Product code:</strong>
-                <p>{{ product?.product_code }}</p>
-            </div>
-
-            <div>
-                <strong>Product name:</strong>
-                <p>{{ product?.product_name }}</p>
-            </div>
-
-            <div>
-                <strong>Net price:</strong>
-                <p>€ {{ product?.net_price }}</p>
-            </div>
-
-            <div>
-                <strong>VAT:</strong>
-                <p>{{ product?.vat_rate }}%</p>
-            </div>
-
-            <div>
-                <strong>Stock quantity:</strong>
-                <p>{{ product?.stock_quantity }}</p>
-            </div>
-
-            <div>
-                <strong>Created at:</strong>
-                <p>{{ product?.created_at }}</p>
-            </div>
-        </div>
-
-        <div class="mt-6">
-            <strong>Description:</strong>
-
-            <div class="mt-2 rounded border p-4">
-                {{ product?.description || 'No description' }}
-            </div>
-        </div>
-
-        <div class="mt-6 flex gap-3">
-            <Link
-                :href="edit(product?.id)"
-                class="rounded bg-green-600 px-4 py-2 text-white"
-            >
-                Edit
-            </Link>
-            <button
-                @click="openConfirmModal"
-                class="rounded bg-red-600 px-6 py-2 text-white"
-            >
-                Delete
-            </button>
-
-            <ModalAlert
-                :show="isConfirmOpen"
-                :item="props.product?.product_name"
-                title="Delete confirmation"
-                message="Are you sure you want to delete product"
-                confirm="Delete"
-                @close="isConfirmOpen = false"
-                @confirm="confirmRemove"
-            />
-
-            <Link
-                href="/products"
-                class="rounded bg-gray-500 px-4 py-2 text-white"
-            >
-                Cancel
-            </Link>
-        </div>
-        <div
-            v-if="$page.props.errors.delete"
-            v-text="$page.props.errors.delete"
-            class="text-red-500"
-        ></div>
-    </div>
-</template> -->
 <template>
     <Head :title="`Product - ${product?.product_name}`" />
 
     <div class="space-y-6">
         <!-- Header -->
         <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+            class="flex flex-col gap-4 p-3 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <p class="text-sm font-medium text-muted-foreground">
-                    Products / Details
-                </p>
-
                 <h1
-                    class="mt-1 text-3xl font-bold tracking-tight text-foreground"
+                    class="mt-1 mt-3 text-3xl font-bold tracking-tight text-foreground"
                 >
                     Product details
                 </h1>

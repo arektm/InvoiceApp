@@ -57,13 +57,9 @@ watch(search, (value) => {
     <div class="space-y-6">
         <!-- Header -->
         <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+            class="flex flex-col gap-4 p-3 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <p class="text-sm font-medium text-muted-foreground">
-                    Platform / Products
-                </p>
-
                 <h1
                     class="mt-1 text-3xl font-bold tracking-tight text-foreground"
                 >
