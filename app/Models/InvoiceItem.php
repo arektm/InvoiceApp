@@ -25,24 +25,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Invoice|null $invoice
  * @property-read Product|null $product
  *
- * @method static \Database\Factories\InvoiceItemFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereDiscount($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereGrossValue($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereInvoiceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereNetValue($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereProductName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereUnitNetPrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereVatRate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceItem whereVatValue($value)
- *
  * @mixin \Eloquent
  */
 class InvoiceItem extends Model

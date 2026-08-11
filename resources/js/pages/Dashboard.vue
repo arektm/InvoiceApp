@@ -552,15 +552,13 @@ const pieStyle = () => {
                 </div>
 
                 <div class="mt-8 rounded-lg border bg-muted/30 p-4">
-                    <div class="flex items-start gap-3">
-                        <Clock3
-                            class="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground"
-                        />
+                    <div class="flex items-start gap-3 text-red-600">
+                        <Clock3 class="mt-0.5 h-4 w-4 shrink-0 text-red-600" />
 
                         <div>
                             <p class="text-sm font-medium">Overdue invoices</p>
 
-                            <p class="mt-1 text-xs text-muted-foreground">
+                            <p class="mt-1 text-xs text-red-600">
                                 {{ formatNumber(paymentStatus.overdue) }}
                                 invoices have passed their payment deadline.
                             </p>

@@ -34,30 +34,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int $items_count
  * @property bool $overdue
  *
- * @method static \Database\Factories\InvoiceFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereClientId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereDueDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereInvoiceNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereIssueDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereNote($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice wherePaymentMethod($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereReference($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereSaleDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereTotalGross($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereTotalNet($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereTotalVat($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice withTrashed(bool $withTrashed = true)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice withoutTrashed()
- *
  * @mixin \Eloquent
  */
 class Invoice extends Model

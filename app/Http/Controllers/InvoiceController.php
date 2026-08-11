@@ -11,6 +11,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
+
 
 class InvoiceController extends Controller
 {
@@ -52,6 +54,7 @@ class InvoiceController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Invoice::class);
         return Inertia::render('Invoices/Create', [
             'clients' => Client::query()
                 ->select('id', 'name')
@@ -225,6 +228,9 @@ class InvoiceController extends Controller
                 quantity:float
             }>
         } $validated */
+         
+        $this->authorize('update', $invoice);
+
         $validated = $request->validate([
 
             'client_id' => ['required'],
@@ -361,12 +367,29 @@ class InvoiceController extends Controller
 
     public function destroy(Invoice $invoice)
     {
+        $this->authorize('delete', $invoice);
+
         $invoice->delete();
 
         return redirect()
             ->route('invoices.index')
             ->with('success', 'Invoice deleted');
     }
+
+    public function restore(int $id)
+    {
+        $invoice = Invoice::onlyTrashed()
+            ->findOrFail($id);
+
+        $this->authorize('restore', $invoice);
+
+        $invoice->restore();
+
+        return redirect()
+            ->route('invoices.deleted')
+            ->with('success', 'Invoice restored');
+    }
+    
 
     public function pdf(Invoice $invoice)
     {
@@ -376,6 +399,45 @@ class InvoiceController extends Controller
     public function print(Invoice $invoice)
     {
         return $this->buildPdf($invoice)->stream($this->pdfFilename($invoice));
+    }
+
+    public function deleted(Request $request)
+    {
+        // $invoices= Invoice::onlyTrashed()->get();
+        $invoices = Invoice::query()
+            ->onlyTrashed('client')
+            ->when($request->search, function ($query, $search) {
+                $query->where('invoice_number', 'like', "%{$search}%")
+                    ->orWhereHas('client', fn ($q) => $q
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                    );
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn (Invoice $invoice) => [
+                'id' => $invoice->id,
+                'invoice_number' => $invoice->invoice_number,
+                'issue_date' => $invoice->issue_date->format('Y/m/d'),
+                'due_date' => $invoice->due_date->format('Y/m/d'),
+                'status' => $invoice->status,
+                'total_gross' => $invoice->total_gross,
+                'name' => $invoice->client->name,
+                'email' => $invoice->client->email,
+                 'deleted_at' => $invoice->deleted_at?->format('Y/m/d H:i')
+            ]);
+    
+        return Inertia::render('Invoices/Deleted',
+            [
+                'invoices' => $invoices,
+
+                'filters' => [
+                    'search' => $request->search,
+                ],
+            ]
+        );
+        
     }
 
     // -------------------------------------------------------------------------

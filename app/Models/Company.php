@@ -18,21 +18,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereCountry($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company wherePostalCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereStreet($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereTaxNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Company extends Model

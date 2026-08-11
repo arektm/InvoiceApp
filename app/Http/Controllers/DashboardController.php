@@ -36,6 +36,8 @@ class DashboardController extends Controller
         */
 
         $invoiceCount = Invoice::count();
+        $invoisesCanceled = Invoice::where('status', 'cancelled')->count();
+        $invoiceCount = $invoiceCount - $invoisesCanceled;
 
         /*
         |--------------------------------------------------------------------------

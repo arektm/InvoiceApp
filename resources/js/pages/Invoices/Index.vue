@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { Eye, Pencil, Plus } from '@lucide/vue';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { create, show, index, edit } from '@/routes/invoices';
 import Pagination from '../Shared/Pagination.vue';
 
@@ -15,7 +15,17 @@ defineOptions({
         ],
     },
 });
+const page=usePage();
 
+const user= computed(()=>page.props.auth.user);
+
+const canEdit = computed(() =>
+    ['accountant', 'admin'].includes(user.value?.role)
+)
+
+const canDelete = computed(() =>
+    ['accountant', 'admin'].includes(user.value?.role)
+)
 const props = defineProps({
     invoices: Object,
     filters: Object,
@@ -42,10 +52,10 @@ watch(search, (value) => {
     <div class="space-y-4">
         <!-- Header -->
         <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+            class="flex flex-col gap-4 p-3 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
-                <h1 class="mt-3 ml-3 text-3xl font-semibold tracking-tight">
+                <h1 class="mt-3 text-3xl font-semibold tracking-tight">
                     Invoices
                 </h1>
             </div>
@@ -224,6 +234,7 @@ watch(search, (value) => {
                                     </Link>
 
                                     <Link
+                                        v-if="canEdit"
                                         :href="edit(invoice.id)"
                                         class="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                                     >

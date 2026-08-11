@@ -42,6 +42,10 @@ class ReportController extends Controller
 
         $invoiceCount = Invoice::count();
 
+        $invoicesCancelled = Invoice::where('status', 'cancelled')->count();
+
+        $invoiceCount = $invoiceCount - $invoicesCancelled;
+
         $unpaidInvoices = Invoice::where(
             'status',
             'unpaid'
