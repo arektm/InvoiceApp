@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Invoice;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Auth\Access\Response;
 
 class InvoicePolicy

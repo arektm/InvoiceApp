@@ -2,6 +2,7 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ModalAlert from '@/components/ModalAlert.vue';
+import { usePermissions } from '@/composables/userPermisions';
 import { print, pdf, show, destroy } from '@/routes/invoices';
 // import { destroy, print } from '@/actions/App/Http/Controllers/InvoiceController';
 
@@ -17,21 +18,14 @@ defineOptions({
 });
 
 type InvoiceStatus = 'paid' | 'unpaid' | 'cancelled';
-
+const {
+    canEditInvoices,
+    canDeleteInvoices,
+} = usePermissions()
 const props = defineProps({
     invoice: Object,
 });
-// const form = useForm({
-//     invoice_id: props.invoice.id
-// })
-// const remove = () => {
-//     if (!confirm('Are you sure you want to delete the invoice? ')) {
-//         return;
-//     }
 
-//     // form.delete(destroy(props.invoice.id))
-//     router.delete(destroy(props.invoice?.id).url);
-// };
 const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
     paid: {
         label: 'Paid',
@@ -43,7 +37,7 @@ const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
     },
     cancelled: {
         label: 'Cancelled',
-        class: 'bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400',
+        class: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
     },
 };
 
@@ -92,6 +86,13 @@ const confirmRemove = () => {
             </div>
 
             <div class="flex items-center gap-2">
+                <button 
+                    v-if="canDeleteInvoices"
+                    @click="openConfirmModal"
+                    class="inline-flex h-9 items-center justify-center rounded-lg bg-red-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-600/90 disabled:pointer-events-none disabled:opacity-50"
+                >
+                    Delete
+                </button>
                 <Link
                     :href="pdf(invoice?.id)?.url"
                     target="_blank"
@@ -115,12 +116,7 @@ const confirmRemove = () => {
                     Back
                 </Link>
 
-                <button
-                    @click="openConfirmModal"
-                    class="inline-flex h-9 items-center justify-center rounded-lg bg-red-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-600/90 disabled:pointer-events-none disabled:opacity-50"
-                >
-                    Delete
-                </button>
+                
 
                 <ModalAlert
                     :show="isConfirmOpen"

@@ -65,13 +65,8 @@ using consistent Tailwind classes (e.g., `bg-card`, `rounded-xl`,
         class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
     >
         <div>
-            <div class="flex items-center gap-2 text-sm text-muted-foreground">
-                <FileText class="h-4 w-4" />
 
-                <span>Invoices</span>
-            </div>
-
-            <h1 class="mt-1 text-3xl font-semibold tracking-tight">
+            <h1 class="mt-1 p-3 text-3xl font-semibold tracking-tight">
                 Edit Invoice {{ invoice?.invoice_number }}
             </h1>
         </div>

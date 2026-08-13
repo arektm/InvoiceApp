@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@local.com',
             'password' => static::$password ??= Hash::make('aaaaaaaa'),
+            'role'=>'admin',
         ]);
     }
 }

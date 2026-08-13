@@ -4,6 +4,7 @@ import { Eye, Pencil, Plus } from '@lucide/vue';
 import { computed, ref, watch } from 'vue';
 import { create, show, index, edit } from '@/routes/invoices';
 import Pagination from '../Shared/Pagination.vue';
+import { usePermissions } from '@/composables/userPermisions.js';
 
 defineOptions({
     layout: {
@@ -19,13 +20,11 @@ const page=usePage();
 
 const user= computed(()=>page.props.auth.user);
 
-const canEdit = computed(() =>
-    ['accountant', 'admin'].includes(user.value?.role)
-)
+const {
+    canEditInvoices,
+    canDeleteInvoices,
+} = usePermissions();
 
-const canDelete = computed(() =>
-    ['accountant', 'admin'].includes(user.value?.role)
-)
 const props = defineProps({
     invoices: Object,
     filters: Object,
@@ -199,7 +198,7 @@ watch(search, (value) => {
                                         'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400':
                                             invoice.status === 'paid',
 
-                                        'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400':
+                                        'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400':
                                             invoice.status === 'unpaid',
 
                                         'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400':
@@ -234,7 +233,7 @@ watch(search, (value) => {
                                     </Link>
 
                                     <Link
-                                        v-if="canEdit"
+                                        v-if="canEditInvoices"
                                         :href="edit(invoice.id)"
                                         class="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                                     >

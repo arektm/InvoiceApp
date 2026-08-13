@@ -11,11 +11,15 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use Illuminate\Database\Eloquent\Attributes\UsePolicy;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 
 class InvoiceController extends Controller
 {
+
+     use AuthorizesRequests;
     // -------------------------------------------------------------------------
     // Public actions
     // -------------------------------------------------------------------------
@@ -229,6 +233,7 @@ class InvoiceController extends Controller
             }>
         } $validated */
          
+        // Gate::authorize('update', $invoice);
         $this->authorize('update', $invoice);
 
         $validated = $request->validate([
