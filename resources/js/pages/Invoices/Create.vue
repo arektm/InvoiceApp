@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+import FormActions from '@/components/invoices/FormActions.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import { create, index } from '@/routes/invoices';
 
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
-import PageHeader from '@/components/invoices/PageHeader.vue';
-import FormActions from '@/components/invoices/FormActions.vue';
 defineOptions({
     layout: {
         breadcrumbs: [

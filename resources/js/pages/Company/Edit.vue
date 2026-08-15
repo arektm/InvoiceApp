@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, useForm, Link } from '@inertiajs/vue3';
-import { updateCompany } from '@/routes';
 import PageHeader from '@/components/invoices/PageHeader.vue';
+import { updateCompany } from '@/routes';
 
 defineOptions({
     layout: {

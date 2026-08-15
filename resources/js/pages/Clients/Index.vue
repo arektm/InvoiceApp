@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import { index, edit, show } from '@/routes/clients';
 import Pagination from '../Shared/Pagination.vue';
-import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {

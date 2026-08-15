@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import ModalAlert from '@/components/ModalAlert.vue';
 import { show, edit, destroy } from '@/routes/products';
-import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {

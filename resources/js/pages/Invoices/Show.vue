@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import ModalAlert from '@/components/ModalAlert.vue';
-import { usePermissions } from '@/composables/userPermisions';
-import { print, pdf, show, destroy } from '@/routes/invoices';
+import { Head, Link } from '@inertiajs/vue3';
+import { print, pdf, show } from '@/routes/invoices';
 // import { destroy, print } from '@/actions/App/Http/Controllers/InvoiceController';
 
 defineOptions({
@@ -18,8 +15,8 @@ defineOptions({
 });
 
 type InvoiceStatus = 'paid' | 'unpaid' | 'cancelled';
-const { canEditInvoices, canDeleteInvoices } = usePermissions();
-const props = defineProps({
+// const { canEditInvoices, canDeleteInvoices } = usePermissions();
+defineProps({
     invoice: Object,
 });
 
@@ -105,15 +102,6 @@ const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
                 >
                     Back
                 </Link>
-
-                <ModalAlert
-                    :show="isConfirmOpen"
-                    title="Delete confirmation"
-                    message="Are you sure you want to delete the invoice?"
-                    confirm="Delete"
-                    @close="isConfirmOpen = false"
-                    @confirm="confirmRemove"
-                />
             </div>
         </div>
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import { store } from '@/routes/clients';
 import FormInput from '../Shared/FormInput.vue';
-import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {

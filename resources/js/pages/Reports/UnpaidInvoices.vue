@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import { unpaidInvoices } from '@/routes/reports';
 import Pagination from '../Shared/Pagination.vue';
-import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {

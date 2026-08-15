@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Head, useForm, Link, router } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import FormActions from '@/components/invoices/FormActions.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
+import ModalAlert from '@/components/ModalAlert.vue';
 import { destroy, edit, index, update } from '@/routes/invoices';
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
-import PageHeader from '@/components/invoices/PageHeader.vue';
-import FormActions from '@/components/invoices/FormActions.vue';
-import { ref } from 'vue';
-import ModalAlert from '@/components/ModalAlert.vue';
 
 defineOptions({
     layout: {

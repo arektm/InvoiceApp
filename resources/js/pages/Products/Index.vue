@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import { index } from '@/routes/products';
 
 import Pagination from '../Shared/Pagination.vue';
-import PageHeader from '@/components/invoices/PageHeader.vue';
 defineOptions({
     layout: {
         breadcrumbs: [

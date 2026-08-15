@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { Eye, Pencil, Plus } from '@lucide/vue';
-import { computed, ref, watch } from 'vue';
-import { create, show, index, edit } from '@/routes/invoices';
-import Pagination from '../Shared/Pagination.vue';
-import { usePermissions } from '@/composables/userPermisions.js';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { Eye, Pencil } from '@lucide/vue';
+import { ref, watch } from 'vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
+import { usePermissions } from '@/composables/userPermisions.js';
+import { show, index, edit } from '@/routes/invoices';
+import Pagination from '../Shared/Pagination.vue';
 
 defineOptions({
     layout: {
@@ -17,11 +17,11 @@ defineOptions({
         ],
     },
 });
-const page = usePage();
+// const page = usePage();
 
-const user = computed(() => page.props.auth.user);
+// const user = computed(() => page.props.auth.user);
 
-const { canEditInvoices, canDeleteInvoices } = usePermissions();
+const { canEditInvoices } = usePermissions();
 
 const props = defineProps({
     invoices: Object,

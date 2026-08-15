@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import { edit, index } from '@/routes/products/index.js';
 import FormInput from '../Shared/FormInput.vue';
-import FormActions from '@/components/invoices/FormActions.vue';
 
 defineOptions({
     layout: {

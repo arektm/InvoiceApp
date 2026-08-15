@@ -34,6 +34,6 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('company', absolute: false));
+        $response->assertRedirect(route('dashboard', absolute: false));
     }
 }

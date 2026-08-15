@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+import { Briefcase } from '@lucide/vue';
+import FormActions from '@/components/invoices/FormActions.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import { update, index, destroy, edit } from '@/routes/clients';
 import FormInput from '../Shared/FormInput.vue';
-import PageHeader from '@/components/invoices/PageHeader.vue';
-import FormActions from '@/components/invoices/FormActions.vue';
-import { Briefcase } from '@lucide/vue';
 
 defineOptions({
     layout: {

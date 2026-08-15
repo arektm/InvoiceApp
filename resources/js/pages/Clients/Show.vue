@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { edit, show } from '@/routes/clients';
 import PageHeader from '@/components/invoices/PageHeader.vue';
+import { edit, show } from '@/routes/clients';
 
 defineOptions({
     layout: {
