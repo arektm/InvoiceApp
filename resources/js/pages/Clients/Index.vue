@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
-import { index, create, edit, show } from '@/routes/clients';
+import { index, edit, show } from '@/routes/clients';
 import Pagination from '../Shared/Pagination.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -41,26 +42,14 @@ watch(search, (value) => {
 
     <div class="space-y-6">
         <!-- Header -->
-        <div
-            class="mt-3 mb-6 ml-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                    Clients
-                </h1>
 
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Manage your client list and contact information.
-                </p>
-            </div>
-
-            <Link
-                :href="create()"
-                class="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground text-secondary shadow-sm transition-colors hover:bg-primary/80 disabled:pointer-events-none disabled:opacity-50"
-            >
-                New client
-            </Link>
-        </div>
+        <PageHeader
+            title="Clients"
+            description="Manage your client list and contact information."
+            actionButton="New client"
+            actionButtonAddress="/clients/create"
+            variant="btnBlack"
+        />
 
         <!-- Search -->
         <div

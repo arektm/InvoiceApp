@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Link, useForm } from '@inertiajs/vue3';
 import { create } from '@/routes/products';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -35,17 +36,13 @@ const submit = () => {
 <template>
     <div class="space-y-6">
         <!-- Header -->
-        <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h1 class="text-3xl font-bold tracking-tight">Add product</h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Create a new product and add it to your inventory.
-                </p>
-            </div>
-        </div>
+        <PageHeader
+            title="Add produt"
+            description="Create a new product and add it to your inventory."
+            actionButton="← Back to products"
+            actionButtonAddress="/products"
+            variant="btnWhite"
+        />
 
         <!-- Form card -->
         <form

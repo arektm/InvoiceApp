@@ -8,18 +8,15 @@ use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
-
+use Inertia\Inertia;
 
 class InvoiceController extends Controller
 {
-
-     use AuthorizesRequests;
+    use AuthorizesRequests;
     // -------------------------------------------------------------------------
     // Public actions
     // -------------------------------------------------------------------------
@@ -59,6 +56,7 @@ class InvoiceController extends Controller
     public function create()
     {
         $this->authorize('create', Invoice::class);
+
         return Inertia::render('Invoices/Create', [
             'clients' => Client::query()
                 ->select('id', 'name')
@@ -89,8 +87,16 @@ class InvoiceController extends Controller
 
         DB::transaction(function () use ($validated) {
             // Load all required products in a single query — avoids N+1 inside the loop.
-            $productIds = collect($validated['items'])->pluck('product_id')->unique();
-            $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+            // $productIds = collect($validated['items'])->pluck('product_id')->unique();
+            $productIds = array_unique(
+                array_column($validated['items'], 'product_id')
+            );
+
+            // $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+            $products = Product::query()
+                ->whereIn('id', $productIds)
+                ->get()
+                ->keyBy('id');
 
             $invoice = Invoice::create([
                 // 'invoice_number' => $this->generateInvoiceNumber(),
@@ -118,7 +124,7 @@ class InvoiceController extends Controller
             foreach ($validated['items'] as $row) {
                 $product = $products[$row['product_id']];
                 if ($product === null) {
-                    throw new \RuntimeException('Product not found.');
+                    throw new \RuntimeException('Product not found: '.$row['product_id']);
                 }
 
                 $net = round($product->net_price * $row['quantity'], 2);
@@ -220,6 +226,8 @@ class InvoiceController extends Controller
 
     public function update(Request $request, Invoice $invoice)
     {
+        $this->authorize('update', $invoice);
+
         /** @var array{
             client_id:int,
             issue_date:string,
@@ -232,9 +240,8 @@ class InvoiceController extends Controller
                 quantity:float
             }>
         } $validated */
-         
+
         // Gate::authorize('update', $invoice);
-        $this->authorize('update', $invoice);
 
         $validated = $request->validate([
 
@@ -267,15 +274,22 @@ class InvoiceController extends Controller
             $invoice
         ) {
 
-            $productIds = collect(
-                $validated['items']
-            )->pluck('product_id')
-                ->unique();
+            // $productIds = collect(
+            //     $validated['items']
+            // )->pluck('product_id')
+            //     ->unique();
+            $productIds = array_unique(
+                array_column($validated['items'], 'product_id')
+            );
 
-            $products = Product::whereIn(
-                'id',
-                $productIds
-            )->get()->keyBy('id');
+            // $products = Product::whereIn(
+            //     'id',
+            //     $productIds
+            // )->get()->keyBy('id');
+            $products = Product::query()
+                ->whereIn('id', $productIds)
+                ->get()
+                ->keyBy('id');
 
             $invoice->update([
 
@@ -394,7 +408,6 @@ class InvoiceController extends Controller
             ->route('invoices.deleted')
             ->with('success', 'Invoice restored');
     }
-    
 
     public function pdf(Invoice $invoice)
     {
@@ -410,7 +423,8 @@ class InvoiceController extends Controller
     {
         // $invoices= Invoice::onlyTrashed()->get();
         $invoices = Invoice::query()
-            ->onlyTrashed('client')
+            ->onlyTrashed()
+            ->with('client')
             ->when($request->search, function ($query, $search) {
                 $query->where('invoice_number', 'like', "%{$search}%")
                     ->orWhereHas('client', fn ($q) => $q
@@ -430,9 +444,9 @@ class InvoiceController extends Controller
                 'total_gross' => $invoice->total_gross,
                 'name' => $invoice->client->name,
                 'email' => $invoice->client->email,
-                 'deleted_at' => $invoice->deleted_at?->format('Y/m/d H:i')
+                'deleted_at' => $invoice->deleted_at?->format('Y/m/d H:i'),
             ]);
-    
+
         return Inertia::render('Invoices/Deleted',
             [
                 'invoices' => $invoices,
@@ -442,7 +456,7 @@ class InvoiceController extends Controller
                 ],
             ]
         );
-        
+
     }
 
     // -------------------------------------------------------------------------

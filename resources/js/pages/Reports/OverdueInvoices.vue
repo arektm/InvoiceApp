@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { unpaidInvoices } from '@/routes/reports';
 import Pagination from '../Shared/Pagination.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -20,18 +21,16 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Unpaid Invoices" />
-    <div
-        class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-    >
-        <h1 class="text-3xl font-semibold tracking-tight">Unpaid invoices</h1>
+    <Head title="Overdue Invoices" />
 
-        <Link
-            href="/reports"
-            class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
-        >
-            Back
-        </Link>
+    <div class="mb-3">
+        <PageHeader
+            title="Overdue invoices"
+            description="Payment deadline has passed."
+            actionButton="Back to report"
+            actionButtonAddress="/reports"
+            variant="btnWhite"
+        />
     </div>
 
     <div class="overflow-hidden rounded-xl border bg-card shadow-sm">

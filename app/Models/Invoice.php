@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Collection<int, InvoiceItem> $items
  * @property-read int $items_count
  * @property bool $overdue
+ * @property Carbon|null $deleted_at
  *
  * @mixin \Eloquent
  */

@@ -3,6 +3,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ModalAlert from '@/components/ModalAlert.vue';
 import { show, edit, destroy } from '@/routes/products';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -37,37 +38,14 @@ const confirmRemove = () => {
 
     <div class="space-y-6">
         <!-- Header -->
-        <div
-            class="flex flex-col gap-4 p-3 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h1
-                    class="mt-1 mt-3 text-3xl font-bold tracking-tight text-foreground"
-                >
-                    Product details
-                </h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    View product information and inventory details.
-                </p>
-            </div>
-
-            <div class="flex gap-2">
-                <Link
-                    href="/products"
-                    class="inline-flex items-center rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition hover:bg-muted"
-                >
-                    ← Back
-                </Link>
-
-                <Link
-                    :href="edit(product?.id)"
-                    class="inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
-                >
-                    Edit product
-                </Link>
-            </div>
-        </div>
+        <PageHeader
+            title="Product Details"
+            :item="product?.product_name"
+            description="View product information and inventory details."
+            actionButton="← Back to products"
+            actionButtonAddress="/products"
+            variant="btnWhite"
+        />
 
         <!-- Product overview -->
         <div class="overflow-hidden rounded-xl border border-border bg-card">

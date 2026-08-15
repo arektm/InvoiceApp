@@ -18,10 +18,7 @@ defineOptions({
 });
 
 type InvoiceStatus = 'paid' | 'unpaid' | 'cancelled';
-const {
-    canEditInvoices,
-    canDeleteInvoices,
-} = usePermissions()
+const { canEditInvoices, canDeleteInvoices } = usePermissions();
 const props = defineProps({
     invoice: Object,
 });
@@ -41,18 +38,18 @@ const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
     },
 };
 
-const isConfirmOpen = ref(false);
+// const isConfirmOpen = ref(false);
 
-const openConfirmModal = () => {
-    isConfirmOpen.value = true;
-};
-const confirmRemove = () => {
-    isConfirmOpen.value = false;
+// const openConfirmModal = () => {
+//     isConfirmOpen.value = true;
+// };
+// const confirmRemove = () => {
+//     isConfirmOpen.value = false;
 
-    if (props.invoice?.id) {
-        router.delete(destroy(props.invoice.id).url);
-    }
-};
+//     if (props.invoice?.id) {
+//         router.delete(destroy(props.invoice.id).url);
+//     }
+// };
 </script>
 
 <template>
@@ -61,7 +58,7 @@ const confirmRemove = () => {
     <div class="space-y-8">
         <!-- Header -->
         <div
-            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+            class="mb-6 flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
                 <h1 class="mt-1 text-3xl font-semibold tracking-tight">
@@ -86,13 +83,6 @@ const confirmRemove = () => {
             </div>
 
             <div class="flex items-center gap-2">
-                <button 
-                    v-if="canDeleteInvoices"
-                    @click="openConfirmModal"
-                    class="inline-flex h-9 items-center justify-center rounded-lg bg-red-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-600/90 disabled:pointer-events-none disabled:opacity-50"
-                >
-                    Delete
-                </button>
                 <Link
                     :href="pdf(invoice?.id)?.url"
                     target="_blank"
@@ -115,8 +105,6 @@ const confirmRemove = () => {
                 >
                     Back
                 </Link>
-
-                
 
                 <ModalAlert
                     :show="isConfirmOpen"

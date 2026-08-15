@@ -9,6 +9,7 @@ import {
     Clock3,
     FileText,
     Package,
+    SquareX,
     Users,
 } from '@lucide/vue';
 import reports from '@/routes/reports';
@@ -45,6 +46,7 @@ const props = defineProps<{
     yearSales: number;
     invoiceCount: number;
     unpaidInvoices: number;
+    cancelledInvoices: number;
     overdueInvoices: number;
     topClients: TopClient[];
     topProducts: TopProduct[];
@@ -255,7 +257,7 @@ const productPercentage = (value: number | string | null) => {
         </div>
 
         <!-- Invoice status -->
-        <div class="grid gap-4 lg:grid-cols-2">
+        <div class="grid gap-4 lg:grid-cols-3">
             <!-- Unpaid -->
             <Link
                 href="/reports/unpaid-invoices"
@@ -273,7 +275,9 @@ const productPercentage = (value: number | string | null) => {
                             <h2 class="font-semibold">Unpaid invoices</h2>
                         </div>
 
-                        <p class="mt-4 text-3xl font-semibold tracking-tight">
+                        <p
+                            class="mt-4 ml-7 text-3xl font-semibold tracking-tight text-amber-600"
+                        >
                             {{ formatNumber(unpaidInvoices) }}
                         </p>
 
@@ -282,11 +286,14 @@ const productPercentage = (value: number | string | null) => {
                         </p>
                     </div>
 
-                    <span
+                    <!-- <span
                         class="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700 dark:bg-amber-950 dark:text-amber-400"
                     >
                         Unpaid
-                    </span>
+                    </span> -->
+                    <ArrowRight
+                        class="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1"
+                    />
                 </div>
             </Link>
             <!-- Overdue -->
@@ -307,13 +314,46 @@ const productPercentage = (value: number | string | null) => {
                         </div>
 
                         <p
-                            class="mt-4 text-3xl font-semibold tracking-tight text-red-600"
+                            class="mt-4 ml-7 text-3xl font-semibold tracking-tight text-red-600"
                         >
                             {{ formatNumber(overdueInvoices) }}
                         </p>
 
                         <p class="mt-1 text-sm text-muted-foreground">
                             Payment deadline has passed
+                        </p>
+                    </div>
+
+                    <ArrowRight
+                        class="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1"
+                    />
+                </div>
+            </Link>
+            <!-- Cancelled Invoices -->
+            <Link
+                href="/reports/cancelled-invoices"
+                class="group rounded-xl border bg-card p-6 shadow-sm transition-all hover:border-orange-200 hover:shadow-md dark:hover:border-orange-900"
+            >
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-50 text-orange-600 dark:bg-red-950 dark:text-orange-400"
+                            >
+                                <SquareX class="h-4 w-4" />
+                            </div>
+
+                            <h2 class="font-semibold">Cancelled invoices</h2>
+                        </div>
+
+                        <p
+                            class="mt-4 ml-7 text-3xl font-semibold tracking-tight text-orange-600"
+                        >
+                            {{ formatNumber(cancelledInvoices) }}
+                        </p>
+
+                        <p class="mt-1 text-sm text-muted-foreground">
+                            Invoices cancelled.
                         </p>
                     </div>
 

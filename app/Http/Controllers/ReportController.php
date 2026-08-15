@@ -110,6 +110,8 @@ class ReportController extends Controller
 
                 'overdueInvoices' => $overdueInvoices,
 
+                'cancelledInvoices' => $invoicesCancelled,
+
                 'topClients' => $topClients,
 
                 'topProducts' => $topProducts,
@@ -245,6 +247,44 @@ class ReportController extends Controller
 
         return Inertia::render(
             'Reports/OverdueInvoices',
+            [
+                'invoices' => $invoices,
+            ]
+        );
+    }
+
+    public function cancelledInvoices()
+    {
+        $invoices = Invoice::query()
+
+            ->with('client')
+
+            ->where('status', 'cancelled')
+
+            ->orderBy('issue_date')
+
+            ->paginate(20)
+
+            ->through(fn ($invoice) => [
+
+                'id' => $invoice->id,
+
+                'invoice_number' => $invoice->invoice_number,
+
+                'issue_date' => $invoice->issue_date->format('Y-m-d'),
+
+                'due_date' => $invoice->due_date->format('Y-m-d'),
+
+                'total_gross' => $invoice->total_gross,
+
+                'client_name' => $invoice->client->name,
+
+                'client_email' => $invoice->client->email,
+
+            ]);
+
+        return Inertia::render(
+            'Reports/CancelledInvoices',
             [
                 'invoices' => $invoices,
             ]

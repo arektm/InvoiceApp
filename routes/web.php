@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('company/edit', [CompanyController::class, 'edit'])->name('editCompany');
     Route::patch('company/{company}', [CompanyController::class, 'update'])->name('updateCompany');
 
-    //deleted invoices
+    // deleted invoices
     Route::get('/invoices/deleted', [InvoiceController::class, 'deleted'])->name('invoices.deleted');
 
     // export to pdf
@@ -37,8 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/unpaid-invoices', [ReportController::class, 'unpaidInvoices'])->name('reports.unpaid-invoices');
     Route::get('/reports/overdue-invoices', [ReportController::class, 'overdueInvoices'])->name('reports.overdue-invoices');
+    Route::get('/reports/cancelled-invoices', [ReportController::class, 'cancelledInvoices'])->name('reports.cancelled-invoices');
 
-    //Resource routes
+    // Resource routes
     Route::resource('clients', ClientController::class);
     Route::resource('products', ProductController::class);
     Route::resource('invoices', InvoiceController::class);

@@ -4,6 +4,7 @@ import { ref, watch } from 'vue';
 import { index } from '@/routes/products';
 
 import Pagination from '../Shared/Pagination.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 defineOptions({
     layout: {
         breadcrumbs: [
@@ -56,29 +57,13 @@ watch(search, (value) => {
 
     <div class="space-y-6">
         <!-- Header -->
-        <div
-            class="flex flex-col gap-4 p-3 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h1
-                    class="mt-1 text-3xl font-bold tracking-tight text-foreground"
-                >
-                    Products
-                </h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Manage your products, prices and inventory.
-                </p>
-            </div>
-
-            <Link
-                href="/products/create"
-                class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
-            >
-                + Add product
-            </Link>
-        </div>
-
+        <PageHeader
+            title="Products"
+            description="Manage your products, prices and inventory."
+            actionButton="+ Add product"
+            actionButtonAddress="/products/create"
+            variant="btnBlack"
+        />
         <!-- Main card -->
         <div class="overflow-hidden rounded-xl border border-border bg-card">
             <!-- Search -->

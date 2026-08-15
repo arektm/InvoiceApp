@@ -9,7 +9,7 @@ class StoreInvoiceRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        //return true; // Add policy check here if needed
+        // return true; // Add policy check here if needed
         return $this->user()
             ->can('create', Invoice::class);
     }
@@ -28,5 +28,4 @@ class StoreInvoiceRequest extends FormRequest
             'items.*.vat_rate' => ['sometimes', 'numeric', 'min:0', 'max:100'],
         ];
     }
-
 }

@@ -1,50 +1,49 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3'
-import { ref, watch } from 'vue'
-import AppLayout from '@/layouts/AppLayout.vue'
-import Pagination from '../Shared/Pagination.vue'
-
+import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import Pagination from '../Shared/Pagination.vue';
 
 defineOptions({
     layout: AppLayout,
-})
+});
 
 type Invoice = {
-    id: number
-    invoice_number: string
-    issue_date: string
-    due_date: string
-    status: string
-    total_gross: number | string
-    name?: string | null
-    email?: string | null
-    deleted_at?: string | null
-}
+    id: number;
+    invoice_number: string;
+    issue_date: string;
+    due_date: string;
+    status: string;
+    total_gross: number | string;
+    name?: string | null;
+    email?: string | null;
+    deleted_at?: string | null;
+};
 
 type PaginationLink = {
-    url: string | null
-    label: string
-    active: boolean
-}
+    url: string | null;
+    label: string;
+    active: boolean;
+};
 
 type PaginatedInvoices = {
-    data: Invoice[]
-    links: PaginationLink[]
-}
+    data: Invoice[];
+    links: PaginationLink[];
+};
 
 const props = defineProps<{
-    invoices: PaginatedInvoices
+    invoices: PaginatedInvoices;
     filters: {
-        search?: string
-    }
-}>()
+        search?: string;
+    };
+}>();
 
-const search = ref(props.filters?.search ?? '')
+const search = ref(props.filters?.search ?? '');
 
-let timeout: ReturnType<typeof setTimeout>
+let timeout: ReturnType<typeof setTimeout>;
 
 watch(search, (value) => {
-    clearTimeout(timeout)
+    clearTimeout(timeout);
 
     timeout = setTimeout(() => {
         router.get(
@@ -57,16 +56,15 @@ watch(search, (value) => {
                 preserveScroll: true,
                 replace: true,
             },
-        )
-    }, 300)
-})
+        );
+    }, 300);
+});
 </script>
 
 <template>
     <Head title="Deleted invoices" />
 
     <div class="space-y-6">
-
         <!-- Header -->
         <div
             class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
@@ -98,79 +96,54 @@ watch(search, (value) => {
         </div>
 
         <!-- Search -->
-        <div
-            class="rounded-xl border bg-card p-4 shadow-sm"
-        >
+        <div class="rounded-xl border bg-card p-4 shadow-sm">
             <div class="relative">
                 <input
                     v-model="search"
                     type="text"
                     placeholder="Search by invoice number, client or email..."
-                    class="w-full rounded-lg border bg-background px-4 py-2.5 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    class="w-full rounded-lg border bg-background px-4 py-2.5 text-sm transition outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
             </div>
         </div>
 
         <!-- Table -->
-        <div
-            class="overflow-hidden rounded-xl border bg-card shadow-sm"
-        >
+        <div class="overflow-hidden rounded-xl border bg-card shadow-sm">
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-
                     <thead>
                         <tr
-                            class="border-b bg-muted/40 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground"
+                            class="border-b bg-muted/40 text-left text-xs font-medium tracking-wider text-muted-foreground uppercase"
                         >
-                            <th class="px-6 py-4">
-                                Invoice
-                            </th>
+                            <th class="px-6 py-4">Invoice</th>
 
-                            <th class="px-6 py-4">
-                                Client
-                            </th>
+                            <th class="px-6 py-4">Client</th>
 
-                            <th class="px-6 py-4">
-                                Issue date
-                            </th>
+                            <th class="px-6 py-4">Issue date</th>
 
-                            <th class="px-6 py-4">
-                                Due date
-                            </th>
+                            <th class="px-6 py-4">Due date</th>
 
-                            <th class="px-6 py-4 text-right">
-                                Total
-                            </th>
+                            <th class="px-6 py-4 text-right">Total</th>
 
-                            <th class="px-6 py-4">
-                                Deleted
-                            </th>
+                            <th class="px-6 py-4">Deleted</th>
 
-                            <th class="px-6 py-4 text-center">
-                                Actions
-                            </th>
+                            <th class="px-6 py-4 text-center">Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody
-                        v-if="invoices?.data?.length"
-                        class="divide-y"
-                    >
+                    <tbody v-if="invoices?.data?.length" class="divide-y">
                         <tr
                             v-for="invoice in invoices.data"
                             :key="invoice.id"
                             class="transition hover:bg-muted/30"
                         >
-
                             <!-- Invoice -->
-                            <td class="whitespace-nowrap px-6 py-4">
+                            <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="font-medium">
                                     {{ invoice.invoice_number }}
                                 </div>
 
-                                <div
-                                    class="mt-1 text-xs text-muted-foreground"
-                                >
+                                <div class="mt-1 text-xs text-muted-foreground">
                                     ID #{{ invoice.id }}
                                 </div>
                             </td>
@@ -191,33 +164,31 @@ watch(search, (value) => {
 
                             <!-- Issue date -->
                             <td
-                                class="whitespace-nowrap px-6 py-4 text-muted-foreground"
+                                class="px-6 py-4 whitespace-nowrap text-muted-foreground"
                             >
                                 {{ invoice.issue_date }}
                             </td>
 
                             <!-- Due date -->
                             <td
-                                class="whitespace-nowrap px-6 py-4 text-muted-foreground"
+                                class="px-6 py-4 whitespace-nowrap text-muted-foreground"
                             >
                                 {{ invoice.due_date }}
                             </td>
 
                             <!-- Total -->
                             <td
-                                class="whitespace-nowrap px-6 py-4 text-right font-semibold"
+                                class="px-6 py-4 text-right font-semibold whitespace-nowrap"
                             >
                                 €
                                 {{
-                                    Number(
-                                        invoice.total_gross ?? 0
-                                    ).toFixed(2)
+                                    Number(invoice.total_gross ?? 0).toFixed(2)
                                 }}
                             </td>
 
                             <!-- Deleted -->
                             <td
-                                class="whitespace-nowrap px-6 py-4 text-muted-foreground"
+                                class="px-6 py-4 whitespace-nowrap text-muted-foreground"
                             >
                                 {{ invoice.deleted_at }}
                             </td>
@@ -233,26 +204,18 @@ watch(search, (value) => {
                                     </Link>
                                 </div>
                             </td>
-
                         </tr>
                     </tbody>
 
                     <!-- Empty -->
                     <tbody v-else>
                         <tr>
-                            <td
-                                colspan="7"
-                                class="px-6 py-16 text-center"
-                            >
-                                <div
-                                    class="text-sm font-medium"
-                                >
+                            <td colspan="7" class="px-6 py-16 text-center">
+                                <div class="text-sm font-medium">
                                     No deleted invoices found
                                 </div>
 
-                                <p
-                                    class="mt-1 text-sm text-muted-foreground"
-                                >
+                                <p class="mt-1 text-sm text-muted-foreground">
                                     {{
                                         search
                                             ? 'Try changing your search.'
@@ -262,15 +225,11 @@ watch(search, (value) => {
                             </td>
                         </tr>
                     </tbody>
-
                 </table>
             </div>
         </div>
 
         <!-- Pagination -->
-        <Pagination
-            :links="invoices?.links"
-        />
-
+        <Pagination :links="invoices?.links" />
     </div>
 </template>

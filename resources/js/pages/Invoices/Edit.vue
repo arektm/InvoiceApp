@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { Head, useForm, Link } from '@inertiajs/vue3';
-import { edit, update } from '@/routes/invoices';
+import { Head, useForm, Link, router } from '@inertiajs/vue3';
+import { destroy, edit, index, update } from '@/routes/invoices';
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
+import FormActions from '@/components/invoices/FormActions.vue';
+import { ref } from 'vue';
+import ModalAlert from '@/components/ModalAlert.vue';
 
 defineOptions({
     layout: {
@@ -51,36 +55,34 @@ const addItem = () => {
 const removeItem = (index: number) => {
     form.items.splice(index, 1);
 };
+
+const isConfirmOpen = ref(false);
+
+const openConfirmModal = () => {
+    isConfirmOpen.value = true;
+};
+const confirmRemove = () => {
+    isConfirmOpen.value = false;
+
+    if (props.invoice?.id) {
+        router.delete(destroy(props.invoice.id).url);
+    }
+};
 </script>
 
-Here is the modified Laravel Inertia Vue template. The styling has been
-completely overhauled to match the **Reports** dashboard style you provided,
-using consistent Tailwind classes (e.g., `bg-card`, `rounded-xl`,
-`border-border`, `text-muted-foreground`) and Lucide icons throughout. ```html
 <template>
     <Head title="Edit Invoice" />
 
     <!-- Header Section -->
-    <div
-        class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-    >
-        <div>
-
-            <h1 class="mt-1 p-3 text-3xl font-semibold tracking-tight">
-                Edit Invoice {{ invoice?.invoice_number }}
-            </h1>
-        </div>
-
-        <!-- Actions / Breadcrumbs style -->
-        <div class="flex gap-2">
-            <Link
-                href="/invoices"
-                :aria-label="'Cancel and go back'"
-                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
-            >
-                Back to list
-            </Link>
-        </div>
+    <div class="space-y-6">
+        <PageHeader
+            title="Edit invoice"
+            :item="invoice?.number"
+            description="Update product details"
+            actionButton="← Back to products"
+            actionButtonAddress="/invoices"
+            variant="btnWhite"
+        />
     </div>
 
     <form @submit.prevent="submit">
@@ -253,32 +255,24 @@ using consistent Tailwind classes (e.g., `bg-card`, `rounded-xl`,
                     @remove-item="removeItem"
                 />
             </div>
-
-            <!-- Footer / Buttons -->
-            <div
-                class="flex items-center justify-between gap-4 rounded-xl border bg-muted/30 p-5 shadow-sm"
-            >
-                <div class="text-sm text-muted-foreground">
-                    All changes will be saved upon submission.
-                </div>
-
-                <div class="flex gap-4">
-                    <Link
-                        href="/invoices"
-                        :aria-label="'Cancel'"
-                        class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        Cancel
-                    </Link>
-
-                    <button
-                        type="submit"
-                        :disabled="form.processing"
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        {{ form.processing ? 'Saving...' : 'Update Invoice' }}
-                    </button>
-                </div>
+            <div>
+                <!-- Footer / Buttons -->
+                <FormActions
+                    :index-url="index().url"
+                    delete-label="Delete Invoice"
+                    save-label="Save Changes"
+                    :processing="form.processing"
+                    show-delete
+                    @delete="openConfirmModal"
+                />
+                <ModalAlert
+                    :show="isConfirmOpen"
+                    title="Delete confirmation"
+                    message="Are you sure you want to delete the invoice?"
+                    confirm="Delete"
+                    @close="isConfirmOpen = false"
+                    @confirm="confirmRemove"
+                />
             </div>
         </div>
     </form>

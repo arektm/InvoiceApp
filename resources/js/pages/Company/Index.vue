@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import PageHeader from '@/components/invoices/PageHeader.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 
 defineOptions({
@@ -40,33 +41,22 @@ const page = usePage<SharedProps>();
 ```html
 <template>
     <Head title="Company" />
-
+    <!-- <div
+            v-if="page.props.flash.success"
+            class="mt-4 inline-flex h-9 items-center justify-center rounded-lg border bg-muted px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted/60"
+        >
+            {{ page.props.flash.success }}
+        </div> -->
     <div class="space-y-8">
         <!-- Header -->
-        <div
-            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h1 class="mt-3 ml-3 text-3xl font-semibold tracking-tight">
-                    Company Data
-                </h1>
 
-                <!-- Toast Notification -->
-                <div
-                    v-if="page.props.flash.success"
-                    class="mt-4 inline-flex h-9 items-center justify-center rounded-lg border bg-muted px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted/60"
-                >
-                    {{ page.props.flash.success }}
-                </div>
-            </div>
-
-            <!-- <Link
-                href="/company/edit"
-                class="inline-flex mr-3 h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
-            >
-                Edit Profile
-            </Link> -->
-        </div>
+        <PageHeader
+            title="Company Details"
+            description="View company details."
+            actionButton="Edit company details"
+            actionButtonAddress="/company/edit"
+            variant="btnBlack"
+        />
 
         <!-- Main Information Card -->
         <div
@@ -196,16 +186,6 @@ const page = usePage<SharedProps>();
                 </div>
 
                 <!-- Edit Link Footer -->
-                <div
-                    class="mt-6 flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
-                >
-                    <Link
-                        href="/company/edit"
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground text-secondary shadow-sm transition-colors hover:bg-primary/80 disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        Edit Data
-                    </Link>
-                </div>
             </div>
         </div>
     </div>

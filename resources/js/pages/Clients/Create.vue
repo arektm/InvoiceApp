@@ -2,6 +2,7 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { store } from '@/routes/clients';
 import FormInput from '../Shared/FormInput.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -47,34 +48,14 @@ const submit = () => {
 
     <div class="space-y-8">
         <!-- Header -->
-        <div
-            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <Users class="h-4 w-4" />
 
-                    <span>Clients</span>
-                </div>
-
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                    New Client
-                </h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Add a new client to your business directory.
-                </p>
-            </div>
-
-            <Link
-                href="/clients"
-                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
-            >
-                Cancel
-            </Link>
-        </div>
+        <PageHeader
+            title="New Client"
+            description="Add a new client to your business directory."
+            actionButton="← Back to clients"
+            actionButtonAddress="/clients"
+            variant="btnWhite"
+        />
 
         <!-- Form Container -->
         <form

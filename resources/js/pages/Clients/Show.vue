@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { edit, show } from '@/routes/clients';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -17,44 +18,18 @@ defineProps({
 });
 </script>
 
-```html
 <template>
     <Head :title="client?.name || 'Client'" />
 
     <div class="space-y-8">
         <!-- Header -->
-        <div
-            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <Users class="h-4 w-4" />
-
-                    <span>Clients</span>
-                </div>
-
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                    {{ client?.name }}
-                </h1>
-
-                <!-- Status Badge (if applicable) -->
-                <div
-                    v-if="client?.status"
-                    class="mt-2 inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-medium shadow-sm"
-                >
-                    <span>{{ client?.status }}</span>
-                </div>
-            </div>
-
-            <Link
-                :href="edit(client?.id)"
-                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
-            >
-                Edit Client
-            </Link>
-        </div>
+        <PageHeader
+            :item="client?.name"
+            description="View client information."
+            actionButton="← Back to clients"
+            actionButtonAddress="/clients"
+            variant="btnWhite"
+        />
 
         <!-- Client Information Card -->
         <div
@@ -166,7 +141,7 @@ defineProps({
                 >
                     <Link
                         :href="edit(client?.id)"
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
+                        class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
                     >
                         Edit Client Details
                     </Link>

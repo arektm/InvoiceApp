@@ -2,6 +2,9 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { update, index, destroy, edit } from '@/routes/clients';
 import FormInput from '../Shared/FormInput.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
+import FormActions from '@/components/invoices/FormActions.vue';
+import { Briefcase } from '@lucide/vue';
 
 defineOptions({
     layout: {
@@ -53,40 +56,19 @@ const remove = () => {
 };
 </script>
 
-```html
 <template>
     <Head title="Edit client" />
 
     <div class="space-y-6">
         <!-- Header -->
-        <div
-            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <Users class="h-4 w-4" />
 
-                    <span>Clients</span>
-                </div>
-
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                    Edit Client
-                </h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Update client information and contact details.
-                </p>
-            </div>
-
-            <Link
-                :href="index()"
-                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
-            >
-                Cancel
-            </Link>
-        </div>
+        <PageHeader
+            title="Edit client details"
+            description="Update client information and contact details."
+            actionButton="← Back to clients"
+            actionButtonAddress="/clients"
+            variant="btnWhite"
+        />
 
         <!-- Form Container -->
         <form
@@ -106,11 +88,6 @@ const remove = () => {
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <!-- Company Name -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Company name</label
-                            >
-
                             <FormInput
                                 v-model="form.name"
                                 id="name"
@@ -121,11 +98,6 @@ const remove = () => {
 
                         <!-- Tax Number -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Tax number</label
-                            >
-
                             <FormInput
                                 v-model="form.tax_number"
                                 id="tax_number"
@@ -150,11 +122,6 @@ const remove = () => {
                     >
                         <!-- Street -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Street</label
-                            >
-
                             <FormInput
                                 v-model="form.street"
                                 id="street"
@@ -166,11 +133,6 @@ const remove = () => {
 
                         <!-- Postal Code -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Postal code</label
-                            >
-
                             <FormInput
                                 v-model="form.postal_code"
                                 id="postal_code"
@@ -182,11 +144,6 @@ const remove = () => {
 
                         <!-- City -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >City</label
-                            >
-
                             <FormInput
                                 v-model="form.city"
                                 id="city"
@@ -198,11 +155,6 @@ const remove = () => {
 
                         <!-- Country -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Country</label
-                            >
-
                             <FormInput
                                 v-model="form.country"
                                 id="country"
@@ -214,11 +166,6 @@ const remove = () => {
 
                         <!-- E-mail -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >E-mail</label
-                            >
-
                             <FormInput
                                 v-model="form.email"
                                 id="email"
@@ -230,11 +177,6 @@ const remove = () => {
 
                         <!-- Phone -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Phone</label
-                            >
-
                             <FormInput
                                 v-model="form.phone"
                                 id="phone"
@@ -247,7 +189,7 @@ const remove = () => {
                 </div>
 
                 <!-- Action Buttons Footer -->
-                <div
+                <!-- <div
                     class="mt-6 flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
                 >
                     <Link
@@ -260,17 +202,25 @@ const remove = () => {
                     <button
                         type="button"
                         @click="remove"
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-red-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-600/90 disabled:pointer-events-none disabled:opacity-50"
+                        class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-100 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
                     >
                         Delete Client
                     </button>
 
                     <button
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
+                        class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
                     >
                         Save Changes
                     </button>
-                </div>
+                </div> -->
+                <FormActions
+                    :index-url="index().url"
+                    delete-label="Delete Client"
+                    save-label="Save Changes"
+                    :processing="form.processing"
+                    show-delete
+                    @delete="remove"
+                />
             </div>
         </form>
     </div>

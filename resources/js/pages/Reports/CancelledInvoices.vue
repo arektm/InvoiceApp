@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { unpaidInvoices } from '@/routes/reports';
+import { cancelledInvoices } from '@/routes/reports';
 import Pagination from '../Shared/Pagination.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 
@@ -8,8 +8,8 @@ defineOptions({
     layout: {
         breadcrumbs: [
             {
-                title: 'Reports/Unpaid invoices',
-                href: unpaidInvoices(),
+                title: 'Reports/Cancelled invoices',
+                href: cancelledInvoices(),
             },
         ],
     },
@@ -21,24 +21,12 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Unpaid Invoices" />
+    <Head title="Cancelled Invoices" />
 
-    <!-- <div
-        class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-    >
-        <h1 class="text-3xl font-semibold tracking-tight">Unpaid invoices</h1>
-
-        <Link
-            href="/reports"
-            class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
-        >
-            Back
-        </Link>
-    </div> -->
     <div class="mb-3">
         <PageHeader
-            title="Unpaid invoices"
-            description="Invoices awaiting payment."
+            title="Cancelled invoices"
+            description="Payment deadline has passed."
             actionButton="Back to report"
             actionButtonAddress="/reports"
             variant="btnWhite"
@@ -78,12 +66,6 @@ defineProps({
                             class="px-6 py-3 text-center text-xs font-medium tracking-wider text-muted-foreground uppercase"
                         >
                             Due Date
-                        </th>
-
-                        <th
-                            class="px-6 py-3 text-center text-xs font-medium tracking-wider text-muted-foreground uppercase"
-                        >
-                            Overdue
                         </th>
 
                         <th
@@ -132,22 +114,6 @@ defineProps({
                             class="px-6 py-3 text-center text-sm whitespace-nowrap text-muted-foreground"
                         >
                             {{ invoice.due_date }}
-                        </td>
-
-                        <td class="px-6 py-3 text-center">
-                            <span
-                                v-if="invoice.days_overdue > 0"
-                                class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-400"
-                            >
-                                {{ invoice.days_overdue }} days
-                            </span>
-
-                            <span
-                                v-else
-                                class="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
-                            >
-                                {{ -invoice.days_overdue }} OK
-                            </span>
                         </td>
 
                         <td

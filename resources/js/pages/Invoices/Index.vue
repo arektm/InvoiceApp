@@ -5,6 +5,7 @@ import { computed, ref, watch } from 'vue';
 import { create, show, index, edit } from '@/routes/invoices';
 import Pagination from '../Shared/Pagination.vue';
 import { usePermissions } from '@/composables/userPermisions.js';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -16,14 +17,11 @@ defineOptions({
         ],
     },
 });
-const page=usePage();
+const page = usePage();
 
-const user= computed(()=>page.props.auth.user);
+const user = computed(() => page.props.auth.user);
 
-const {
-    canEditInvoices,
-    canDeleteInvoices,
-} = usePermissions();
+const { canEditInvoices, canDeleteInvoices } = usePermissions();
 
 const props = defineProps({
     invoices: Object,
@@ -50,25 +48,14 @@ watch(search, (value) => {
 
     <div class="space-y-4">
         <!-- Header -->
-        <div
-            class="flex flex-col gap-4 p-3 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h1 class="mt-3 text-3xl font-semibold tracking-tight">
-                    Invoices
-                </h1>
-            </div>
 
-            <Link
-                :href="create()"
-                class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
-            >
-                <Plus class="h-4 w-4" />
-
-                New Invoice
-            </Link>
-        </div>
-
+        <PageHeader
+            title="Invoices"
+            description="Manage your invoices."
+            actionButton="+ New invoice"
+            actionButtonAddress="/invoices/create"
+            variant="btnBlack"
+        />
         <!-- Search -->
         <div class="rounded-xl border bg-card p-5 shadow-sm">
             <div class="flex items-center gap-2">

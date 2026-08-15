@@ -24,7 +24,7 @@ class CompanyController extends Controller
             'website' => '',
         ]);
 
-        return Inertia::render('Company', [
+        return Inertia::render('Company/Index', [
             'company' => $company,
 
         ]);

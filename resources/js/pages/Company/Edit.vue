@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, useForm, Link } from '@inertiajs/vue3';
 import { updateCompany } from '@/routes';
+import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
     layout: {
@@ -45,34 +46,14 @@ const submit = () => {
 
     <div class="space-y-8">
         <!-- Header -->
-        <div
-            class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <div
-                    class="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                    <Building class="h-4 w-4" />
 
-                    <span>Companies</span>
-                </div>
-
-                <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                    Edit Company Details
-                </h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Update your company information and contact details.
-                </p>
-            </div>
-
-            <Link
-                href="/company"
-                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
-            >
-                Cancel
-            </Link>
-        </div>
+        <PageHeader
+            title="Edit company details"
+            description="Update your company information and contact details."
+            actionButton="← Back"
+            actionButtonAddress="/company"
+            variant="btnWhite"
+        />
 
         <!-- Form Container -->
         <div class="rounded-xl border bg-card p-5 shadow-sm">

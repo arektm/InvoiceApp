@@ -24,7 +24,6 @@ class DashboardController extends Controller
 
         $unpaidInvoices = Invoice::where('status', 'unpaid')
             ->count();
-
         $overdueInvoices = Invoice::where('status', 'unpaid')
             ->whereDate('due_date', '<', $today)
             ->count();
@@ -36,8 +35,8 @@ class DashboardController extends Controller
         */
 
         $invoiceCount = Invoice::count();
-        $invoisesCanceled = Invoice::where('status', 'cancelled')->count();
-        $invoiceCount = $invoiceCount - $invoisesCanceled;
+        $invoicesCancelled = Invoice::where('status', 'cancelled')->count();
+        $invoiceCount = $invoiceCount - $invoicesCancelled;
 
         /*
         |--------------------------------------------------------------------------
@@ -110,6 +109,8 @@ class DashboardController extends Controller
             'paymentStatusPercentages' => $paymentStatusPercentages,
 
             'recentInvoices' => $recentInvoices,
+
+            'cancelledInvoices' => $invoicesCancelled,
         ]);
     }
 }

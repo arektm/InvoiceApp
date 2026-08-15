@@ -39,7 +39,7 @@ const handleInput = (event: Event) => {
 
 <template>
     <div class="flex flex-col gap-1">
-        <label :for="id" class="text-sm font-medium">
+        <label :for="id" class="p-2 text-sm font-medium">
             {{ label }}
         </label>
 

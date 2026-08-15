@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { edit } from '@/routes/products/index.js';
+import PageHeader from '@/components/invoices/PageHeader.vue';
+import { edit, index } from '@/routes/products/index.js';
 import FormInput from '../Shared/FormInput.vue';
+import FormActions from '@/components/invoices/FormActions.vue';
 
 defineOptions({
     layout: {
@@ -50,48 +52,28 @@ const remove = () => {
 
     <div class="space-y-6">
         <!-- Header -->
-        <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <p class="text-sm font-medium text-muted-foreground">
-                    Products / Edit
-                </p>
-
-                <h1
-                    class="mt-1 text-3xl font-bold tracking-tight text-foreground"
-                >
-                    Edit product
-                </h1>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Update product information, pricing and stock.
-                </p>
-            </div>
-
-            <Link
-                href="/products"
-                class="inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted"
-            >
-                ← Back to products
-            </Link>
-        </div>
+        <PageHeader
+            title="Edit"
+            :item="product?.product_name"
+            description="Update product details"
+            actionButton="← Back to products"
+            actionButtonAddress="/products"
+            variant="btnWhite"
+        />
 
         <!-- Form card -->
         <form
             @submit.prevent="submit"
-            class="overflow-hidden rounded-xl border border-border bg-card"
+            class="rounded-xl border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
         >
             <!-- Product information -->
-            <div class="border-b border-border p-6">
-                <div class="mb-5">
-                    <h2 class="text-lg font-semibold text-foreground">
+            <div class="space-y-6">
+                <div class="mb-6">
+                    <h2
+                        class="mb-4 flex items-center gap-2 text-sm font-medium text-muted-foreground"
+                    >
                         Product information
                     </h2>
-
-                    <p class="mt-1 text-sm text-muted-foreground">
-                        Basic information about the product.
-                    </p>
                 </div>
 
                 <div class="grid gap-5 md:grid-cols-2">
@@ -156,7 +138,7 @@ const remove = () => {
 
                 <div class="grid gap-5 md:grid-cols-3">
                     <!-- Net price -->
-                    <div>
+                    <div class="mt-3">
                         <label
                             for="net_price"
                             class="mb-2 block text-sm font-medium text-foreground"
@@ -191,7 +173,7 @@ const remove = () => {
                     </div>
 
                     <!-- VAT -->
-                    <div>
+                    <div class="mt-3">
                         <label
                             for="vat_rate"
                             class="mb-2 block text-sm font-medium text-foreground"
@@ -232,37 +214,14 @@ const remove = () => {
             </div>
 
             <!-- Actions -->
-            <div
-                class="flex flex-col-reverse gap-3 bg-muted/20 p-6 sm:flex-row sm:items-center sm:justify-between"
-            >
-                <!-- Delete -->
-                <button
-                    type="button"
-                    @click="remove"
-                    class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-100 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
-                >
-                    Delete product
-                </button>
-
-                <div class="flex flex-col gap-3 sm:flex-row">
-                    <Link
-                        href="/products"
-                        class="inline-flex items-center justify-center rounded-lg border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted"
-                    >
-                        Cancel
-                    </Link>
-
-                    <button
-                        type="submit"
-                        :disabled="form.processing"
-                        class="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        <span v-if="form.processing"> Saving... </span>
-
-                        <span v-else> Save changes </span>
-                    </button>
-                </div>
-            </div>
+            <FormActions
+                :index-url="index().url"
+                delete-label="Delete Product"
+                save-label="Save Changes"
+                :processing="form.processing"
+                show-delete
+                @delete="remove"
+            />
 
             <!-- Delete error -->
             <div

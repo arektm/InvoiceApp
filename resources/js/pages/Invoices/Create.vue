@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { create } from '@/routes/invoices';
+import { create, index } from '@/routes/invoices';
 
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
+import PageHeader from '@/components/invoices/PageHeader.vue';
+import FormActions from '@/components/invoices/FormActions.vue';
 defineOptions({
     layout: {
         breadcrumbs: [
@@ -61,7 +63,7 @@ const submit = () => {
 
     <div class="space-y-8">
         <!-- Header -->
-        <div
+        <!-- <div
             class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
             <div>
@@ -80,7 +82,14 @@ const submit = () => {
             >
                 Cancel
             </Link>
-        </div>
+        </div> -->
+        <PageHeader
+            title="New invoice"
+            description="Create a new invoice record in the system."
+            actionButton="← Back to invoices"
+            actionButtonAddress="/invoices"
+            variant="btnWhite"
+        />
 
         <!-- Form -->
         <form @submit.prevent="submit">
@@ -251,25 +260,11 @@ const submit = () => {
                     </p>
                 </div>
 
-                <!-- Actions FOOTER -->
-                <div
-                    class="flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
-                >
-                    <Link
-                        href="/invoices"
-                        class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        Cancel
-                    </Link>
-
-                    <button
-                        type="submit"
-                        :disabled="form.processing"
-                        class="inline-flex h-9 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600/90 disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        {{ form.processing ? 'Saving...' : 'Save Invoice' }}
-                    </button>
-                </div>
+                <FormActions
+                    :index-url="index().url"
+                    save-label="Save Changes"
+                    :processing="form.processing"
+                />
             </div>
         </form>
     </div>
