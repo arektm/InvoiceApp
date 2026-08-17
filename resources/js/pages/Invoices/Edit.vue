@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import ModalAlert from '@/components/ModalAlert.vue';
-import { destroy, edit, index, update } from '@/routes/invoices';
+import { destroy, index, update } from '@/routes/invoices';
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
 
@@ -13,7 +13,7 @@ defineOptions({
         breadcrumbs: [
             {
                 title: 'Invoices/Edit invoice',
-                href: edit,
+                href: 'invoices/edit',
             },
         ],
     },
@@ -77,7 +77,7 @@ const confirmRemove = () => {
     <div class="space-y-6">
         <PageHeader
             title="Edit invoice"
-            :item="invoice?.number"
+            :item="invoice?.invoice_number"
             description="Update product details"
             actionButton="← Back to products"
             actionButtonAddress="/invoices"

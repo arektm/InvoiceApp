@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
-
+const search = ref('');
 const open = ref(false);
 const dropdownRef = ref(null);
 
@@ -29,6 +29,13 @@ const filteredProducts = computed(() => {
         product.product_name.toLowerCase().includes(q),
     );
 });
+function clearProduct() {
+    search.value = '';
+
+    emit('update:modelValue', '');
+
+    open.value = false;
+}
 
 function selectProduct(product) {
     emit('update:modelValue', {
@@ -105,21 +112,31 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="relative" ref="dropdownRef">
-        <input
-            :value="modelValue.product_name"
-            type="text"
-            autocomplete="off"
-            placeholder="Select product..."
-            class="flex w-full items-center rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-            @focus="open = true"
-            @keydown.escape="open = false"
-            @input="
-                emit('update:modelValue', {
-                    ...modelValue,
-                    product_name: $event.target.value,
-                })
-            "
-        />
+        <div class="flex w-full gap-2">
+            <input
+                :value="modelValue.product_name"
+                type="text"
+                autocomplete="off"
+                placeholder="Select product..."
+                class="flex w-full items-center rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                @focus="open = true"
+                @keydown.escape="open = false"
+                @input="
+                    emit('update:modelValue', {
+                        ...modelValue,
+                        product_name: $event.target.value,
+                    })
+                "
+            />
+            <button
+                v-if="modelValue"
+                type="button"
+                class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border bg-background text-sm text-muted-foreground shadow-sm transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
+                @click="clearProduct"
+            >
+                ✕
+            </button>
+        </div>
 
         <div
             v-if="open"

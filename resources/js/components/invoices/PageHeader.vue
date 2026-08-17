@@ -2,35 +2,57 @@
 import { Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
-type Variant = 'btnBlack' | 'btnWhite';
+// type Variant = 'btnBlack' | 'btnWhite';
 
-interface Props {
+// interface Props {
+//     title?: string;
+//     item?: string;
+//     description?: string;
+//     actionButton?: string;
+//     actionButtonAddress?: string;
+//     variant?: Variant;
+// }
+
+// const props = withDefaults(defineProps<Props>(), {
+//     title: '',
+//     item: '',
+//     description: '',
+//     actionButton: '← Back',
+//     actionButtonAddress: '',
+//     variant: 'btnWhite',
+// });
+
+// const styles: Record<Variant, string> = {
+//     btnWhite:
+//         'inline-flex items-center justify-center rounded-lg bg-background px-4 py-2.5 text-sm font-medium border border-border text-foreground transition hover:bg-muted',
+
+//     btnBlack:
+//         'inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90',
+// };
+
+// const currentClass = computed(() => styles[props.variant]);
+const {
+    title = '',
+    item,
+    description = '',
+    actionButton = '← Back',
+    actionButtonAddress = '#',
+    variant = 'btnWhite',
+} = defineProps<{
     title?: string;
     item?: string;
     description?: string;
     actionButton?: string;
     actionButtonAddress?: string;
-    variant?: Variant;
-}
+    variant?: 'btnBlack' | 'btnWhite';
+}>();
 
-const props = withDefaults(defineProps<Props>(), {
-    title: '',
-    item: '',
-    description: '',
-    actionButton: '← Back',
-    actionButtonAddress: '',
-    variant: 'btnWhite',
-});
+const styles = {
+    btnWhite: `inline-flex items-center justify-center rounded-lg bg-background px-4 py-2.5 text-sm font-medium border border-border text-foreground transition hover:bg-muted`,
+    btnBlack: `inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90`,
+} as const;
 
-const styles: Record<Variant, string> = {
-    btnWhite:
-        'inline-flex items-center justify-center rounded-lg bg-background px-4 py-2.5 text-sm font-medium border border-border text-foreground transition hover:bg-muted',
-
-    btnBlack:
-        'inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90',
-};
-
-const currentClass = computed(() => styles[props.variant]);
+const currentClass = computed(() => styles[variant]);
 </script>
 <template>
     <div

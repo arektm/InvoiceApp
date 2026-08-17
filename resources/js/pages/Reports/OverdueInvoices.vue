@@ -125,14 +125,14 @@ defineProps({
                         <td class="px-6 py-3 text-center">
                             <span
                                 v-if="invoice.days_overdue > 0"
-                                class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-400"
+                                class="inline-flex rounded-full overdue px-2.5 py-1 text-xs font-medium"
                             >
                                 {{ invoice.days_overdue }} days
                             </span>
 
                             <span
                                 v-else
-                                class="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                                class="inline-flex rounded-full paid px-2.5 py-1 text-xs font-medium"
                             >
                                 {{ invoice.days_overdue }} OK
                             </span>

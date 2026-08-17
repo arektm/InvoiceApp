@@ -143,7 +143,7 @@ watch(search, (value) => {
                             class="border-b border-border transition last:border-0 hover:bg-muted/30"
                         >
                             <!-- Code -->
-                            <td class="px-5 py-4">
+                            <td class="px-5 py-3">
                                 <span
                                     class="font-mono text-xs text-muted-foreground"
                                 >
@@ -152,7 +152,7 @@ watch(search, (value) => {
                             </td>
 
                             <!-- Product -->
-                            <td class="px-5 py-4">
+                            <td class="px-5 py-3">
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"
@@ -183,20 +183,20 @@ watch(search, (value) => {
 
                             <!-- Net price -->
                             <td
-                                class="px-5 py-4 text-right font-medium text-foreground"
+                                class="px-5 py-3 text-right font-medium text-foreground"
                             >
                                 € {{ Number(product.net_price).toFixed(2) }}
                             </td>
 
                             <!-- VAT -->
                             <td
-                                class="px-5 py-4 text-right text-muted-foreground"
+                                class="px-5 py-3 text-right text-muted-foreground"
                             >
                                 {{ product.vat_rate }}%
                             </td>
 
                             <!-- Stock -->
-                            <td class="px-5 py-4 text-right">
+                            <td class="px-5 py-3 text-right">
                                 <span
                                     v-if="product.stock_quantity > 0"
                                     class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
@@ -221,7 +221,7 @@ watch(search, (value) => {
                             </td>
 
                             <!-- Actions -->
-                            <td class="px-5 py-4">
+                            <td class="px-5 py-3">
                                 <div class="flex justify-center gap-2">
                                     <Link
                                         :href="`/products/${product.id}`"

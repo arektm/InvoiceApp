@@ -267,7 +267,7 @@ const productPercentage = (value: number | string | null) => {
                     <div>
                         <div class="flex items-center gap-2">
                             <div
-                                class="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-400"
+                                class="flex h-9 w-9 items-center justify-center rounded-lg unpaid"
                             >
                                 <Clock3 class="h-4 w-4" />
                             </div>
@@ -276,7 +276,7 @@ const productPercentage = (value: number | string | null) => {
                         </div>
 
                         <p
-                            class="mt-4 ml-7 text-3xl font-semibold tracking-tight text-amber-600"
+                            class="mt-3 ml-5 w-0 unpaid text-3xl font-semibold tracking-tight"
                         >
                             {{ formatNumber(unpaidInvoices) }}
                         </p>
@@ -305,7 +305,7 @@ const productPercentage = (value: number | string | null) => {
                     <div>
                         <div class="flex items-center gap-2">
                             <div
-                                class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400"
+                                class="flex h-9 w-9 items-center justify-center rounded-lg overdue"
                             >
                                 <AlertCircle class="h-4 w-4" />
                             </div>
@@ -314,7 +314,7 @@ const productPercentage = (value: number | string | null) => {
                         </div>
 
                         <p
-                            class="mt-4 ml-7 text-3xl font-semibold tracking-tight text-red-600"
+                            class="mt-3 ml-5 w-0 overdue text-3xl font-semibold tracking-tight"
                         >
                             {{ formatNumber(overdueInvoices) }}
                         </p>
@@ -332,13 +332,13 @@ const productPercentage = (value: number | string | null) => {
             <!-- Cancelled Invoices -->
             <Link
                 href="/reports/cancelled-invoices"
-                class="group rounded-xl border bg-card p-6 shadow-sm transition-all hover:border-orange-200 hover:shadow-md dark:hover:border-orange-900"
+                class="group rounded-xl border bg-card p-6 shadow-sm transition-all hover:border-gray-400 hover:shadow-md dark:hover:border-gray-200"
             >
                 <div class="flex items-start justify-between">
                     <div>
                         <div class="flex items-center gap-2">
                             <div
-                                class="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-50 text-orange-600 dark:bg-red-950 dark:text-orange-400"
+                                class="flex h-9 w-9 items-center justify-center rounded-lg cancelled"
                             >
                                 <SquareX class="h-4 w-4" />
                             </div>
@@ -346,11 +346,11 @@ const productPercentage = (value: number | string | null) => {
                             <h2 class="font-semibold">Cancelled invoices</h2>
                         </div>
 
-                        <p
-                            class="mt-4 ml-7 text-3xl font-semibold tracking-tight text-orange-600"
+                        <div
+                            class="mt-3 ml-5 w-0 cancelled text-3xl font-semibold tracking-tight"
                         >
                             {{ formatNumber(cancelledInvoices) }}
-                        </p>
+                        </div>
 
                         <p class="mt-1 text-sm text-muted-foreground">
                             Invoices cancelled.

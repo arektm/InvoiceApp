@@ -170,21 +170,6 @@ watch(search, (value) => {
                         </td>
                     </tr>
                 </tbody>
-
-                <tfoot v-if="clients?.data.length > 0">
-                    <tr class="bg-muted/30 font-medium">
-                        <td colspan="4" class="p-4 text-right text-sm">
-                            Total clients:
-                        </td>
-
-                        <td
-                            colspan="2"
-                            class="p-4 text-left text-sm text-blue-600"
-                        >
-                            {{ clients?.data.length }}
-                        </td>
-                    </tr>
-                </tfoot>
             </table>
         </div>
 

@@ -1,5 +1,21 @@
 @import 'tailwindcss';
 
+@utility paid {
+    @apply bg-emerald-100 text-emerald-700;
+    @apply dark:bg-emerald-950 dark:text-emerald-400;
+}
+@utility unpaid {
+    @apply bg-amber-100 text-amber-700;
+    @apply dark:bg-amber-950 dark:text-amber-400;
+}
+@utility overdue {
+    @apply bg-red-100 text-red-700;
+    @apply dark:bg-red-950 dark:text-red-400;
+}
+@utility cancelled {
+    @apply bg-slate-100 text-slate-700;
+    @apply dark:bg-slate-900 dark:text-slate-400;
+}
 @import 'tw-animate-css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

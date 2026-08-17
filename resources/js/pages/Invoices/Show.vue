@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import InvoiceStatusBadge from '@/components/invoices/InvoiceStatusBadge.vue';
 import { print, pdf, show } from '@/routes/invoices';
 // import { destroy, print } from '@/actions/App/Http/Controllers/InvoiceController';
 
@@ -14,26 +15,26 @@ defineOptions({
     },
 });
 
-type InvoiceStatus = 'paid' | 'unpaid' | 'cancelled';
+// type InvoiceStatus = 'paid' | 'unpaid' | 'cancelled';
 // const { canEditInvoices, canDeleteInvoices } = usePermissions();
 defineProps({
     invoice: Object,
 });
 
-const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
-    paid: {
-        label: 'Paid',
-        class: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
-    },
-    unpaid: {
-        label: 'Unpaid',
-        class: 'bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400',
-    },
-    cancelled: {
-        label: 'Cancelled',
-        class: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
-    },
-};
+// const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
+//     paid: {
+//         label: 'Paid',
+//         class: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400',
+//     },
+//     unpaid: {
+//         label: 'Unpaid',
+//         class: 'bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400',
+//     },
+//     cancelled: {
+//         label: 'Cancelled',
+//         class: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+//     },
+// };
 
 // const isConfirmOpen = ref(false);
 
@@ -62,21 +63,10 @@ const statusConfig: Record<InvoiceStatus, { label: string; class: string }> = {
                     Invoice {{ invoice?.invoice_number }}
                 </h1>
 
-                <!-- Status Badge -->
-                <div
-                    class="mt-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium shadow-sm"
-                    :class="
-                        statusConfig[invoice?.status as InvoiceStatus]?.class
-                    "
-                >
-                    {{ statusConfig[invoice?.status as InvoiceStatus]?.label }}
-                </div>
-                <div
-                    v-if="invoice?.status === 'unpaid' && invoice?.overdue"
-                    class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-400"
-                >
-                    overdue
-                </div>
+                <InvoiceStatusBadge
+                    :status="invoice?.status"
+                    :overdue="invoice?.overdue"
+                />
             </div>
 
             <div class="flex items-center gap-2">

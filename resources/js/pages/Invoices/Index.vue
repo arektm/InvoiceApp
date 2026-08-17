@@ -2,6 +2,7 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Eye, Pencil } from '@lucide/vue';
 import { ref, watch } from 'vue';
+import InvoiceStatusBadge from '@/components/invoices/InvoiceStatusBadge.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import { usePermissions } from '@/composables/userPermisions.js';
 import { show, index, edit } from '@/routes/invoices';
@@ -179,32 +180,10 @@ watch(search, (value) => {
 
                             <!-- Status -->
                             <td class="px-6 py-2">
-                                <span
-                                    class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium"
-                                    :class="{
-                                        'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400':
-                                            invoice.status === 'paid',
-
-                                        'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400':
-                                            invoice.status === 'unpaid',
-
-                                        'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400':
-                                            invoice.status === 'overdue',
-
-                                        'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300':
-                                            invoice.status === 'cancelled',
-                                    }"
-                                >
-                                    {{ invoice.status }}
-                                </span>
-                                <span
-                                    v-if="
-                                        invoice.status === 'unpaid' &&
-                                        invoice.overdue
-                                    "
-                                    class="inline-flex rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-400"
-                                    >overdue</span
-                                >
+                                <InvoiceStatusBadge
+                                    :status="invoice.status"
+                                    :overdue="invoice.overdue"
+                                />
                             </td>
 
                             <!-- Actions -->
