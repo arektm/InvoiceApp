@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import ShowActions from '@/components/invoices/ShowActions.vue';
+import { usePermissions } from '@/composables/userPermisions';
 import { index, show } from '@/routes/clients';
 // import FormActions from '@/components/invoices/FormActions.vue';
 
@@ -18,6 +19,7 @@ defineOptions({
 defineProps({
     client: Object,
 });
+const { canEditClients } = usePermissions();
 </script>
 
 <template>
@@ -141,7 +143,7 @@ defineProps({
 
                 <ShowActions
                     :indexUrl="index().url"
-                    showEdit
+                    :showEdit="canEditClients"
                     editLabel="Edit Client Details"
                     :edit-url="`/clients/${client?.id}/edit`"
                 />

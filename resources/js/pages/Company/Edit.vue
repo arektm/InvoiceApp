@@ -8,7 +8,7 @@ defineOptions({
         breadcrumbs: [
             {
                 title: 'Company/Edit company details',
-                // href: edit,
+                href: '/edit',
             },
         ],
     },

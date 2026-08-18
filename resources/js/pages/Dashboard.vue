@@ -152,12 +152,12 @@ const pieStyle = () => {
 
         <!-- Quick actions -->
         <div>
-            <div class="mb-4">
+            <div class="mb-4 p-3">
                 <h2 class="font-semibold">Quick actions</h2>
 
-                <p class="mt-1 text-sm text-muted-foreground">
+                <!-- <p class="mt-1 text-sm text-muted-foreground">
                     Frequently used actions.
-                </p>
+                </p> -->
             </div>
 
             <div class="grid gap-4 sm:grid-cols-3">

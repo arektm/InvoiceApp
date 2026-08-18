@@ -4,10 +4,10 @@ import { ref } from 'vue';
 import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import ModalAlert from '@/components/ModalAlert.vue';
+import { usePermissions } from '@/composables/userPermisions.js';
 import { destroy, index, update } from '@/routes/invoices';
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
-
 defineOptions({
     layout: {
         breadcrumbs: [
@@ -68,6 +68,7 @@ const confirmRemove = () => {
         router.delete(destroy(props.invoice.id).url);
     }
 };
+const { canDeleteInvoices } = usePermissions();
 </script>
 
 <template>
@@ -262,7 +263,7 @@ const confirmRemove = () => {
                     delete-label="Delete Invoice"
                     save-label="Save Changes"
                     :processing="form.processing"
-                    show-delete
+                    :show-delete="canDeleteInvoices"
                     @delete="openConfirmModal"
                     :error="$page.props.errors.delete"
                 />

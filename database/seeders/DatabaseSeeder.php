@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         Client::factory(20)->create();
-        Product::factory(100)->create();
+        Product::factory(50)->create();
         Invoice::factory(20)
             ->create()
             ->each(function ($invoice) {
@@ -36,11 +36,24 @@ class DatabaseSeeder extends Seeder
                     'invoice_id' => $invoice->id,
                 ]);
             });
+        // For tests only not for production
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@local.com',
             'password' => static::$password ??= Hash::make('aaaaaaaa'),
             'role' => 'admin',
+        ]);
+        User::factory()->create([
+            'name' => 'Accuntant',
+            'email' => 'ac@local.com',
+            'password' => static::$password ??= Hash::make('aaaaaaaa'),
+            'role' => 'accountant',
+        ]);
+        User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@local.com',
+            'password' => static::$password ??= Hash::make('aaaaaaaa'),
+            'role' => 'user',
         ]);
     }
 }

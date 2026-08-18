@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import ModalAlert from '@/components/ModalAlert.vue';
+import { usePermissions } from '@/composables/userPermisions.js';
 import { update, index, destroy, edit } from '@/routes/clients';
 import FormInput from '../Shared/FormInput.vue';
 
@@ -61,6 +62,7 @@ const confirmRemove = () => {
         router.delete(destroy(props.client.id).url);
     }
 };
+const { canDeleteClients } = usePermissions();
 </script>
 
 <template>
@@ -202,7 +204,7 @@ const confirmRemove = () => {
                     delete-label="Delete Client"
                     save-label="Save Changes"
                     :processing="form.processing"
-                    show-delete
+                    :show-delete="canDeleteClients"
                     @delete="openConfirmModal"
                     :error="$page.props.errors.delete"
                 />

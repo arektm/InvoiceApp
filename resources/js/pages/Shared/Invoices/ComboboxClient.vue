@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
                 type="text"
                 autocomplete="off"
                 placeholder="Search client..."
-                class="flex w-full items-center rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                class="relative z-10 flex w-full items-center rounded-lg border border-border bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground hover:bg-muted/40 focus:border-primary focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                 @focus="open = true"
                 @keydown.escape="open = false"
             />
@@ -97,26 +97,30 @@ onBeforeUnmount(() => {
             </button>
         </div>
 
+        <!-- Dropdown -->
         <div
             v-if="open"
-            class="absolute top-full z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-lg border bg-secondary shadow-lg"
+            class="absolute top-full left-0 z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-lg border bg-secondary shadow-lg"
         >
             <div
                 v-for="client in filteredClients"
                 :key="client.id"
-                class="cursor-pointer border-b p-2 hover:bg-gray-100"
+                class="cursor-pointer border-b border-border p-3 last:border-b-0 hover:bg-muted"
                 @click="selectClient(client)"
             >
-                <div class="font-medium">
+                <div class="font-medium text-foreground">
                     {{ client.name }}
                 </div>
 
-                <div v-if="client.email" class="text-sm text-gray-500">
+                <div v-if="client.email" class="text-sm text-muted-foreground">
                     {{ client.email }}
                 </div>
             </div>
 
-            <div v-if="filteredClients.length === 0" class="p-2 text-gray-500">
+            <div
+                v-if="filteredClients.length === 0"
+                class="p-3 text-sm text-muted-foreground"
+            >
                 No clients found
             </div>
         </div>

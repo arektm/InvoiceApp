@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import ShowActions from '@/components/invoices/ShowActions.vue';
+import { usePermissions } from '@/composables/userPermisions';
 import { show, index } from '@/routes/products';
 
 defineOptions({
@@ -18,6 +19,7 @@ defineOptions({
 defineProps({
     product: Object,
 });
+const { canEditProducts } = usePermissions();
 </script>
 
 <template>
@@ -193,7 +195,7 @@ defineProps({
         <!-- Actions -->
         <ShowActions
             :indexUrl="index().url"
-            showEdit
+            :showEdit="canEditProducts"
             editLabel="Edit Product"
             :edit-url="`/products/${product?.id}/edit`"
         />

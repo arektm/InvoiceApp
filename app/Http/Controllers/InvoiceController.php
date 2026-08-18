@@ -174,6 +174,7 @@ class InvoiceController extends Controller
 
     public function edit(Invoice $invoice)
     {
+        $this->authorize('edit', Invoice::class);
         $invoice->load([
             'items.product',
             'client',

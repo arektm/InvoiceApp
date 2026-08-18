@@ -9,7 +9,7 @@ export function usePermissions() {
     const isAdmin = computed(() => role.value === 'admin');
 
     const isAccountant = computed(() => role.value === 'accountant');
-
+    // Invoices
     const canEditInvoices = computed(() => isAdmin.value || isAccountant.value);
 
     const canDeleteInvoices = computed(
@@ -17,6 +17,26 @@ export function usePermissions() {
     );
 
     const canCreateInvoices = computed(
+        () => isAdmin.value || isAccountant.value || role.value === 'user',
+    );
+    // Products
+    const canEditProducts = computed(() => isAdmin.value || isAccountant.value);
+
+    const canDeleteProducts = computed(
+        () => isAdmin.value || isAccountant.value,
+    );
+
+    const canCreateProducts = computed(
+        () => isAdmin.value || isAccountant.value || role.value === 'user',
+    );
+    // Clients
+    const canEditClients = computed(() => isAdmin.value || isAccountant.value);
+
+    const canDeleteClients = computed(
+        () => isAdmin.value || isAccountant.value,
+    );
+
+    const canCreateClients = computed(
         () => isAdmin.value || isAccountant.value || role.value === 'user',
     );
 
@@ -27,5 +47,13 @@ export function usePermissions() {
         canEditInvoices,
         canDeleteInvoices,
         canCreateInvoices,
+
+        canEditProducts,
+        canDeleteProducts,
+        canCreateProducts,
+
+        canEditClients,
+        canDeleteClients,
+        canCreateClients,
     };
 }

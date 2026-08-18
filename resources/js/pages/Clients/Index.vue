@@ -2,6 +2,7 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
+import { usePermissions } from '@/composables/userPermisions.js';
 import { index, edit, show } from '@/routes/clients';
 import Pagination from '../Shared/Pagination.vue';
 
@@ -35,6 +36,7 @@ watch(search, (value) => {
         },
     );
 });
+const { canEditClients } = usePermissions();
 </script>
 
 <template>
@@ -151,6 +153,7 @@ watch(search, (value) => {
                                 </Link>
 
                                 <Link
+                                    v-if="canEditClients"
                                     :href="edit(client.id)"
                                     class="inline-flex h-8 w-18 items-center justify-center rounded-lg bg-primary text-xs font-medium text-primary-foreground shadow-sm transition transition-colors hover:bg-primary/90 disabled:pointer-events-none disabled:opacity-50"
                                     title="Edit details"

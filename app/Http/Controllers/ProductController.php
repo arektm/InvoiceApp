@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
@@ -57,6 +60,8 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Product::class);
+
         return Inertia::render('Products/Create');
     }
 
@@ -114,6 +119,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $this->authorize('edit', Product::class);
+
         return Inertia::render('Products/Edit', [
 
             'product' => $product,
@@ -125,6 +132,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $this->authorize('create', $product);
         $validated = $request->validate([
 
             'product_code' => [
@@ -171,6 +179,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $this->authorize('delete', $product);
         // dd($product);
         if ($product->invoiceItems()->exists()) {
 

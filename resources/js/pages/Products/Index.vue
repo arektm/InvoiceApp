@@ -2,8 +2,8 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
+import { usePermissions } from '@/composables/userPermisions.js';
 import { index } from '@/routes/products';
-
 import Pagination from '../Shared/Pagination.vue';
 defineOptions({
     layout: {
@@ -50,6 +50,7 @@ watch(search, (value) => {
         },
     );
 });
+const { canEditProducts } = usePermissions();
 </script>
 
 <template>
@@ -231,6 +232,7 @@ watch(search, (value) => {
                                     </Link>
 
                                     <Link
+                                        v-if="canEditProducts"
                                         :href="`/products/${product.id}/edit`"
                                         class="inline-flex items-center rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition hover:bg-primary/90"
                                     >

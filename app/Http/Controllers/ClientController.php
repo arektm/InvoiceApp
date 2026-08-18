@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ClientController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
@@ -58,6 +61,8 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Client::class);
+
         return Inertia::render('Clients/Create');
     }
 
@@ -112,6 +117,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
+        $this->authorize('edit', Client::class);
+
         return Inertia::render('Clients/Edit', [
             'client' => $client,
         ]);
@@ -122,6 +129,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
+
+        $this->authorize('update', $client);
 
         $validated = $request->validate([
 
@@ -159,6 +168,7 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
+        $this->authorize('delete', $client);
         if ($client->invoices()->exists()) {
 
             return back()->withErrors([
