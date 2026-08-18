@@ -68,7 +68,6 @@ watch(search, (value) => {
     }, 300);
 });
 
-
 const isConfirmOpen = ref(false);
 
 const selectedUser = ref<UserItem | null>(null);
@@ -242,9 +241,7 @@ const confirmRemove = () => {
                 </table>
             </div>
 
-           
-                <Pagination :links="users.links" />
-           
+            <Pagination :links="users.links" />
         </div>
     </div>
 </template>
