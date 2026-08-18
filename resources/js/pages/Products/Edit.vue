@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, router, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
-import { edit, index } from '@/routes/products/index.js';
+import ModalAlert from '@/components/ModalAlert.vue';
+import { destroy, edit, index } from '@/routes/products/index.js';
 import FormInput from '../Shared/FormInput.vue';
 
 defineOptions({
@@ -38,12 +40,24 @@ const form = useForm({
 const submit = () => {
     form.put(`/products/${props.product?.id}`);
 };
-const remove = () => {
-    if (!confirm('Are you sure you want to delete this product? ')) {
-        return;
-    }
+// const remove = () => {
+//     if (!confirm('Are you sure you want to delete this product? ')) {
+//         return;
+//     }
 
-    form.delete(`/products/${props.product?.id}`);
+//     form.delete(`/products/${props.product?.id}`);
+// };
+const isConfirmOpen = ref(false);
+
+const openConfirmModal = () => {
+    isConfirmOpen.value = true;
+};
+const confirmRemove = () => {
+    isConfirmOpen.value = false;
+
+    if (props.product?.id) {
+        router.delete(destroy(props.product.id).url);
+    }
 };
 </script>
 
@@ -220,16 +234,18 @@ const remove = () => {
                 save-label="Save Changes"
                 :processing="form.processing"
                 show-delete
-                @delete="remove"
+                @delete="openConfirmModal"
+                :error="$page.props.errors.delete"
             />
-
-            <!-- Delete error -->
-            <div
-                v-if="$page.props.errors.delete"
-                class="border-t border-red-200 bg-red-50 px-6 py-4 text-sm text-red-600 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400"
-            >
-                {{ $page.props.errors.delete }}
-            </div>
+            <ModalAlert
+                :show="isConfirmOpen"
+                :item="props.product?.product_name"
+                title="Delete confirmation"
+                message="Are you sure you want to delete product"
+                confirm="Delete"
+                @close="isConfirmOpen = false"
+                @confirm="confirmRemove"
+            />
         </form>
     </div>
 </template>

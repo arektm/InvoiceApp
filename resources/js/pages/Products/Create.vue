@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { Link, useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
-import { create } from '@/routes/products';
+import { create, index } from '@/routes/products';
+import FormInput from '../Shared/FormInput.vue';
 
 defineOptions({
     layout: {
@@ -62,52 +64,26 @@ const submit = () => {
                 <div class="grid gap-6 md:grid-cols-2">
                     <!-- Product code -->
                     <div>
-                        <label
-                            class="mb-2 block text-sm font-medium"
-                            for="product_code"
-                        >
-                            Product code
-                        </label>
-
-                        <input
-                            id="product_code"
+                        <FormInput
                             v-model="form.product_code"
+                            id="product_code"
                             type="text"
-                            placeholder="e.g. PROD-001"
+                            label="Product code"
+                            :error="form.errors.product_code"
                             class="w-full rounded-lg border bg-background px-3 py-2.5 text-sm shadow-sm transition outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                         />
-
-                        <div
-                            v-if="form.errors.product_code"
-                            class="mt-1.5 text-sm text-red-500"
-                        >
-                            {{ form.errors.product_code }}
-                        </div>
                     </div>
 
                     <!-- Product name -->
                     <div>
-                        <label
-                            class="mb-2 block text-sm font-medium"
-                            for="product_name"
-                        >
-                            Product name
-                        </label>
-
-                        <input
-                            id="product_name"
+                        <FormInput
                             v-model="form.product_name"
+                            id="product_name"
                             type="text"
-                            placeholder="e.g. Laravel Book"
+                            label="Product name"
+                            :error="form.errors.product_name"
                             class="w-full rounded-lg border bg-background px-3 py-2.5 text-sm shadow-sm transition outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                         />
-
-                        <div
-                            v-if="form.errors.product_name"
-                            class="mt-1.5 text-sm text-red-500"
-                        >
-                            {{ form.errors.product_name }}
-                        </div>
                     </div>
                 </div>
 
@@ -240,26 +216,12 @@ const submit = () => {
                 </div>
 
                 <!-- Actions -->
-                <div
-                    class="flex flex-col-reverse gap-3 border-t pt-6 sm:flex-row sm:justify-end"
-                >
-                    <Link
-                        href="/products"
-                        class="inline-flex items-center justify-center rounded-lg border px-5 py-2.5 text-sm font-medium transition hover:bg-muted"
-                    >
-                        Cancel
-                    </Link>
 
-                    <button
-                        type="submit"
-                        :disabled="form.processing"
-                        class="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        <span v-if="form.processing"> Saving... </span>
-
-                        <span v-else> Save product </span>
-                    </button>
-                </div>
+                <FormActions
+                    :index-url="index().url"
+                    save-label="Save Product"
+                    :processing="form.processing"
+                />
             </div>
         </form>
     </div>

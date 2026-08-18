@@ -153,6 +153,14 @@ defineProps({
                             </Link>
                         </td>
                     </tr>
+                    <tr v-if="invoices?.data.length === 0">
+                        <td
+                            colspan="6"
+                            class="p-8 text-center text-sm text-muted-foreground"
+                        >
+                            No overdue invoices.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

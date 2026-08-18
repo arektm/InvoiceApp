@@ -240,17 +240,13 @@ watch(search, (value) => {
                         <span
                             class="shrink-0 rounded-full px-2.5 py-1 text-xs font-medium"
                             :class="{
-                                'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400':
-                                    invoice.status === 'paid',
+                                paid: invoice.status === 'paid',
 
-                                'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400':
-                                    invoice.status === 'unpaid',
+                                unpaid: invoice.status === 'unpaid',
 
-                                'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400':
-                                    invoice.status === 'overdue',
+                                overdue: invoice.status === 'overdue',
 
-                                'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300':
-                                    invoice.status === 'cancelled',
+                                cancelled: invoice.status === 'cancelled',
                             }"
                         >
                             {{ invoice.status }}
@@ -312,6 +308,7 @@ watch(search, (value) => {
         </div>
 
         <!-- Pagination -->
+
         <Pagination :links="invoices?.links" />
     </div>
 </template>

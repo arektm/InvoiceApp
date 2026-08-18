@@ -16,6 +16,16 @@
     @apply bg-slate-100 text-slate-700;
     @apply dark:bg-slate-900 dark:text-slate-400;
 }
+@utility btnWhite {
+    @apply inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted;
+}
+@utility btnBlack {
+    @apply inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90;
+}
+@utility btnDelete {
+    @apply inline-flex items-center justify-center rounded-lg border border-red-300 bg-red-100 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-100 disabled:pointer-events-none disabled:opacity-50;
+    @apply dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20;
+}
 @import 'tw-animate-css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

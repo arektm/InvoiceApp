@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { Head, useForm } from '@inertiajs/vue3';
-import { Briefcase } from '@lucide/vue';
+import { Head, router, useForm } from '@inertiajs/vue3';
+import { Briefcase, MapPin } from '@lucide/vue';
+import { ref } from 'vue';
 import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
+import ModalAlert from '@/components/ModalAlert.vue';
 import { update, index, destroy, edit } from '@/routes/clients';
 import FormInput from '../Shared/FormInput.vue';
 
@@ -47,12 +49,17 @@ const submit = () => {
     );
 };
 
-const remove = () => {
-    if (!confirm('Remove client?')) {
-        return;
-    }
+const isConfirmOpen = ref(false);
 
-    form.delete(destroy(props.client?.id).url);
+const openConfirmModal = () => {
+    isConfirmOpen.value = true;
+};
+const confirmRemove = () => {
+    isConfirmOpen.value = false;
+
+    if (props.client?.id) {
+        router.delete(destroy(props.client.id).url);
+    }
 };
 </script>
 
@@ -189,37 +196,24 @@ const remove = () => {
                 </div>
 
                 <!-- Action Buttons Footer -->
-                <!-- <div
-                    class="mt-6 flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
-                >
-                    <Link
-                        :href="index()"
-                        class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        Cancel
-                    </Link>
 
-                    <button
-                        type="button"
-                        @click="remove"
-                        class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-100 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
-                    >
-                        Delete Client
-                    </button>
-
-                    <button
-                        class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
-                    >
-                        Save Changes
-                    </button>
-                </div> -->
                 <FormActions
                     :index-url="index().url"
                     delete-label="Delete Client"
                     save-label="Save Changes"
                     :processing="form.processing"
                     show-delete
-                    @delete="remove"
+                    @delete="openConfirmModal"
+                    :error="$page.props.errors.delete"
+                />
+                <ModalAlert
+                    :show="isConfirmOpen"
+                    title="Delete confirmation"
+                    message="Are you sure you want to delete"
+                    :item="client?.name"
+                    confirm="Delete"
+                    @close="isConfirmOpen = false"
+                    @confirm="confirmRemove"
                 />
             </div>
         </form>

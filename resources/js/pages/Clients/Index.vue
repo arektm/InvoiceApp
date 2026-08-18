@@ -174,6 +174,7 @@ watch(search, (value) => {
         </div>
 
         <!-- Pagination -->
+
         <Pagination :links="clients?.links" />
     </div>
 </template>

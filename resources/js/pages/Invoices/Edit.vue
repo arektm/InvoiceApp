@@ -264,11 +264,13 @@ const confirmRemove = () => {
                     :processing="form.processing"
                     show-delete
                     @delete="openConfirmModal"
+                    :error="$page.props.errors.delete"
                 />
                 <ModalAlert
                     :show="isConfirmOpen"
                     title="Delete confirmation"
-                    message="Are you sure you want to delete the invoice?"
+                    :item="invoice?.invoice_number"
+                    message="Are you sure you want to delete the invoice"
                     confirm="Delete"
                     @close="isConfirmOpen = false"
                     @confirm="confirmRemove"

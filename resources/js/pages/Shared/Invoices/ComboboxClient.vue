@@ -74,15 +74,15 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<!-- <template>
+<template>
     <div class="relative" ref="dropdownRef">
-        <div class="flex gap-1">
+        <div class="flex w-full gap-2">
             <input
                 v-model="search"
                 type="text"
                 autocomplete="off"
                 placeholder="Search client..."
-                class="w-full rounded border p-2"
+                class="flex w-full items-center rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                 @focus="open = true"
                 @keydown.escape="open = false"
             />
@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
 
         <div
             v-if="open"
-            class="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded border bg-secondary shadow"
+            class="absolute top-full z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-lg border bg-secondary shadow-lg"
         >
             <div
                 v-for="client in filteredClients"
@@ -125,8 +125,8 @@ onBeforeUnmount(() => {
             {{ error }}
         </p>
     </div>
-</template> -->
-<template>
+</template>
+<!-- <template>
     <div class="relative" ref="dropdownRef">
         <div class="flex w-full gap-2">
             <input
@@ -183,4 +183,4 @@ onBeforeUnmount(() => {
             {{ error }}
         </p>
     </div>
-</template>
+</template> -->

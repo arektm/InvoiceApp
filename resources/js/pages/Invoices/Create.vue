@@ -3,7 +3,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import FormActions from '@/components/invoices/FormActions.vue';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 import { create, index } from '@/routes/invoices';
-
+import FormInput from '../Shared/FormInput.vue';
 import ComboboxClient from '../Shared/Invoices/ComboboxClient.vue';
 import InvoiceItems from '../Shared/Invoices/InvoiceItems.vue';
 defineOptions({
@@ -63,26 +63,7 @@ const submit = () => {
 
     <div class="space-y-8">
         <!-- Header -->
-        <!-- <div
-            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h1 class="mt-2 text-3xl font-semibold tracking-tight">
-                    New Invoice
-                </h1>
 
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Create a new invoice record in the system.
-                </p>
-            </div>
-
-            <Link
-                href="/invoices"
-                class="inline-flex h-9 items-center justify-center rounded-lg border bg-background px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted"
-            >
-                Cancel
-            </Link>
-        </div> -->
         <PageHeader
             title="New invoice"
             description="Create a new invoice record in the system."
@@ -113,7 +94,6 @@ const submit = () => {
                     <ComboboxClient
                         v-model="form.client_id"
                         :clients="clients ?? []"
-                        :error="form.errors.client_id"
                         class="flex w-full items-center gap-2 rounded-lg border bg-background px-6 py-3 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                     />
 
@@ -121,7 +101,7 @@ const submit = () => {
                         v-if="form.errors.client_id"
                         class="mt-1 text-xs text-red-500"
                     >
-                        {{ form.errors.client_id }}
+                        Client name is required.
                     </div>
                 </div>
 
@@ -145,70 +125,43 @@ const submit = () => {
                     >
                         <!-- Issue Date -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Issue date</label
-                            >
-
-                            <input
+                            <FormInput
                                 v-model="form.issue_date"
+                                id="issue_date"
                                 type="date"
-                                class="flex w-full items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                label="Issue date"
+                                :error="form.errors.issue_date"
+                                class="w-full rounded-lg border bg-background px-3 py-2.5 text-sm shadow-sm transition outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                             />
-
-                            <p
-                                v-if="form.errors.issue_date"
-                                class="mt-1 text-xs text-red-500"
-                            >
-                                {{ form.errors.issue_date }}
-                            </p>
                         </div>
 
                         <!-- Sale Date -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Sale date</label
-                            >
-
-                            <input
+                            <FormInput
                                 v-model="form.sale_date"
+                                id="sale_date"
                                 type="date"
-                                class="flex w-full items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                label="Sale date"
+                                :error="form.errors.sale_date"
+                                class="w-full rounded-lg border bg-background px-3 py-2.5 text-sm shadow-sm transition outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                             />
-
-                            <p
-                                v-if="form.errors.sale_date"
-                                class="mt-1 text-xs text-red-500"
-                            >
-                                {{ form.errors.sale_date }}
-                            </p>
                         </div>
 
                         <!-- Due Date -->
                         <div>
-                            <label
-                                class="mb-1.5 block text-sm font-medium text-muted-foreground"
-                                >Due date</label
-                            >
-
-                            <input
+                            <FormInput
                                 v-model="form.due_date"
+                                id="due_date"
                                 type="date"
-                                class="flex w-full items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm shadow-sm transition-colors hover:bg-muted/40 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                label="Due date"
+                                :error="form.errors.due_date"
+                                class="w-full rounded-lg border bg-background px-3 py-2.5 text-sm shadow-sm transition outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                             />
-
-                            <p
-                                v-if="form.errors.due_date"
-                                class="mt-1 text-xs text-red-500"
-                            >
-                                {{ form.errors.due_date }}
-                            </p>
                         </div>
 
                         <!-- Payment Method -->
                         <div>
-                            <label
+                            <!-- <label
                                 class="mb-1.5 block text-sm font-medium text-muted-foreground"
                                 >Payment method</label
                             >
@@ -225,7 +178,16 @@ const submit = () => {
                                 class="mt-1 text-xs text-red-500"
                             >
                                 {{ form.errors.payment_method }}
-                            </p>
+                            </p> -->
+                            <FormInput
+                                v-model="form.payment_method"
+                                id="payment_method"
+                                type="text"
+                                label="Payment_method"
+                                :error="form.errors.payment_method"
+                                placeholder="e.g. Transfer, Cash..."
+                                class="w-full rounded-lg border bg-background px-3 py-2.5 text-sm shadow-sm transition outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                            />
                         </div>
                     </div>
                 </div>

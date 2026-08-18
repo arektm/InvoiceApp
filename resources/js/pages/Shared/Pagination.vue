@@ -13,7 +13,7 @@ defineProps<{
 </script>
 
 <template>
-    <div class="mt-6 flex gap-2">
+    <div class="mt-6 flex gap-2" v-if="links.length > 3">
         <template v-for="link in links" :key="link.label">
             <span
                 v-if="!link.url"

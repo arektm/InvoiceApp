@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import PageHeader from '@/components/invoices/PageHeader.vue';
-import { edit, show } from '@/routes/clients';
+import ShowActions from '@/components/invoices/ShowActions.vue';
+import { index, show } from '@/routes/clients';
+// import FormActions from '@/components/invoices/FormActions.vue';
 
 defineOptions({
     layout: {
@@ -136,16 +138,13 @@ defineProps({
                 </div>
 
                 <!-- Edit Link Footer -->
-                <div
-                    class="mt-6 flex items-center justify-end gap-3 rounded-xl border bg-muted/20 p-4 shadow-sm"
-                >
-                    <Link
-                        :href="edit(client?.id)"
-                        class="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
-                    >
-                        Edit Client Details
-                    </Link>
-                </div>
+
+                <ShowActions
+                    :indexUrl="index().url"
+                    showEdit
+                    editLabel="Edit Client Details"
+                    :edit-url="`/clients/${client?.id}/edit`"
+                />
             </div>
         </div>
     </div>

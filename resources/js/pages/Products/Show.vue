@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import PageHeader from '@/components/invoices/PageHeader.vue';
-import ModalAlert from '@/components/ModalAlert.vue';
-import { show, edit, destroy } from '@/routes/products';
+import ShowActions from '@/components/invoices/ShowActions.vue';
+import { show, index } from '@/routes/products';
 
 defineOptions({
     layout: {
@@ -16,21 +15,9 @@ defineOptions({
     },
 });
 
-const props = defineProps({
+defineProps({
     product: Object,
 });
-const isConfirmOpen = ref(false);
-
-const openConfirmModal = () => {
-    isConfirmOpen.value = true;
-};
-const confirmRemove = () => {
-    isConfirmOpen.value = false;
-
-    if (props.product?.id) {
-        router.delete(destroy(props.product.id).url);
-    }
-};
 </script>
 
 <template>
@@ -189,9 +176,9 @@ const confirmRemove = () => {
                     Description
                 </h2>
 
-                <p class="mt-1 text-sm text-muted-foreground">
+                <!-- <p class="mt-1 text-sm text-muted-foreground">
                     Additional information about this product.
-                </p>
+                </p> -->
             </div>
 
             <div class="p-6">
@@ -204,59 +191,11 @@ const confirmRemove = () => {
         </div>
 
         <!-- Actions -->
-        <div
-            class="flex flex-col gap-3 rounded-xl border border-border bg-card p-6 sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h2 class="font-semibold text-foreground">Product actions</h2>
-
-                <p class="mt-1 text-sm text-muted-foreground">
-                    Update or permanently remove this product.
-                </p>
-            </div>
-
-            <div class="flex flex-wrap gap-3">
-                <Link
-                    :href="edit(product?.id)"
-                    class="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
-                >
-                    Edit product
-                </Link>
-
-                <button
-                    type="button"
-                    @click="openConfirmModal"
-                    class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 px-5 py-2.5 text-sm font-medium text-red-700 transition hover:bg-red-100 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
-                >
-                    Delete product
-                </button>
-
-                <Link
-                    href="/products"
-                    class="inline-flex items-center justify-center rounded-lg border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted"
-                >
-                    Cancel
-                </Link>
-            </div>
-        </div>
-
-        <!-- Delete error -->
-        <div
-            v-if="$page.props.errors.delete"
-            class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400"
-        >
-            {{ $page.props.errors.delete }}
-        </div>
-
-        <!-- Delete confirmation -->
-        <ModalAlert
-            :show="isConfirmOpen"
-            :item="props.product?.product_name"
-            title="Delete confirmation"
-            message="Are you sure you want to delete product"
-            confirm="Delete"
-            @close="isConfirmOpen = false"
-            @confirm="confirmRemove"
+        <ShowActions
+            :indexUrl="index().url"
+            showEdit
+            editLabel="Edit Product"
+            :edit-url="`/products/${product?.id}/edit`"
         />
     </div>
 </template>

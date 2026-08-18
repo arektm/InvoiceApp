@@ -284,12 +284,7 @@ watch(search, (value) => {
             </div>
 
             <!-- Footer -->
-            <div
-                v-if="products?.data?.length"
-                class="border-t border-border px-5 py-4"
-            >
-                <Pagination :links="products?.links" />
-            </div>
+            <Pagination :links="products?.links" />
         </div>
     </div>
 </template>
