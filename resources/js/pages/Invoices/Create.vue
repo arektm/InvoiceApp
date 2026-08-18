@@ -55,7 +55,6 @@ const form = useForm({
 const submit = () => {
     form.post('/invoices');
 };
-// ----------------------------------
 </script>
 
 <template>

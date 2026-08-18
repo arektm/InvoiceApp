@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, usePage } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import PageHeader from '@/components/invoices/PageHeader.vue';
 
 defineOptions({
@@ -28,24 +28,11 @@ const props = defineProps({
 //     country:'Ireland'
 
 // }
-interface SharedProps {
-    flash: {
-        success?: string | null;
-        error?: string | null;
-    };
-    [key: string]: any;
-}
-const page = usePage<SharedProps>();
 </script>
 
 <template>
     <Head title="Company" />
-    <div
-        v-if="page.props.flash.success"
-        class="mt-4 inline-flex h-9 items-center justify-center rounded-lg border bg-muted px-4 text-sm font-medium shadow-sm transition-colors hover:bg-muted/60"
-    >
-        {{ page.props.flash.success }}
-    </div>
+
     <div class="space-y-8">
         <!-- Header -->
 
